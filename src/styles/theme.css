@@ -1,0 +1,91 @@
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* ── Songbird colour system ── */
+  --navy:         #0B1B38;
+  --navy-deep:    #0A1730;
+  --navy-card:    #122544;
+  --gold:         #C8911E;
+  --gold-deep:    #A8740F;
+  --gold-brushed: #C6A35A;
+  --cream:        #FAF5EC;
+  --ink:          #1B2A44;
+  --slate:        #5A6675;
+  --cloud:        #E6E2D7;
+  --whatsapp:     #25D366;
+  --teal:         #1A6B7E;
+  --teal-end:     #3FB68A;
+
+  /* ── shadcn/ui system variables ── */
+  --font-size: 16px;
+  --background: var(--cream);
+  --foreground: var(--ink);
+  --card: #ffffff;
+  --card-foreground: var(--ink);
+  --popover: #ffffff;
+  --popover-foreground: var(--ink);
+  --primary: var(--navy);
+  --primary-foreground: #ffffff;
+  --secondary: var(--cloud);
+  --secondary-foreground: var(--ink);
+  --muted: #ececf0;
+  --muted-foreground: var(--slate);
+  --accent: var(--gold-brushed);
+  --accent-foreground: var(--navy);
+  --destructive: #d4183d;
+  --destructive-foreground: #ffffff;
+  --border: var(--cloud);
+  --input: transparent;
+  --input-background: #f3f3f5;
+  --ring: var(--gold-brushed);
+  --radius: 0.625rem;
+}
+
+@theme inline {
+  /* Colour utilities */
+  --color-navy:         var(--navy);
+  --color-navy-deep:    var(--navy-deep);
+  --color-navy-card:    var(--navy-card);
+  --color-gold:         var(--gold);
+  --color-gold-deep:    var(--gold-deep);
+  --color-gold-brushed: var(--gold-brushed);
+  --color-cream:        var(--cream);
+  --color-ink:          var(--ink);
+  --color-slate:        var(--slate);
+  --color-cloud:        var(--cloud);
+  --color-whatsapp:     var(--whatsapp);
+  --color-teal:         var(--teal);
+  --color-teal-end:     var(--teal-end);
+
+  /* shadcn mappings */
+  --color-background:         var(--background);
+  --color-foreground:         var(--foreground);
+  --color-card:               var(--card);
+  --color-card-foreground:    var(--card-foreground);
+  --color-popover:            var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary:            var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary:          var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted:              var(--muted);
+  --color-muted-foreground:   var(--muted-foreground);
+  --color-accent:             var(--accent);
+  --color-accent-foreground:  var(--accent-foreground);
+  --color-destructive:        var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border:             var(--border);
+  --color-input:              var(--input);
+  --color-input-background:   var(--input-background);
+  --color-ring:               var(--ring);
+
+  /* Typography — injected by next/font/google at runtime */
+  --font-serif: var(--heading-font);
+  --font-sans:  var(--body-font);
+
+  /* Radius */
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}

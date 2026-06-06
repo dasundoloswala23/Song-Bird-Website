@@ -1,0 +1,42 @@
+@import './tailwind.css';
+@import './theme.css';
+
+/* fonts.css removed — fonts loaded via next/font/google in app/layout.tsx */
+
+/* WhatsApp floating button pulse */
+@keyframes whatsapp-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.55), 0 8px 24px rgba(37, 211, 102, 0.35); }
+  50%       { box-shadow: 0 0 0 10px rgba(37, 211, 102, 0), 0 8px 24px rgba(37, 211, 102, 0.15); }
+}
+
+/* Teal→green gradient text utility */
+.text-gradient-teal {
+  background: linear-gradient(95deg, #1A6B7E 0%, #3FB68A 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Gold hairline divider utility */
+.gold-rule {
+  display: block;
+  width: 64px;
+  height: 1px;
+  background-color: var(--gold-brushed);
+  margin-top: 1rem;
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Reduced-motion overrides */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

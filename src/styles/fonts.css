@@ -1,0 +1,2 @@
+/* Fonts are now loaded via next/font/google in app/layout.tsx */
+/* CDN imports removed to prevent render-blocking and enable self-hosting */
