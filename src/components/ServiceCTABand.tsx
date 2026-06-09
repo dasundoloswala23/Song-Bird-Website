@@ -28,14 +28,14 @@ export function ServiceCTABand({ serviceTitle }: ServiceCTABandProps) {
           <button
             onClick={openConsultation}
             className="inline-flex items-center justify-center gap-2 px-6 py-3 text-white text-[13px] font-sans font-semibold uppercase tracking-[0.08em] rounded-full transition-all hover:-translate-y-px hover:shadow-[0_8px_24px_rgba(26,107,126,.45)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal"
-            style={{ background: 'linear-gradient(95deg, #1A6B7E 0%, #3FB68A 100%)' }}
+            style={{ background: 'linear-gradient(95deg, #1FA968 0%, #0E5C54 100%)' }}
           >
             Book Consultation
           </button>
           <Link
             href="/services"
             className="inline-flex items-center justify-center px-6 py-3 border border-gold-brushed/50 text-[13px] font-sans font-semibold uppercase tracking-[0.08em] rounded-full transition-colors hover:bg-gold-brushed/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-brushed"
-            style={{ color: '#C9A961' }}
+            style={{ color: '#E6D9A8' }}
           >
             View All Services
           </Link>

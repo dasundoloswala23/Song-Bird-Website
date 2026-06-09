@@ -1,20 +1,24 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* ── Songbird colour system ── */
-  --navy:         #0B1B38;
-  --navy-deep:    #0A1730;
-  --navy-card:    #122544;
-  --gold:         #C8911E;
-  --gold-deep:    #A8740F;
-  --gold-brushed: #C6A35A;
-  --cream:        #FAF5EC;
-  --ink:          #1B2A44;
-  --slate:        #5A6675;
-  --cloud:        #E6E2D7;
+  /* ── Songbird colour system (green luxury / gold accent) ── */
+  --navy:         #15402E;
+  --navy-deep:    #0F3225;
+  --navy-card:    #1A4A35;
+  --gold:         #C9A227;
+  --gold-deep:    #A8850F;
+  --gold-brushed: #E6D9A8;
+  --cream:        #FAF8F1;
+  --ink:          #16211C;
+  --slate:        #4A6B5E;
+  --cloud:        #A7D2B6;
   --whatsapp:     #25D366;
-  --teal:         #1A6B7E;
-  --teal-end:     #3FB68A;
+  --teal:         #0E5C54;
+  --teal-end:     #5EEA8A;
+  --emerald:      #1FA968;
+  --mint:         #5EEA8A;
+  --green-deep:   #0F3225;
+  --brand-gradient: linear-gradient(135deg, #1FA968 0%, #0E5C54 50%, #0A3A52 100%);
 
   /* ── shadcn/ui system variables ── */
   --font-size: 16px;
@@ -28,7 +32,7 @@
   --primary-foreground: #ffffff;
   --secondary: var(--cloud);
   --secondary-foreground: var(--ink);
-  --muted: #ececf0;
+  --muted: #e8f3ec;
   --muted-foreground: var(--slate);
   --accent: var(--gold-brushed);
   --accent-foreground: var(--navy);
@@ -36,7 +40,7 @@
   --destructive-foreground: #ffffff;
   --border: var(--cloud);
   --input: transparent;
-  --input-background: #f3f3f5;
+  --input-background: #edf7f0;
   --ring: var(--gold-brushed);
   --radius: 0.625rem;
 }
@@ -56,6 +60,9 @@
   --color-whatsapp:     var(--whatsapp);
   --color-teal:         var(--teal);
   --color-teal-end:     var(--teal-end);
+  --color-emerald:      var(--emerald);
+  --color-mint:         var(--mint);
+  --color-green-deep:   var(--green-deep);
 
   /* shadcn mappings */
   --color-background:         var(--background);

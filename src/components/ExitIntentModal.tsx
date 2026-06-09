@@ -74,8 +74,8 @@ export function ExitIntentModal() {
                   href={waUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 w-full py-3 text-white text-[13px] font-sans font-semibold uppercase tracking-[0.08em] rounded-[6px] transition-all hover:-translate-y-px hover:shadow-[0_8px_24px_rgba(26,107,126,.4)]"
-                  style={{ background: 'linear-gradient(95deg, #1A6B7E 0%, #3FB68A 100%)' }}
+                  className="flex items-center justify-center gap-2 w-full py-3 text-white text-[13px] font-sans font-semibold uppercase tracking-[0.08em] rounded-[6px] transition-all hover:-translate-y-px hover:shadow-[0_8px_24px_rgba(31,169,104,.4)]"
+                  style={{ background: 'linear-gradient(95deg, #1FA968 0%, #0E5C54 100%)' }}
                 >
                   <MessageCircle className="w-4 h-4" />
                   WhatsApp Free Assessment

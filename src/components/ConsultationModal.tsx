@@ -143,8 +143,8 @@ export function ConsultationModal() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full mt-2 flex items-center justify-center gap-2 py-3.5 text-white disabled:opacity-60 text-[13px] font-sans font-semibold uppercase tracking-[0.08em] rounded-[6px] transition-all hover:-translate-y-px hover:shadow-[0_8px_24px_rgba(26,107,126,.4)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal"
-                  style={{ background: 'linear-gradient(95deg, #1A6B7E 0%, #3FB68A 100%)' }}
+                  className="w-full mt-2 flex items-center justify-center gap-2 py-3.5 text-white disabled:opacity-60 text-[13px] font-sans font-semibold uppercase tracking-[0.08em] rounded-[6px] transition-all hover:-translate-y-px hover:shadow-[0_8px_24px_rgba(31,169,104,.4)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal"
+                  style={{ background: 'linear-gradient(95deg, #1FA968 0%, #0E5C54 100%)' }}
                 >
                   {isSubmitting && <Loader2 className="w-4 h-4 animate-spin" />}
                   Request Free Consultation

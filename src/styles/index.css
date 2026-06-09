@@ -9,9 +9,18 @@
   50%       { box-shadow: 0 0 0 10px rgba(37, 211, 102, 0), 0 8px 24px rgba(37, 211, 102, 0.15); }
 }
 
+/* Ken-Burns slow zoom — hero video fallback */
+@keyframes ken-burns {
+  from { transform: scale(1.0); }
+  to   { transform: scale(1.08); }
+}
+.animate-ken-burns {
+  animation: ken-burns 12s ease-out infinite alternate;
+}
+
 /* Teal→green gradient text utility */
 .text-gradient-teal {
-  background: linear-gradient(95deg, #1A6B7E 0%, #3FB68A 100%);
+  background: linear-gradient(95deg, #1FA968 0%, #5EEA8A 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

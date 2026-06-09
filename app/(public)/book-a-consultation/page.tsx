@@ -1,0 +1,81 @@
+import type { Metadata } from 'next'
+import { EyebrowTag } from '@/components/EyebrowTag'
+import { BookingFlow } from '@/components/BookingFlow'
+import { CheckCircle2 } from 'lucide-react'
+
+export const dynamic = 'force-static'
+
+export const metadata: Metadata = {
+  title: 'Book a Consultation — Songbird Consulting',
+  description: 'Schedule a complimentary consultation with a Songbird advisor. Choose your date, time, and duration.',
+}
+
+const BENEFITS = [
+  'Complimentary initial session',
+  'Choose your session length (15–60 min)',
+  'Speak with a licensed advisor',
+  'No obligation, fully confidential',
+]
+
+export default function BookConsultationPage() {
+  return (
+    <>
+      <section className="pt-[140px] pb-10 bg-navy">
+        <div className="mx-auto px-6 md:px-12 max-w-4xl text-center">
+          <EyebrowTag>Schedule a Call</EyebrowTag>
+          <h1 className="font-serif font-semibold text-[44px] md:text-[58px] leading-tight text-white mb-4">
+            Book a Consultation
+          </h1>
+          <p className="text-[16px] font-sans text-cream/60 max-w-xl mx-auto">
+            Select a date and time that works for you. Our advisors are available Sunday – Thursday, 9 am – 6 pm GST.
+          </p>
+        </div>
+      </section>
+
+      <section className="py-16 bg-navy">
+        <div className="mx-auto px-6 md:px-12 max-w-5xl">
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-12 items-start">
+            {/* Booking flow */}
+            <div className="bg-navy-card border border-gold-brushed/15 rounded-2xl p-8">
+              <BookingFlow />
+            </div>
+
+            {/* Sidebar */}
+            <aside className="space-y-6">
+              <div className="bg-navy-card border border-gold-brushed/15 rounded-xl p-6">
+                <h3 className="font-serif font-semibold text-[18px] text-white mb-4">What to expect</h3>
+                <ul className="space-y-3">
+                  {BENEFITS.map(b => (
+                    <li key={b} className="flex items-start gap-3">
+                      <CheckCircle2 className="w-4 h-4 text-teal shrink-0 mt-0.5" />
+                      <span className="text-[13px] font-sans text-cream/70">{b}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="bg-navy-card border border-gold-brushed/15 rounded-xl p-6">
+                <h3 className="font-serif font-semibold text-[16px] text-white mb-2">Prefer another channel?</h3>
+                <p className="text-[12px] font-sans text-cream/50 mb-4">Reach us directly:</p>
+                <a
+                  href="tel:+97140000000"
+                  className="flex items-center gap-2 text-[13px] font-sans font-medium text-gold-brushed hover:text-gold transition-colors mb-2"
+                >
+                  📞 +971 4 000 0000
+                </a>
+                <a
+                  href={`https://wa.me/971500000000?text=${encodeURIComponent('Hi, I\'d like to book a consultation.')}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 text-[13px] font-sans font-medium text-whatsapp hover:opacity-80 transition-opacity"
+                >
+                  💬 WhatsApp us
+                </a>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+    </>
+  )
+}

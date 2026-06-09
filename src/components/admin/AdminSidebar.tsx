@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
-import { LayoutDashboard, Layers, Settings2, BarChart3, Inbox, LogOut, Bird, ListOrdered, Quote } from 'lucide-react'
+import { LayoutDashboard, Layers, Settings2, BarChart3, Inbox, LogOut, Bird, ListOrdered, Quote, MapPin, CalendarDays, Clock, Video } from 'lucide-react'
 import { getAuth, signOut } from 'firebase/auth'
 import { firebaseApp } from '@/lib/firebase'
 import { cn } from '@/lib/utils'
@@ -11,10 +11,14 @@ import { cn } from '@/lib/utils'
 const NAV = [
   { href: '/admin',                label: 'Dashboard',      Icon: LayoutDashboard },
   { href: '/admin/services',       label: 'Services',       Icon: Layers },
+  { href: '/admin/destinations',   label: 'Destinations',   Icon: MapPin },
   { href: '/admin/why-choose-us',  label: 'Why Choose Us',  Icon: Settings2 },
   { href: '/admin/process',        label: 'How It Works',   Icon: ListOrdered },
   { href: '/admin/testimonials',   label: 'Client Stories', Icon: Quote },
   { href: '/admin/stats',          label: 'Stats',          Icon: BarChart3 },
+  { href: '/admin/slots',          label: 'Time Slots',     Icon: Clock },
+  { href: '/admin/bookings',       label: 'Bookings',       Icon: CalendarDays },
+  { href: '/admin/hero',           label: 'Hero / Video',   Icon: Video },
   { href: '/admin/leads',          label: 'Leads',          Icon: Inbox },
 ]
 

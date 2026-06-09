@@ -23,6 +23,24 @@ service cloud.firestore {
       allow write: if request.auth != null;
     }
 
+    // Destinations: public read, auth write
+    match /destinations/{docId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    // Slots: public read (to show availability), auth write (admin manages slots)
+    match /slots/{docId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    // Bookings: anyone can create (public booking), only auth can read/update/delete
+    match /bookings/{docId} {
+      allow create: if true;
+      allow read, update, delete: if request.auth != null;
+    }
+
     // Leads: write from public (contact form), read only by authenticated admin
     match /leads/{docId} {
       allow create: if true;

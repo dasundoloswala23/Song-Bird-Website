@@ -136,7 +136,7 @@ export function ServiceForm({ initialData, serviceId }: ServiceFormProps) {
               {(['minimal', 'full'] as const).map(opt => (
                 <label key={opt} className="flex items-center gap-2 cursor-pointer">
                   <input type="radio" value={opt} checked={field.value === opt} onChange={() => field.onChange(opt)}
-                    className="w-4 h-4 accent-[#C6A35A]" />
+                    className="w-4 h-4 accent-[#E6D9A8]" />
                   <span className="text-[13px] font-sans text-cream/70">
                     {opt === 'minimal' ? 'Minimal details (image + checklist)' : 'Full details page (screenshots 1–5)'}
                   </span>

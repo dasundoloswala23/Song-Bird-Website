@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import type { StatsDoc, StatEntry } from '@/types/firestore'
 
-const GRADIENT = 'linear-gradient(95deg, #1A6B7E 0%, #3FB68A 100%)'
+const GRADIENT = 'linear-gradient(135deg, #1FA968 0%, #0E5C54 50%, #0A3A52 100%)'
 
 function useCountUp(target: string, active: boolean) {
   const [display, setDisplay] = useState('0')
@@ -31,7 +31,7 @@ function useCountUp(target: string, active: boolean) {
   return display
 }
 
-function StatItem({ value, label }: { value: string; label: string }) {
+function StatItem({ value, label, isLast }: { value: string; label: string; isLast: boolean }) {
   const ref = useRef<HTMLDivElement>(null)
   const [active, setActive] = useState(false)
 
@@ -48,14 +48,17 @@ function StatItem({ value, label }: { value: string; label: string }) {
   const display = useCountUp(value, active)
 
   return (
-    <div ref={ref} className="flex flex-col items-center gap-1">
+    <div
+      ref={ref}
+      className={`flex flex-col items-center gap-2 px-6 ${!isLast ? 'border-r border-gold-brushed/20' : ''}`}
+    >
       <span
-        className="font-serif font-semibold text-[48px] md:text-[58px] leading-none"
+        className="font-serif font-semibold text-[56px] md:text-[72px] leading-none"
         style={{ background: GRADIENT, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}
       >
         {active ? display : value}
       </span>
-      <span className="text-[11px] font-sans font-semibold uppercase tracking-[0.2em] text-cream/50">
+      <span className="text-[11px] font-sans font-semibold uppercase tracking-[0.2em] text-cream/50 text-center">
         {label}
       </span>
     </div>
@@ -79,17 +82,14 @@ export function StatsBand({ stats }: StatsBandProps) {
   if (entries.length === 0) return null
 
   return (
-    <section
-      className="py-14 bg-navy border-t border-gold-brushed/25"
-      aria-label="Key statistics"
-    >
+    <section className="py-20 bg-navy border-t border-gold-brushed/25" aria-label="Key statistics">
       <div className="mx-auto px-6 md:px-12 max-w-5xl">
         <div
-          className="grid gap-10"
+          className="grid"
           style={{ gridTemplateColumns: `repeat(${Math.min(entries.length, 4)}, 1fr)` }}
         >
-          {entries.map(s => (
-            <StatItem key={s.label} value={s.value} label={s.label} />
+          {entries.map((s, i) => (
+            <StatItem key={s.label} value={s.value} label={s.label} isLast={i === entries.length - 1} />
           ))}
         </div>
       </div>

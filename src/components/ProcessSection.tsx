@@ -1,8 +1,13 @@
+'use client'
+
+import React, { useEffect, useRef, useState } from 'react'
 import { EyebrowTag } from './EyebrowTag'
 import { ApplicationCTA } from './ApplicationCTA'
 import type { ProcessSectionDoc } from '@/types/firestore'
 
-const NODE_GRADIENT = 'linear-gradient(135deg, #1A6B7E 0%, #3FB68A 100%)'
+const NODE_GRADIENT = 'linear-gradient(135deg, #1FA968 0%, #0E5C54 50%, #0A3A52 100%)'
+const LINE_GRADIENT_H = 'linear-gradient(90deg, transparent 2%, rgba(31,169,104,0.3) 10%, rgba(94,234,138,0.3) 90%, transparent 98%)'
+const LINE_GRADIENT_V = 'linear-gradient(180deg, rgba(31,169,104,0.3) 0%, rgba(94,234,138,0.3) 100%)'
 
 interface Props {
   content: ProcessSectionDoc | null
@@ -28,67 +33,31 @@ export function ProcessSection({ content }: Props) {
 
         {/* Desktop: horizontal timeline */}
         <div className="hidden md:block relative mb-14">
-          {/* Connecting line behind nodes */}
           <div
-            className="absolute top-6 left-0 right-0 h-px"
-            style={{ background: 'linear-gradient(90deg, transparent 2%, rgba(26,107,126,0.25) 10%, rgba(63,182,138,0.25) 90%, transparent 98%)' }}
+            className="absolute top-7 left-[calc(100%/var(--steps)/2)] right-[calc(100%/var(--steps)/2)] h-px"
+            style={
+              { background: LINE_GRADIENT_H, '--steps': String(steps.length) } as React.CSSProperties
+            }
             aria-hidden="true"
           />
 
           <div className="grid gap-8" style={{ gridTemplateColumns: `repeat(${steps.length}, 1fr)` }}>
             {steps.map((step, idx) => (
-              <div key={idx} className="flex flex-col items-center text-center px-2">
-                {/* Gradient circle node */}
-                <div
-                  className="relative z-10 w-12 h-12 rounded-full flex items-center justify-center mb-5 ring-4 ring-teal/10 shrink-0"
-                  style={{ background: NODE_GRADIENT }}
-                >
-                  <span className="font-serif font-semibold text-[16px] text-white select-none">
-                    {stepNums[idx]}
-                  </span>
-                </div>
-                <h3 className="font-serif font-semibold text-[17px] text-ink mb-2 leading-snug">
-                  {step.title}
-                </h3>
-                <p className="text-[13px] font-sans text-slate leading-relaxed">
-                  {step.description}
-                </p>
-              </div>
+              <StepCard key={idx} step={step} num={stepNums[idx]} />
             ))}
           </div>
         </div>
 
         {/* Mobile: vertical timeline */}
         <div className="md:hidden relative mb-14 pl-8">
-          {/* Vertical connecting line */}
           <div
             className="absolute top-0 bottom-0 left-[23px] w-px"
-            style={{ background: 'linear-gradient(180deg, rgba(26,107,126,0.3) 0%, rgba(63,182,138,0.3) 100%)' }}
+            style={{ background: LINE_GRADIENT_V }}
             aria-hidden="true"
           />
-
           <div className="space-y-8">
             {steps.map((step, idx) => (
-              <div key={idx} className="relative flex gap-5">
-                {/* Node */}
-                <div
-                  className="absolute -left-8 top-0 z-10 w-10 h-10 rounded-full flex items-center justify-center ring-4 ring-teal/10 shrink-0"
-                  style={{ background: NODE_GRADIENT }}
-                >
-                  <span className="font-serif font-semibold text-[14px] text-white select-none">
-                    {stepNums[idx]}
-                  </span>
-                </div>
-                {/* Content */}
-                <div className="pt-1">
-                  <h3 className="font-serif font-semibold text-[17px] text-ink mb-1.5 leading-snug">
-                    {step.title}
-                  </h3>
-                  <p className="text-[13px] font-sans text-slate leading-relaxed">
-                    {step.description}
-                  </p>
-                </div>
-              </div>
+              <MobileStepCard key={idx} step={step} num={stepNums[idx]} />
             ))}
           </div>
         </div>
@@ -98,5 +67,69 @@ export function ProcessSection({ content }: Props) {
         </div>
       </div>
     </section>
+  )
+}
+
+function StepCard({ step, num }: { step: { title: string; description: string }; num: string }) {
+  const ref = useRef<HTMLDivElement>(null)
+  const [visible, setVisible] = useState(false)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) { setVisible(true); observer.disconnect() } },
+      { threshold: 0.3 }
+    )
+    if (ref.current) observer.observe(ref.current)
+    return () => observer.disconnect()
+  }, [])
+
+  return (
+    <div
+      ref={ref}
+      className="flex flex-col items-center text-center px-2 group transition-all duration-500"
+      style={{ opacity: visible ? 1 : 0, transform: visible ? 'translateY(0)' : 'translateY(16px)', transitionDelay: '100ms' }}
+    >
+      <div
+        className="relative z-10 w-14 h-14 rounded-full flex items-center justify-center mb-5 ring-4 ring-teal/10 shrink-0 transition-transform group-hover:-translate-y-1 group-hover:shadow-[0_8px_24px_rgba(31,169,104,.35)]"
+        style={{ background: NODE_GRADIENT }}
+      >
+        <span className="font-serif font-bold text-[18px] text-white select-none">{num}</span>
+      </div>
+      <h3 className="font-serif font-semibold text-[17px] text-ink mb-2 leading-snug">{step.title}</h3>
+      <p className="text-[13px] font-sans text-slate leading-relaxed">{step.description}</p>
+    </div>
+  )
+}
+
+function MobileStepCard({ step, num }: { step: { title: string; description: string }; num: string }) {
+  const ref = useRef<HTMLDivElement>(null)
+  const [visible, setVisible] = useState(false)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) { setVisible(true); observer.disconnect() } },
+      { threshold: 0.3 }
+    )
+    if (ref.current) observer.observe(ref.current)
+    return () => observer.disconnect()
+  }, [])
+
+  return (
+    <div
+      ref={ref}
+      className="relative flex gap-5 transition-all duration-500"
+      style={{ opacity: visible ? 1 : 0, transform: visible ? 'translateX(0)' : 'translateX(-12px)', transitionDelay: '100ms' }}
+    >
+      <div
+        className="absolute -left-8 top-0 z-10 w-10 h-10 rounded-full flex items-center justify-center ring-4 ring-teal/10 shrink-0"
+        style={{ background: NODE_GRADIENT }}
+      >
+        <span className="font-serif font-semibold text-[14px] text-white select-none">{num}</span>
+      </div>
+      <div className="pt-1">
+        <h3 className="font-serif font-semibold text-[17px] text-ink mb-1.5 leading-snug">{step.title}</h3>
+        <p className="text-[13px] font-sans text-slate leading-relaxed">{step.description}</p>
+      </div>
+    </div>
   )
 }
