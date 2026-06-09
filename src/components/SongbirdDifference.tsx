@@ -49,7 +49,7 @@ export function SongbirdDifference({ content }: SongbirdDifferenceProps) {
                 <Image src={image} alt="Songbird team" fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
               ) : (
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <p className="text-slate/60 text-[13px] font-sans text-center px-8">Office / Team photo<br />Replace via Admin → Why Choose Us</p>
+                  <p className="text-slate/60 text-[13px] font-sans text-center px-8">Office / Team photo</p>
                 </div>
               )}
             </div>

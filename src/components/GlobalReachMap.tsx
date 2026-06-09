@@ -108,24 +108,19 @@ export function GlobalReachMap({ fallback }: Props) {
             transition: 'opacity 0.8s ease, transform 0.8s ease',
           }}
         >
+          {/* Static world-map silhouette behind the pins */}
+          <img
+            src="/images/world-map.svg"
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 w-full h-full object-contain opacity-30 pointer-events-none select-none"
+          />
           <svg
             viewBox="0 0 1000 500"
-            className="w-full"
+            className="relative w-full"
             aria-hidden="true"
             style={{ display: 'block' }}
           >
-            {/* Simplified world landmass silhouette via low-res path — aesthetic backdrop */}
-            <rect width="1000" height="500" fill="transparent" />
-            {/* Grid lines */}
-            {[-60, -30, 0, 30, 60].map(lat => {
-              const { y } = project(lat, 0)
-              return <line key={lat} x1="0" y1={y} x2="1000" y2={y} stroke="rgba(198,163,90,0.06)" strokeWidth="0.5" />
-            })}
-            {[-120, -60, 0, 60, 120].map(lng => {
-              const { x } = project(0, lng)
-              return <line key={lng} x1={x} y1="0" x2={x} y2="500" stroke="rgba(198,163,90,0.06)" strokeWidth="0.5" />
-            })}
-
             {/* Pins */}
             {pins.map((pin, i) => (
               <PulsingPin key={pin.label} pin={pin} delay={i * 200} />

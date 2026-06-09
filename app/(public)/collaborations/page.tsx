@@ -66,7 +66,6 @@ export default async function CollaborationsPage() {
           ) : (
             <div className="text-center rounded-2xl border border-dashed border-hairline bg-white py-20 px-6">
               <p className="text-[15px] font-sans text-slate">Partner logos and partnership details will be added here soon.</p>
-              <p className="text-[13px] font-sans text-slate/60 mt-2">Manage via Admin → Collaborations.</p>
             </div>
           )}
         </div>

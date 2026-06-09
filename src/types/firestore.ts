@@ -227,6 +227,20 @@ export interface AccreditationsDoc {
   items: AccreditationItem[]
 }
 
+// ── Insights / Articles (siteContent/insights) ────────────────────────────────
+
+export interface InsightItem {
+  category: string
+  date: string
+  title: string
+  excerpt: string
+  href: string
+}
+
+export interface InsightsDoc {
+  items: InsightItem[]
+}
+
 // ── Collaborations / Partnerships (siteContent/collaborations) ─────────────────
 
 export interface PartnerItem {

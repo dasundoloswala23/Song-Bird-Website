@@ -191,6 +191,16 @@ const ACCREDITATIONS = {
   ],
 }
 
+// ─── Insights ───────────────────────────────────────────────────────────────────
+
+const INSIGHTS = {
+  items: [
+    { category: 'Visa Update', date: 'May 2025',   title: 'UAE Golden Visa: What Changed in 2025 and Who Qualifies Now', excerpt: 'A plain-language breakdown of the latest eligibility criteria, investment thresholds, and the application pathway for the UAE Golden Visa.', href: '/insights' },
+    { category: 'Advisory',    date: 'April 2025', title: 'Five Mistakes to Avoid When Applying for Dubai Residency',     excerpt: 'From incomplete documentation to missed deadlines — our case managers share the most common errors that delay or derail applications.', href: '/insights' },
+    { category: 'Market',      date: 'March 2025', title: 'Global-Talent Visas Compared: UAE, UK, Canada, and Australia',  excerpt: 'We map out the four most sought-after global-talent schemes side by side so you can identify the best fit for your profile and goals.', href: '/insights' },
+  ],
+}
+
 // ─── Collaborations ─────────────────────────────────────────────────────────────
 
 const COLLABORATIONS = {
@@ -237,6 +247,10 @@ async function seed() {
   // Collaborations
   await db.collection('siteContent').doc('collaborations').set(COLLABORATIONS, { merge: true })
   console.log('  ✓ siteContent/collaborations written')
+
+  // Insights
+  await db.collection('siteContent').doc('insights').set(INSIGHTS, { merge: true })
+  console.log('  ✓ siteContent/insights written')
 
   console.log('✅ Seed complete!')
   process.exit(0)

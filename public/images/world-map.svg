@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500" preserveAspectRatio="xMidYMid meet">
+  <!-- Equirectangular world-continent silhouette. Aligns with GlobalReachMap's
+       project(lat,lng): x=(lng+180)/360*1000, y=(90-lat)/180*500. Simplified shapes. -->
+  <g fill="#3FB68A">
+    <!-- North America -->
+    <path d="M60 95 L120 72 L205 76 L300 95 L342 120 L322 150 L300 172 L272 176 L252 208 L232 252 L212 256 L218 210 L182 182 L150 172 L120 152 L90 132 L70 112 Z"/>
+    <!-- Central America -->
+    <path d="M252 210 L272 214 L300 232 L298 250 L278 248 L262 232 Z"/>
+    <!-- South America -->
+    <path d="M300 232 L342 218 L382 238 L392 292 L372 360 L346 432 L322 466 L307 456 L317 400 L296 340 L286 282 L291 248 Z"/>
+    <!-- Greenland -->
+    <path d="M360 50 L410 42 L432 62 L420 92 L382 98 L360 78 Z"/>
+    <!-- Europe -->
+    <path d="M476 122 L520 100 L562 94 L602 106 L612 132 L586 150 L546 152 L510 152 L488 142 Z"/>
+    <!-- Africa -->
+    <path d="M470 160 L540 150 L612 162 L626 202 L616 252 L590 302 L566 362 L546 432 L520 462 L506 420 L500 360 L480 302 L466 242 L461 192 Z"/>
+    <!-- Asia (mainland) -->
+    <path d="M616 92 L682 60 L782 56 L882 72 L972 92 L996 122 L980 152 L930 166 L872 176 L822 202 L800 236 L770 226 L740 202 L700 186 L660 166 L626 142 Z"/>
+    <!-- India peninsula -->
+    <path d="M720 182 L748 186 L742 226 L726 238 L716 206 Z"/>
+    <!-- SE Asia / archipelago -->
+    <path d="M812 232 L852 236 L876 256 L856 272 L820 262 Z"/>
+    <path d="M880 248 L918 252 L930 272 L900 282 L876 268 Z"/>
+    <!-- Australia -->
+    <path d="M820 292 L882 282 L928 296 L932 336 L902 362 L852 362 L820 336 Z"/>
+  </g>
+</svg>

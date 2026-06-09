@@ -4,7 +4,7 @@
  */
 import { getFirestore, collection, query, where, orderBy, getDocs, doc, getDoc, setDoc, addDoc, deleteDoc, updateDoc } from 'firebase/firestore'
 import { firebaseApp } from './firebase'
-import type { ServiceDoc, WhyChooseUsDoc, StatsDoc, ProcessSectionDoc, TestimonialsSectionDoc, LeadDoc, DestinationDoc, SlotDoc, BookingDoc, GlobalReachDoc, HeroSettingsDoc, WelcomeDoc, AccreditationsDoc, CollaborationsDoc } from '@/types/firestore'
+import type { ServiceDoc, WhyChooseUsDoc, StatsDoc, ProcessSectionDoc, TestimonialsSectionDoc, LeadDoc, DestinationDoc, SlotDoc, BookingDoc, GlobalReachDoc, HeroSettingsDoc, WelcomeDoc, AccreditationsDoc, CollaborationsDoc, InsightsDoc } from '@/types/firestore'
 
 const db = getFirestore(firebaseApp)
 
@@ -199,6 +199,13 @@ export async function getCollaborations(): Promise<CollaborationsDoc | null> {
   } catch { return null }
 }
 
+export async function getInsights(): Promise<InsightsDoc | null> {
+  try {
+    const snap = await getDoc(doc(db, 'siteContent', 'insights'))
+    return snap.exists() ? (snap.data() as InsightsDoc) : null
+  } catch { return null }
+}
+
 // ── Admin writes ──────────────────────────────────────────────────────────────
 
 export async function saveService(data: Omit<ServiceDoc, 'id'>, id?: string): Promise<string> {
@@ -273,6 +280,10 @@ export async function saveAccreditations(data: AccreditationsDoc): Promise<void>
 
 export async function saveCollaborations(data: CollaborationsDoc): Promise<void> {
   await setDoc(doc(db, 'siteContent', 'collaborations'), data)
+}
+
+export async function saveInsights(data: InsightsDoc): Promise<void> {
+  await setDoc(doc(db, 'siteContent', 'insights'), data)
 }
 
 export async function saveSlot(data: Omit<SlotDoc, 'id'>, id?: string): Promise<string> {

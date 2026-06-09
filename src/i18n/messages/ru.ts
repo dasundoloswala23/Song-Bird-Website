@@ -1,5 +1,121 @@
-// Russian — translation stub. Keys not present fall back to English.
+// Russian translations. Missing keys fall back to English automatically.
 import type { MessageKey } from './en'
 
-const ru: Partial<Record<MessageKey, string>> = {}
+const ru: Partial<Record<MessageKey, string>> = {
+  'nav.home': 'Главная',
+  'nav.services': 'Услуги',
+  'nav.destinations': 'Направления',
+  'nav.about': 'О нас',
+  'nav.collaborations': 'Партнёрства',
+  'nav.insights': 'Аналитика',
+  'nav.contact': 'Контакты',
+
+  'brand.slogan': 'Поднимите свой статус',
+
+  'cta.bookConsultation': 'Записаться на консультацию',
+  'cta.bookFreeConsultation': 'Запишитесь на бесплатную консультацию',
+  'cta.reserveConsultation': 'Забронируйте консультацию',
+  'cta.connectWhatsApp': 'Связаться через WhatsApp',
+  'cta.freeEligibility': 'Бесплатная проверка права →',
+  'cta.getStarted': 'Начать',
+  'cta.learnMore': 'Узнать больше',
+  'cta.contactUs': 'Связаться с нами',
+  'cta.viewAllServices': 'Все услуги',
+  'cta.whatsappNow': 'Написать в WhatsApp',
+  'cta.subscribe': 'Подписаться',
+
+  'lead.reviewLine': 'Проведём лучшую проверку вашей заявки — позвольте нам помочь.',
+  'lead.responseLine': 'Мы ответим вам в течение 24 часов.',
+  'lead.thankYou': 'Спасибо!',
+
+  'hero.eyebrow': 'Лицензировано в ОАЭ · Иммиграция и глобальная мобильность',
+  'hero.slide1': 'Поддержка ваших бизнес-инвестиций и миграции по всем ОАЭ',
+  'hero.slide2': 'Надёжные и профессиональные юридические консультации для вас и вашего бизнеса за рубежом',
+  'hero.slide3': 'Ваш путь к жизни в Эмиратах',
+  'hero.slide4': 'Живите своей историей в ОАЭ',
+  'hero.slide5': 'Усильте и вдохновите свой следующий шаг за рубежом',
+  'hero.trust.licensed': 'Лицензировано в ОАЭ',
+  'hero.trust.counsel': 'Регулируемые консультации',
+  'hero.trust.success': '95% успешных дел',
+  'hero.trust.confidential': 'Конфиденциальный процесс',
+
+  'uae.licensed': 'Лицензировано в ОАЭ',
+  'uae.licensedDetail': '— Консалтинг · Иммиграция · Управление бизнесом · HR',
+
+  'pillars.eyebrow': 'Чем мы занимаемся',
+  'pillars.heading': 'Два направления, одна ответственная команда',
+  'pillars.residency.title': 'Резидентство и иммиграция',
+  'pillars.residency.desc': 'Золотые визы, инвесторские, рабочие и семейные — под ключ.',
+  'pillars.business.title': 'Бизнес и корпоративные услуги',
+  'pillars.business.desc': 'Регистрация компаний, корпоративная структура и HR-консалтинг по всем ОАЭ.',
+
+  'quick.eyebrow': 'Чем мы можем помочь',
+  'quick.heading': 'Быстрые услуги поддержки',
+  'quick.visa': 'Визы и резидентство',
+  'quick.business': 'Открытие бизнеса',
+  'quick.citizenship': 'Второе гражданство',
+  'quick.legal': 'Корпоративные и юридические',
+  'quick.patent': 'Патенты и товарные знаки',
+  'quick.finance': 'Финансы и страхование',
+  'quick.hr': 'HR и управление',
+  'quick.property': 'Недвижимость и туризм',
+
+  'power.heading': 'Усильте свой следующий шаг за рубежом',
+  'power.sub': 'Вместе с Songbird Consultancy',
+
+  'process.eyebrow': 'Как это работает',
+  'process.heading': 'Мы проведём вас через 4 простых шага',
+
+  'accred.eyebrow': 'Доверие и соответствие',
+  'reach.eyebrow': 'Глобальный охват',
+
+  'combined.eyebrow': 'Бесплатная оценка',
+  'combined.heading': 'Подходите ли вы? Свяжитесь с нами',
+  'combined.subline': 'Ответьте на четыре быстрых вопроса для персонального маршрута — или свяжитесь с нами напрямую. Мы отвечаем в течение 24 часов.',
+  'combined.prefer': 'Хотите поговорить сейчас?',
+  'combined.preferSub': 'Свяжитесь с консультантом Songbird напрямую.',
+
+  'reviews.eyebrow': 'Отзывы',
+  'reviews.heading': 'Отзывы в Google',
+  'reviews.subline': 'Мы гордимся вашими отзывами.',
+  'reviews.soon': 'Отзывы клиентов скоро появятся.',
+
+  'final.eyebrow': 'Сделайте первый шаг',
+  'final.heading': 'Готовы начать свой путь?',
+  'final.body': 'Свяжитесь с консультантом Songbird сегодня и сделайте первый шаг к своему глобальному будущему — с полной уверенностью.',
+  'final.whatsapp': 'Консультация в WhatsApp',
+
+  'book.eyebrow': 'Бесплатная консультация',
+
+  'form.fullName': 'Полное имя *',
+  'form.phoneWhatsapp': 'Телефон / WhatsApp *',
+  'form.email': 'Эл. почта',
+  'form.destinationPlaceholder': 'Интересующее направление…',
+  'form.briefMessage': 'Краткое сообщение',
+  'form.name': 'Полное имя',
+  'form.phone': 'Телефон / WhatsApp',
+  'form.message': 'Сообщение',
+  'form.submit': 'Отправить',
+
+  'footer.stayInformed': 'Будьте в курсе',
+  'footer.stayInformedSub': 'Новости иммиграции ОАЭ и экспертные материалы прямо на вашу почту.',
+  'footer.subscribed': 'Спасибо — вы подписаны.',
+  'footer.emailPlaceholder': 'Ваш адрес эл. почты',
+  'footer.brandLine': 'Ведущая многопрофильная консалтинговая фирма Дубая — ваш путь к глобальному резидентству, сделанный правильно.',
+  'footer.ourServices': 'Наши услуги',
+  'footer.quickLinks': 'Быстрые ссылки',
+  'footer.contactUs': 'Связаться с нами',
+  'footer.link.home': 'Главная',
+  'footer.link.about': 'О нас',
+  'footer.link.process': 'Наш процесс',
+  'footer.link.testimonials': 'Отзывы',
+  'footer.link.insights': 'Аналитика',
+  'footer.link.contact': 'Контакты',
+  'footer.link.privacy': 'Политика конфиденциальности',
+  'footer.terms': 'Условия использования',
+  'footer.rights': 'Все права защищены. Лицензировано в ОАЭ.',
+
+  'contact.hours': 'Часы работы',
+  'contact.followUs': 'Мы в соцсетях',
+}
 export default ru

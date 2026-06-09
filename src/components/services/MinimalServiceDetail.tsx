@@ -31,7 +31,7 @@ export function MinimalServiceDetail({ service }: { service: ServiceDoc }) {
                 {service.heroImage ? (
                   <Image src={service.heroImage} alt={service.frontTitle} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
                 ) : (
-                  <p className="text-cream/20 text-[13px] font-sans text-center px-8">Service image<br />Add via Admin → Services</p>
+                  <p className="text-cream/20 text-[13px] font-sans text-center px-8">Service image</p>
                 )}
               </div>
             </div>

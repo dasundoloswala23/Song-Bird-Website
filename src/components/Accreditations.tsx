@@ -5,27 +5,19 @@ import Image from 'next/image'
 import { EyebrowTag } from './EyebrowTag'
 import type { AccreditationsDoc } from '@/types/firestore'
 
-const DEFAULT: AccreditationsDoc = {
-  title: 'Accreditations & Licenses',
-  subline: 'Recognised and regulated by leading professional bodies.',
-  items: [
-    { name: 'MARN',  logo: '' },
-    { name: 'ICCRC', logo: '' },
-    { name: 'BASL',  logo: '' },
-    { name: 'IBA',   logo: '' },
-  ],
-}
-
 export function Accreditations({ fallback }: { fallback?: AccreditationsDoc | null }) {
-  const [content, setContent] = useState<AccreditationsDoc>(fallback ?? DEFAULT)
+  const [content, setContent] = useState<AccreditationsDoc | null>(fallback ?? null)
 
   useEffect(() => {
     import('@/lib/firestorePublic').then(({ getAccreditations }) =>
-      getAccreditations().then(d => { if (d) setContent(d) })
+      getAccreditations().then(d => setContent(d))
     )
   }, [])
 
-  const items = content.items?.length ? content.items : DEFAULT.items
+  const items = content?.items ?? []
+
+  // Hide the entire section when there are no accreditations to show.
+  if (!content || items.length === 0) return null
 
   return (
     <section className="py-20 bg-surface-muted border-y border-hairline" aria-labelledby="accreditations-heading">

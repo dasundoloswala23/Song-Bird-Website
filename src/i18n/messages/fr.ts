@@ -1,5 +1,121 @@
-// French — translation stub. Keys not present fall back to English.
+// French translations. Missing keys fall back to English automatically.
 import type { MessageKey } from './en'
 
-const fr: Partial<Record<MessageKey, string>> = {}
+const fr: Partial<Record<MessageKey, string>> = {
+  'nav.home': 'Accueil',
+  'nav.services': 'Services',
+  'nav.destinations': 'Destinations',
+  'nav.about': 'À propos',
+  'nav.collaborations': 'Collaborations',
+  'nav.insights': 'Actualités',
+  'nav.contact': 'Contact',
+
+  'brand.slogan': 'Élevez Votre Statut',
+
+  'cta.bookConsultation': 'Réserver une consultation',
+  'cta.bookFreeConsultation': 'Réservez votre consultation gratuite',
+  'cta.reserveConsultation': 'Réservez votre consultation',
+  'cta.connectWhatsApp': 'Contactez-nous sur WhatsApp',
+  'cta.freeEligibility': 'Vérification d’éligibilité gratuite →',
+  'cta.getStarted': 'Commencer',
+  'cta.learnMore': 'En savoir plus',
+  'cta.contactUs': 'Contactez-nous',
+  'cta.viewAllServices': 'Voir tous les services',
+  'cta.whatsappNow': 'WhatsApp maintenant',
+  'cta.subscribe': 'S’abonner',
+
+  'lead.reviewLine': 'Faites évaluer au mieux votre dossier — laissez-nous vous aider.',
+  'lead.responseLine': 'Nous vous répondrons sous 24 heures.',
+  'lead.thankYou': 'Merci !',
+
+  'hero.eyebrow': 'Agréé aux EAU · Immigration et mobilité internationale',
+  'hero.slide1': 'Soutenir votre investissement d’entreprise et votre migration à travers les EAU',
+  'hero.slide2': 'Des services de conseil juridique fiables et professionnels pour vous et vos entreprises à l’étranger',
+  'hero.slide3': 'Votre porte d’entrée vers la vie aux Émirats',
+  'hero.slide4': 'Vivez votre histoire aux EAU',
+  'hero.slide5': 'Dynamisez et inspirez votre prochaine étape à l’étranger',
+  'hero.trust.licensed': 'Agréé aux EAU',
+  'hero.trust.counsel': 'Conseil réglementé',
+  'hero.trust.success': '95 % de taux de réussite',
+  'hero.trust.confidential': 'Processus confidentiel',
+
+  'uae.licensed': 'Agréé aux EAU',
+  'uae.licensedDetail': '— Conseil · Immigration · Gestion d’entreprise · RH',
+
+  'pillars.eyebrow': 'Ce que nous faisons',
+  'pillars.heading': 'Deux piliers, une équipe responsable',
+  'pillars.residency.title': 'Résidence et immigration',
+  'pillars.residency.desc': 'Visas dorés, résidence investisseur, travail et famille — gérés de bout en bout.',
+  'pillars.business.title': 'Entreprise et corporate',
+  'pillars.business.desc': 'Création de société, structuration corporate et conseil RH à travers les EAU.',
+
+  'quick.eyebrow': 'Comment nous pouvons aider',
+  'quick.heading': 'Services d’assistance rapide',
+  'quick.visa': 'Visa et résidence',
+  'quick.business': 'Création d’entreprise',
+  'quick.citizenship': 'Seconde citoyenneté',
+  'quick.legal': 'Corporate et juridique',
+  'quick.patent': 'Brevet et marque',
+  'quick.finance': 'Finance et assurance',
+  'quick.hr': 'RH et gestion',
+  'quick.property': 'Immobilier et tourisme',
+
+  'power.heading': 'Dynamisez votre prochaine étape à l’étranger',
+  'power.sub': 'Avec Songbird Consultancy',
+
+  'process.eyebrow': 'Comment ça marche',
+  'process.heading': 'Nous vous guidons en 4 étapes simples',
+
+  'accred.eyebrow': 'Confiance et conformité',
+  'reach.eyebrow': 'Présence mondiale',
+
+  'combined.eyebrow': 'Évaluation gratuite',
+  'combined.heading': 'Êtes-vous éligible ? Contactez-nous',
+  'combined.subline': 'Répondez à quatre questions rapides pour un parcours personnalisé — ou contactez-nous directement. Nous répondons sous 24 heures.',
+  'combined.prefer': 'Vous préférez parler maintenant ?',
+  'combined.preferSub': 'Échangez directement avec un conseiller Songbird.',
+
+  'reviews.eyebrow': 'Avis',
+  'reviews.heading': 'Avis sur Google',
+  'reviews.subline': 'Nous sommes fiers de partager vos compliments.',
+  'reviews.soon': 'Avis clients bientôt disponibles.',
+
+  'final.eyebrow': 'Faites le premier pas',
+  'final.heading': 'Prêt à commencer votre parcours ?',
+  'final.body': 'Contactez dès aujourd’hui un conseiller Songbird et faites le premier pas vers votre avenir international — en toute confiance.',
+  'final.whatsapp': 'Consultation WhatsApp',
+
+  'book.eyebrow': 'Consultation gratuite',
+
+  'form.fullName': 'Nom complet *',
+  'form.phoneWhatsapp': 'Téléphone / WhatsApp *',
+  'form.email': 'E-mail',
+  'form.destinationPlaceholder': 'Destination souhaitée…',
+  'form.briefMessage': 'Message bref',
+  'form.name': 'Nom complet',
+  'form.phone': 'Téléphone / WhatsApp',
+  'form.message': 'Message',
+  'form.submit': 'Envoyer',
+
+  'footer.stayInformed': 'Restez informé',
+  'footer.stayInformedSub': 'Actualités sur l’immigration aux EAU et conseils, directement dans votre boîte mail.',
+  'footer.subscribed': 'Merci — vous êtes abonné.',
+  'footer.emailPlaceholder': 'Votre adresse e-mail',
+  'footer.brandLine': 'Le premier cabinet de conseil multiservices de Dubaï — votre porte d’entrée vers la résidence mondiale, bien faite.',
+  'footer.ourServices': 'Nos services',
+  'footer.quickLinks': 'Liens rapides',
+  'footer.contactUs': 'Contactez-nous',
+  'footer.link.home': 'Accueil',
+  'footer.link.about': 'À propos',
+  'footer.link.process': 'Notre processus',
+  'footer.link.testimonials': 'Témoignages',
+  'footer.link.insights': 'Actualités',
+  'footer.link.contact': 'Contact',
+  'footer.link.privacy': 'Politique de confidentialité',
+  'footer.terms': 'Conditions d’utilisation',
+  'footer.rights': 'Tous droits réservés. Agréé aux EAU.',
+
+  'contact.hours': 'Heures d’ouverture',
+  'contact.followUs': 'Suivez-nous',
+}
 export default fr

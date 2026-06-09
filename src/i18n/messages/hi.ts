@@ -1,6 +1,121 @@
-// Hindi — translation stub. Add keys from `en.ts` here as they are translated;
-// any key not present falls back to English automatically.
+// Hindi translations. Missing keys fall back to English automatically.
 import type { MessageKey } from './en'
 
-const hi: Partial<Record<MessageKey, string>> = {}
+const hi: Partial<Record<MessageKey, string>> = {
+  'nav.home': 'होम',
+  'nav.services': 'सेवाएँ',
+  'nav.destinations': 'गंतव्य',
+  'nav.about': 'हमारे बारे में',
+  'nav.collaborations': 'सहयोग',
+  'nav.insights': 'जानकारी',
+  'nav.contact': 'संपर्क',
+
+  'brand.slogan': 'अपना दर्जा बढ़ाएँ',
+
+  'cta.bookConsultation': 'परामर्श बुक करें',
+  'cta.bookFreeConsultation': 'अपना निःशुल्क परामर्श बुक करें',
+  'cta.reserveConsultation': 'अपना परामर्श आरक्षित करें',
+  'cta.connectWhatsApp': 'व्हाट्सएप के ज़रिए जुड़ें',
+  'cta.freeEligibility': 'निःशुल्क पात्रता जाँच →',
+  'cta.getStarted': 'शुरू करें',
+  'cta.learnMore': 'और जानें',
+  'cta.contactUs': 'संपर्क करें',
+  'cta.viewAllServices': 'सभी सेवाएँ देखें',
+  'cta.whatsappNow': 'अभी व्हाट्सएप करें',
+  'cta.subscribe': 'सब्सक्राइब करें',
+
+  'lead.reviewLine': 'अपने आवेदन की सर्वोत्तम समीक्षा करें — हम आपकी सहायता करेंगे।',
+  'lead.responseLine': 'हम 24 घंटों के भीतर आपको जवाब देंगे।',
+  'lead.thankYou': 'धन्यवाद!',
+
+  'hero.eyebrow': 'यूएई-लाइसेंस प्राप्त · आव्रजन और वैश्विक गतिशीलता',
+  'hero.slide1': 'यूएई भर में आपके व्यापार निवेश और प्रवासन का समर्थन',
+  'hero.slide2': 'आपके और आपके विदेशी व्यवसायों के लिए विश्वसनीय और पेशेवर कानूनी सलाहकार सेवाएँ',
+  'hero.slide3': 'अमीरात में जीवन का आपका प्रवेश द्वार',
+  'hero.slide4': 'यूएई में अपनी कहानी जिएँ',
+  'hero.slide5': 'विदेश में अपने अगले कदम को सशक्त और प्रेरित करें',
+  'hero.trust.licensed': 'यूएई लाइसेंस प्राप्त',
+  'hero.trust.counsel': 'विनियमित परामर्श',
+  'hero.trust.success': '95% सफलता दर',
+  'hero.trust.confidential': 'गोपनीय प्रक्रिया',
+
+  'uae.licensed': 'यूएई लाइसेंस प्राप्त',
+  'uae.licensedDetail': '— परामर्श · आव्रजन · व्यापार प्रबंधन · एचआर',
+
+  'pillars.eyebrow': 'हम क्या करते हैं',
+  'pillars.heading': 'दो स्तंभ, एक जवाबदेह टीम',
+  'pillars.residency.title': 'निवास और आव्रजन',
+  'pillars.residency.desc': 'गोल्डन वीज़ा, निवेशक, कार्य और पारिवारिक निवास — संपूर्ण प्रबंधन।',
+  'pillars.business.title': 'व्यापार और कॉर्पोरेट',
+  'pillars.business.desc': 'यूएई भर में कंपनी गठन, कॉर्पोरेट संरचना और एचआर सलाह।',
+
+  'quick.eyebrow': 'हम कैसे मदद कर सकते हैं',
+  'quick.heading': 'त्वरित सहायता सेवाएँ',
+  'quick.visa': 'वीज़ा और निवास',
+  'quick.business': 'व्यापार स्थापना',
+  'quick.citizenship': 'दूसरी नागरिकता',
+  'quick.legal': 'कॉर्पोरेट और कानूनी',
+  'quick.patent': 'पेटेंट और ट्रेडमार्क',
+  'quick.finance': 'वित्त और बीमा',
+  'quick.hr': 'एचआर और प्रबंधन',
+  'quick.property': 'संपत्ति और पर्यटन',
+
+  'power.heading': 'विदेश में अपने अगले कदम को सशक्त बनाएं',
+  'power.sub': 'सॉन्गबर्ड कंसल्टेंसी के साथ',
+
+  'process.eyebrow': 'यह कैसे काम करता है',
+  'process.heading': 'हम आपको 4 सरल चरणों में मार्गदर्शन करते हैं',
+
+  'accred.eyebrow': 'विश्वास और अनुपालन',
+  'reach.eyebrow': 'वैश्विक पहुँच',
+
+  'combined.eyebrow': 'निःशुल्क मूल्यांकन',
+  'combined.heading': 'क्या आप पात्र हैं? हमसे जुड़ें',
+  'combined.subline': 'व्यक्तिगत मार्ग के लिए चार त्वरित प्रश्नों के उत्तर दें — या सीधे हमसे संपर्क करें। हम 24 घंटों में जवाब देते हैं।',
+  'combined.prefer': 'अभी बात करना चाहते हैं?',
+  'combined.preferSub': 'सीधे किसी सॉन्गबर्ड सलाहकार से जुड़ें।',
+
+  'reviews.eyebrow': 'समीक्षाएँ',
+  'reviews.heading': 'गूगल पर समीक्षा करें',
+  'reviews.subline': 'हमें आपकी प्रशंसा साझा करने पर गर्व है।',
+  'reviews.soon': 'ग्राहक समीक्षाएँ जल्द आ रही हैं।',
+
+  'final.eyebrow': 'पहला कदम उठाएं',
+  'final.heading': 'अपनी यात्रा शुरू करने के लिए तैयार हैं?',
+  'final.body': 'आज ही किसी सॉन्गबर्ड सलाहकार से जुड़ें और पूरे विश्वास के साथ अपने वैश्विक भविष्य की ओर पहला कदम उठाएं।',
+  'final.whatsapp': 'व्हाट्सएप परामर्श',
+
+  'book.eyebrow': 'निःशुल्क परामर्श',
+
+  'form.fullName': 'पूरा नाम *',
+  'form.phoneWhatsapp': 'फ़ोन / व्हाट्सएप *',
+  'form.email': 'ईमेल',
+  'form.destinationPlaceholder': 'रुचि का गंतव्य…',
+  'form.briefMessage': 'संक्षिप्त संदेश',
+  'form.name': 'पूरा नाम',
+  'form.phone': 'फ़ोन / व्हाट्सएप',
+  'form.message': 'संदेश',
+  'form.submit': 'सबमिट करें',
+
+  'footer.stayInformed': 'सूचित रहें',
+  'footer.stayInformedSub': 'यूएई आव्रजन अपडेट और सलाहकार जानकारी, सीधे आपके इनबॉक्स में।',
+  'footer.subscribed': 'धन्यवाद — आपने सब्सक्राइब कर लिया है।',
+  'footer.emailPlaceholder': 'आपका ईमेल पता',
+  'footer.brandLine': 'दुबई की प्रमुख बहु-सेवा सलाहकार फर्म — वैश्विक निवास के लिए आपका प्रवेश द्वार, सही तरीके से।',
+  'footer.ourServices': 'हमारी सेवाएँ',
+  'footer.quickLinks': 'त्वरित लिंक',
+  'footer.contactUs': 'संपर्क करें',
+  'footer.link.home': 'होम',
+  'footer.link.about': 'हमारे बारे में',
+  'footer.link.process': 'हमारी प्रक्रिया',
+  'footer.link.testimonials': 'प्रशंसापत्र',
+  'footer.link.insights': 'जानकारी',
+  'footer.link.contact': 'संपर्क',
+  'footer.link.privacy': 'गोपनीयता नीति',
+  'footer.terms': 'सेवा की शर्तें',
+  'footer.rights': 'सर्वाधिकार सुरक्षित। यूएई लाइसेंस प्राप्त।',
+
+  'contact.hours': 'खुलने का समय',
+  'contact.followUs': 'हमें फॉलो करें',
+}
 export default hi

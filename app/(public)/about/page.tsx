@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { CheckCircle2 } from 'lucide-react'
 import { EyebrowTag } from '@/components/EyebrowTag'
 import { FinalCTA } from '@/components/FinalCTA'
-import { getWhyChooseUs } from '@/lib/firestorePublic'
+import { getWhyChooseUs, getWelcome } from '@/lib/firestorePublic'
 
 export const dynamic = 'force-static'
 
@@ -34,10 +34,11 @@ const RELATED_EXPERTISE = [
 ]
 
 export default async function AboutPage() {
-  const whyContent = await getWhyChooseUs()
+  const [whyContent, welcome] = await Promise.all([getWhyChooseUs(), getWelcome()])
   const image    = whyContent?.image    ?? ''
   const badge    = whyContent?.badge
   const features = whyContent?.features ?? []
+  const welcomeParas = (welcome?.body ?? '').split(/\n\s*\n/).map(p => p.trim()).filter(Boolean)
 
   return (
     <>
@@ -66,7 +67,7 @@ export default async function AboutPage() {
                   <Image src={image} alt="Songbird office" fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
                 ) : (
                   <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-navy via-navy-card to-teal/5">
-                    <p className="text-cream/30 text-[13px] font-sans text-center px-8">Office desk scene with Songbird logo<br />(AI placeholder — set via Admin → Why Choose Us)</p>
+                    <p className="text-cream/30 text-[13px] font-sans text-center px-8">Office desk scene with Songbird logo</p>
                   </div>
                 )}
               </div>
@@ -89,17 +90,26 @@ export default async function AboutPage() {
               <h2 className="font-serif font-semibold text-[36px] md:text-[44px] leading-tight text-ink mb-4">
                 Built on trust, powered by expertise
               </h2>
+              {welcome?.slogan && (
+                <p className="font-sans text-[13px] uppercase tracking-[0.24em] text-gold-deep mb-4">{welcome.slogan}</p>
+              )}
               <div className="w-12 h-px bg-gold mb-6" />
               <div className="space-y-4 text-[15px] font-sans text-slate leading-relaxed mb-10">
-                <p>
-                  We, Songbird Consultancy, specialize in providing tailored consultations with a deep understanding of UAE and international laws — guiding individuals and businesses through every stage of their journey.
-                </p>
-                <p>
-                  Our work spans Residency &amp; Immigration, Foreign Investments, Second Citizenships, Corporate &amp; Commercial matters, Patent &amp; Trademark, Finance &amp; Insurance, Property &amp; Tourism, and Employment, HR &amp; Management Consultancy.
-                </p>
-                <p>
-                  With a multilingual team and proven experience across multiple jurisdictions, we take responsibility for your outcome — delivering full-spectrum advisory under one roof, with transparency and discretion.
-                </p>
+                {welcomeParas.length > 0 ? (
+                  welcomeParas.map((p, i) => <p key={i}>{p}</p>)
+                ) : (
+                  <>
+                    <p>
+                      We, Songbird Consultancy, specialize in providing tailored consultations with a deep understanding of UAE and international laws — guiding individuals and businesses through every stage of their journey.
+                    </p>
+                    <p>
+                      Our work spans Residency &amp; Immigration, Foreign Investments, Second Citizenships, Corporate &amp; Commercial matters, Patent &amp; Trademark, Finance &amp; Insurance, Property &amp; Tourism, and Employment, HR &amp; Management Consultancy.
+                    </p>
+                    <p>
+                      With a multilingual team and proven experience across multiple jurisdictions, we take responsibility for your outcome — delivering full-spectrum advisory under one roof, with transparency and discretion.
+                    </p>
+                  </>
+                )}
               </div>
 
               <Link
