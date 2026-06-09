@@ -5,7 +5,7 @@ import { EyebrowTag } from './EyebrowTag'
 import { ApplicationCTA } from './ApplicationCTA'
 import type { ProcessSectionDoc } from '@/types/firestore'
 
-const NODE_GRADIENT = 'linear-gradient(135deg, #1FA968 0%, #0E5C54 50%, #0A3A52 100%)'
+const NODE_GRADIENT = 'linear-gradient(135deg, #22B877 0%, #0E9C6E 55%, #0E7C5A 100%)'
 const LINE_GRADIENT_H = 'linear-gradient(90deg, transparent 2%, rgba(31,169,104,0.3) 10%, rgba(94,234,138,0.3) 90%, transparent 98%)'
 const LINE_GRADIENT_V = 'linear-gradient(180deg, rgba(31,169,104,0.3) 0%, rgba(94,234,138,0.3) 100%)'
 
@@ -17,7 +17,7 @@ export function ProcessSection({ content }: Props) {
   if (!content || !content.steps || content.steps.length === 0) return null
 
   const steps = content.steps
-  const sectionTitle = content.title || 'Our Process'
+  const sectionTitle = content.title || 'We Guide You Through 4 Simple Steps'
   const stepNums = steps.map((_, i) => String(i + 1).padStart(2, '0'))
 
   return (
@@ -48,10 +48,10 @@ export function ProcessSection({ content }: Props) {
           </div>
         </div>
 
-        {/* Mobile: vertical timeline */}
-        <div className="md:hidden relative mb-14 pl-8">
+        {/* Mobile: vertical timeline — circle column centred on the line */}
+        <div className="md:hidden relative mb-14">
           <div
-            className="absolute top-0 bottom-0 left-[23px] w-px"
+            className="absolute top-3 bottom-3 left-5 w-px -translate-x-1/2"
             style={{ background: LINE_GRADIENT_V }}
             aria-hidden="true"
           />
@@ -63,7 +63,7 @@ export function ProcessSection({ content }: Props) {
         </div>
 
         <div className="text-center">
-          <ApplicationCTA />
+          <ApplicationCTA label="Reserve Your Consultation" />
         </div>
       </div>
     </section>
@@ -117,16 +117,16 @@ function MobileStepCard({ step, num }: { step: { title: string; description: str
   return (
     <div
       ref={ref}
-      className="relative flex gap-5 transition-all duration-500"
+      className="relative flex gap-4 items-start transition-all duration-500"
       style={{ opacity: visible ? 1 : 0, transform: visible ? 'translateX(0)' : 'translateX(-12px)', transitionDelay: '100ms' }}
     >
       <div
-        className="absolute -left-8 top-0 z-10 w-10 h-10 rounded-full flex items-center justify-center ring-4 ring-teal/10 shrink-0"
+        className="relative z-10 w-10 h-10 rounded-full flex items-center justify-center ring-4 ring-teal/10 shrink-0"
         style={{ background: NODE_GRADIENT }}
       >
         <span className="font-serif font-semibold text-[14px] text-white select-none">{num}</span>
       </div>
-      <div className="pt-1">
+      <div className="pt-1 flex-1 min-w-0">
         <h3 className="font-serif font-semibold text-[17px] text-ink mb-1.5 leading-snug">{step.title}</h3>
         <p className="text-[13px] font-sans text-slate leading-relaxed">{step.description}</p>
       </div>

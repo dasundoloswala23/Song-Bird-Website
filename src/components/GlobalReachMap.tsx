@@ -3,23 +3,23 @@
 import React, { useEffect, useState, useRef } from 'react'
 import type { GlobalReachDoc, GlobalReachPin } from '@/types/firestore'
 
-const BRAND_GRADIENT = 'linear-gradient(135deg, #1FA968 0%, #0E5C54 50%, #0A3A52 100%)'
+const BRAND_GRADIENT = 'linear-gradient(135deg, #22B877 0%, #0E9C6E 55%, #0E7C5A 100%)'
 
-// Default pins if no CMS data
+// Default pins if no CMS data — regions Songbird serves
 const DEFAULT_PINS: GlobalReachPin[] = [
   { label: 'Dubai',       lat: 25.2,  lng: 55.3  },
   { label: 'Abu Dhabi',   lat: 24.5,  lng: 54.4  },
-  { label: 'London',      lat: 51.5,  lng: -0.12 },
-  { label: 'New York',    lat: 40.7,  lng: -74.0 },
-  { label: 'Toronto',     lat: 43.7,  lng: -79.4 },
-  { label: 'Sydney',      lat: -33.9, lng: 151.2 },
+  { label: 'Sharjah',     lat: 25.35, lng: 55.4  },
+  { label: 'Riyadh',      lat: 24.7,  lng: 46.7  },
+  { label: 'Colombo',     lat: 6.93,  lng: 79.85 },
+  { label: 'New Delhi',   lat: 28.6,  lng: 77.2  },
+  { label: 'Manila',      lat: 14.6,  lng: 121.0 },
   { label: 'Singapore',   lat: 1.35,  lng: 103.8 },
-  { label: 'Zurich',      lat: 47.4,  lng: 8.5   },
 ]
 
 const DEFAULT_CONTENT: GlobalReachDoc = {
-  headline: 'We serve clients in 15+ countries',
-  subline: 'Our network spans every major immigration hub, giving you local expertise with global reach.',
+  headline: 'We serve clients across the UAE, South Asia and beyond',
+  subline: 'From the GCC to Sri Lanka, India and the wider Asian region — local expertise with international reach.',
   pins: DEFAULT_PINS,
 }
 

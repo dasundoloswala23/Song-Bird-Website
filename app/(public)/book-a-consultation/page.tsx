@@ -14,7 +14,7 @@ const BENEFITS = [
   'Complimentary initial session',
   'Choose your session length (15–60 min)',
   'Speak with a licensed advisor',
-  'No obligation, fully confidential',
+  'Free and fully confidential',
 ]
 
 export default function BookConsultationPage() {
@@ -27,7 +27,7 @@ export default function BookConsultationPage() {
             Book a Consultation
           </h1>
           <p className="text-[16px] font-sans text-cream/60 max-w-xl mx-auto">
-            Select a date and time that works for you. Our advisors are available Sunday – Thursday, 9 am – 6 pm GST.
+            Select a date and time that works for you. Our advisors are available Monday – Friday 10am – 7pm, and weekends 8am – 11pm.
           </p>
         </div>
       </section>

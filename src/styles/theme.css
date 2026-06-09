@@ -2,23 +2,30 @@
 
 :root {
   /* ── Songbird colour system (green luxury / gold accent) ── */
-  --navy:         #15402E;
-  --navy-deep:    #0F3225;
-  --navy-card:    #1A4A35;
+  /* ── Brighter emerald / teal palette (Round 2 refresh) ── */
+  --navy:         #0E6B57;   /* primary dark — brighter teal-green */
+  --navy-deep:    #0A5042;
+  --navy-card:    #11705C;
   --gold:         #C9A227;
   --gold-deep:    #A8850F;
   --gold-brushed: #E6D9A8;
-  --cream:        #FAF8F1;
-  --ink:          #16211C;
-  --slate:        #4A6B5E;
+  --cream:        #F1FAF4;   /* fresh mint-cream page background */
+  --ink:          #12281F;
+  --slate:        #46715F;
   --cloud:        #A7D2B6;
   --whatsapp:     #25D366;
-  --teal:         #0E5C54;
+  --teal:         #0E7C5A;
   --teal-end:     #5EEA8A;
   --emerald:      #1FA968;
   --mint:         #5EEA8A;
-  --green-deep:   #0F3225;
-  --brand-gradient: linear-gradient(135deg, #1FA968 0%, #0E5C54 50%, #0A3A52 100%);
+  --green-deep:   #0A5042;
+  --brand-gradient: linear-gradient(135deg, #22B877 0%, #0E9C6E 55%, #0E7C5A 100%);
+
+  /* ── Light surfaces ── */
+  --surface:        #FFFFFF;
+  --surface-soft:   var(--cream);
+  --surface-muted:  #E7F5EC;
+  --hairline:       #DCEBE1;
 
   /* ── shadcn/ui system variables ── */
   --font-size: 16px;
@@ -63,6 +70,10 @@
   --color-emerald:      var(--emerald);
   --color-mint:         var(--mint);
   --color-green-deep:   var(--green-deep);
+  --color-surface:      var(--surface);
+  --color-surface-soft: var(--surface-soft);
+  --color-surface-muted:var(--surface-muted);
+  --color-hairline:     var(--hairline);
 
   /* shadcn mappings */
   --color-background:         var(--background);

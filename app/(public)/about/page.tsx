@@ -9,15 +9,28 @@ import { getWhyChooseUs } from '@/lib/firestorePublic'
 export const dynamic = 'force-static'
 
 export const metadata: Metadata = {
-  title: 'About Us — Songbird Consulting',
-  description: 'Songbird Consulting is a UAE-licensed immigration and business advisory firm headquartered in Dubai, serving clients across 15+ jurisdictions.',
+  title: 'About Us — Songbird Consultancy',
+  description: 'Songbird Consultancy is a UAE-licensed immigration and business advisory firm headquartered in Dubai, serving clients across 15+ jurisdictions.',
 }
 
 const VALUES = [
-  { title: 'Transparency', desc: 'No hidden fees. Every step, cost, and timeline laid out before we begin.' },
-  { title: 'Precision', desc: 'Meticulous preparation — every application reviewed multiple times before submission.' },
-  { title: 'Discretion', desc: 'Your personal and financial information stays private. Always.' },
-  { title: 'Accountability', desc: 'UAE-licensed and fully regulated. We stand behind every engagement.' },
+  { title: 'Customized Solutions', desc: 'Advice shaped around your goals, profile and timeline — never one-size-fits-all.' },
+  { title: 'Client Satisfaction', desc: 'Your outcome is our measure of success at every stage.' },
+  { title: 'Customized Pricing Structure', desc: 'Transparent, flexible pricing matched to the scope of your engagement.' },
+  { title: 'Expertise & Experience', desc: 'Over 15 years of combined professional experience across jurisdictions.' },
+  { title: 'Dedicated Support', desc: 'A responsive team that stays with you from first contact to final approval.' },
+  { title: 'Legally Authorized Advice', desc: 'UAE-licensed and fully regulated guidance you can rely on.' },
+]
+
+const RELATED_EXPERTISE = [
+  'Residency & Immigration',
+  'Foreign Investments',
+  'Second Citizenships',
+  'Corporate & Commercial',
+  'Patent & Trademark',
+  'Finance & Insurance',
+  'Property & Tourism',
+  'Employment, HR & Management Consultancy',
 ]
 
 export default async function AboutPage() {
@@ -33,7 +46,7 @@ export default async function AboutPage() {
         <div className="mx-auto px-6 md:px-12 max-w-4xl text-center">
           <EyebrowTag>Our Story</EyebrowTag>
           <h1 className="font-serif font-semibold text-[48px] md:text-[64px] leading-tight text-white mb-5">
-            About Songbird Consulting
+            About Songbird Consultancy
           </h1>
           <div className="mx-auto w-16 h-px bg-gold-brushed mb-6" />
           <p className="text-[17px] font-sans text-cream/65 max-w-2xl mx-auto leading-relaxed">
@@ -53,7 +66,7 @@ export default async function AboutPage() {
                   <Image src={image} alt="Songbird office" fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
                 ) : (
                   <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-navy via-navy-card to-teal/5">
-                    <p className="text-cream/20 text-[13px] font-sans text-center px-8">Office photo<br />(set via Admin → Why Choose Us)</p>
+                    <p className="text-cream/30 text-[13px] font-sans text-center px-8">Office desk scene with Songbird logo<br />(AI placeholder — set via Admin → Why Choose Us)</p>
                   </div>
                 )}
               </div>
@@ -76,23 +89,23 @@ export default async function AboutPage() {
               <h2 className="font-serif font-semibold text-[36px] md:text-[44px] leading-tight text-ink mb-4">
                 Built on trust, powered by expertise
               </h2>
-              <div className="w-12 h-px bg-gold-brushed mb-6" />
+              <div className="w-12 h-px bg-gold mb-6" />
               <div className="space-y-4 text-[15px] font-sans text-slate leading-relaxed mb-10">
                 <p>
-                  Songbird Consulting was founded with a clear purpose: to make global mobility seamless for those who have earned the right to choose where they live and build.
+                  We, Songbird Consultancy, specialize in providing tailored consultations with a deep understanding of UAE and international laws — guiding individuals and businesses through every stage of their journey.
                 </p>
                 <p>
-                  From UAE Golden Visas to investor pathways in Europe, North America, and beyond, our team of licensed advisors brings deep jurisdictional knowledge and genuine care to every engagement. We don't just process applications — we architect futures.
+                  Our work spans Residency &amp; Immigration, Foreign Investments, Second Citizenships, Corporate &amp; Commercial matters, Patent &amp; Trademark, Finance &amp; Insurance, Property &amp; Tourism, and Employment, HR &amp; Management Consultancy.
                 </p>
                 <p>
-                  Operating from our flagship Dubai office, we have guided thousands of clients through the complexities of immigration law, business formation, maritime regulation, and lifestyle advisory — always with transparency, precision, and discretion.
+                  With a multilingual team and proven experience across multiple jurisdictions, we take responsibility for your outcome — delivering full-spectrum advisory under one roof, with transparency and discretion.
                 </p>
               </div>
 
               <Link
                 href="/book-a-consultation"
                 className="inline-flex items-center gap-2 px-7 py-3.5 text-[14px] font-sans font-semibold uppercase tracking-[0.08em] text-white rounded-[6px] transition-all hover:-translate-y-px hover:shadow-[0_8px_24px_rgba(31,169,104,.4)]"
-                style={{ background: 'linear-gradient(135deg, #1FA968 0%, #0E5C54 50%, #0A3A52 100%)' }}
+                style={{ background: 'linear-gradient(135deg, #22B877 0%, #0E9C6E 55%, #0E7C5A 100%)' }}
               >
                 Book a Consultation
               </Link>
@@ -106,10 +119,13 @@ export default async function AboutPage() {
         <div className="mx-auto px-6 md:px-12 max-w-7xl">
           <div className="text-center mb-14">
             <EyebrowTag>What We Stand For</EyebrowTag>
-            <h2 className="font-serif font-semibold text-[38px] md:text-[48px] leading-tight text-white">Our Values</h2>
+            <h2 className="font-serif font-semibold text-[38px] md:text-[48px] leading-tight text-white">Our Core Values</h2>
             <div className="mx-auto mt-4 w-16 h-px bg-gold-brushed" />
+            <p className="mt-5 text-[15px] font-sans text-cream/60 max-w-2xl mx-auto">
+              Providing customized consultations with a deep understanding of UAE and international laws.
+            </p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {VALUES.map(v => (
               <div key={v.title} className="p-6 rounded-xl border border-gold-brushed/15 bg-navy-card hover:border-gold-brushed/30 transition-colors">
                 <div className="w-10 h-10 rounded-full flex items-center justify-center mb-4 bg-teal/15">
@@ -146,6 +162,29 @@ export default async function AboutPage() {
           </div>
         </section>
       )}
+
+      {/* Related Expertise */}
+      <section className="py-24 bg-surface-soft border-t border-hairline">
+        <div className="mx-auto px-6 md:px-12 max-w-5xl">
+          <div className="text-center mb-12">
+            <EyebrowTag>Our Practice Areas</EyebrowTag>
+            <h2 className="font-serif font-semibold text-[34px] md:text-[44px] leading-tight text-ink">Related Expertise</h2>
+            <div className="mx-auto mt-4 w-16 h-px bg-gold" />
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {RELATED_EXPERTISE.map(area => (
+              <Link
+                key={area}
+                href="/services"
+                className="flex items-center gap-3 p-5 rounded-xl bg-white border border-hairline hover:border-emerald/40 hover:-translate-y-0.5 transition-all"
+              >
+                <CheckCircle2 className="w-5 h-5 text-emerald shrink-0" />
+                <span className="text-[14px] font-sans font-medium text-ink">{area}</span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
 
       <FinalCTA />
     </>

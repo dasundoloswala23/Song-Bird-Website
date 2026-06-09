@@ -88,11 +88,13 @@ export function ConsultationModal() {
 
               <p className="text-[10px] font-sans font-semibold uppercase tracking-[0.22em] text-gold-brushed mb-1">
                 <span className="inline-block w-5 h-px bg-gold-brushed align-middle mr-2" />
-                No Obligation
-              </p>
-              <h2 id="consultation-title" className="font-serif font-semibold text-[28px] leading-tight text-white mb-6">
                 Free Consultation
+              </p>
+              <h2 id="consultation-title" className="font-serif font-semibold text-[28px] leading-tight text-white mb-2">
+                Book Your Free Consultation
               </h2>
+              <p className="text-[14px] font-sans text-cream/70 mb-1">Make the best review of your application — let’s assist you.</p>
+              <p className="text-[12px] font-sans text-gold-brushed mb-6">We will respond to you within 24 hours.</p>
 
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
                 <Field label="Full Name *" error={errors.name?.message}>
@@ -144,7 +146,7 @@ export function ConsultationModal() {
                   type="submit"
                   disabled={isSubmitting}
                   className="w-full mt-2 flex items-center justify-center gap-2 py-3.5 text-white disabled:opacity-60 text-[13px] font-sans font-semibold uppercase tracking-[0.08em] rounded-[6px] transition-all hover:-translate-y-px hover:shadow-[0_8px_24px_rgba(31,169,104,.4)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal"
-                  style={{ background: 'linear-gradient(95deg, #1FA968 0%, #0E5C54 100%)' }}
+                  style={{ background: 'linear-gradient(95deg, #22B877 0%, #0E7C5A 100%)' }}
                 >
                   {isSubmitting && <Loader2 className="w-4 h-4 animate-spin" />}
                   Request Free Consultation

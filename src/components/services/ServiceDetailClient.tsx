@@ -41,7 +41,7 @@ export function ServiceDetailClient({ slug, initial }: { slug: string; initial: 
       <div className="min-h-screen bg-navy flex flex-col items-center justify-center gap-6 px-4 text-center">
         <p className="font-serif text-[32px] text-white">Service not found</p>
         <p className="font-sans text-[15px] text-cream/60">This service page doesn&apos;t exist or may have been removed.</p>
-        <Link href="/services" className="inline-flex items-center gap-2 px-6 py-3 text-[13px] font-sans font-semibold uppercase tracking-[0.08em] text-white rounded-[6px]" style={{ background: 'linear-gradient(95deg, #1FA968 0%, #0E5C54 100%)' }}>
+        <Link href="/services" className="inline-flex items-center gap-2 px-6 py-3 text-[13px] font-sans font-semibold uppercase tracking-[0.08em] text-white rounded-[6px]" style={{ background: 'linear-gradient(95deg, #22B877 0%, #0E7C5A 100%)' }}>
           <ArrowLeft className="w-4 h-4" /> View All Services
         </Link>
       </div>

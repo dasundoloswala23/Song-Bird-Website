@@ -7,7 +7,7 @@ import { z } from 'zod'
 import { ChevronLeft, ChevronRight, CheckCircle2, Clock, Loader2 } from 'lucide-react'
 import type { SlotDoc } from '@/types/firestore'
 
-const BRAND_GRADIENT = 'linear-gradient(135deg, #1FA968 0%, #0E5C54 50%, #0A3A52 100%)'
+const BRAND_GRADIENT = 'linear-gradient(135deg, #22B877 0%, #0E9C6E 55%, #0E7C5A 100%)'
 
 const DURATIONS = [15, 30, 45, 60]
 const TIMEZONES = [

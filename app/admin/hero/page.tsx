@@ -2,12 +2,14 @@
 
 import React, { useEffect, useState } from 'react'
 import { Loader2, Save } from 'lucide-react'
-import type { HeroSettingsDoc } from '@/types/firestore'
+import type { HeroSettingsDoc, HeroSlide } from '@/types/firestore'
+import { ImageUpload } from '@/components/admin/ImageUpload'
+import { RepeatableList } from '@/components/admin/RepeatableList'
 
 const inp = 'w-full px-3.5 py-2.5 bg-navy/40 border border-gold-brushed/20 rounded-[6px] text-[13px] font-sans text-cream placeholder:text-cream/30 focus:outline-none focus:ring-2 focus:ring-gold-brushed/50'
 
 export default function AdminHeroPage() {
-  const [form, setForm] = useState<HeroSettingsDoc>({ heroVideoUrl: '', heroVideoFullUrl: '', heroImage: '' })
+  const [form, setForm] = useState<HeroSettingsDoc>({ heroVideoUrl: '', heroVideoFullUrl: '', heroImage: '', slides: [] })
   const [loading, setLoading] = useState(true)
   const [saving,  setSaving]  = useState(false)
   const [toast,   setToast]   = useState('')
@@ -40,6 +42,32 @@ export default function AdminHeroPage() {
       </p>
 
       <form onSubmit={onSubmit}>
+        {/* Hero slider (4 images + rotating taglines) */}
+        <div className="bg-navy-card border border-gold-brushed/15 rounded-xl p-6 mb-6">
+          <h2 className="font-serif font-semibold text-[18px] text-white mb-1">Hero Slider</h2>
+          <p className="text-[12px] font-sans text-cream/40 mb-5">
+            Add up to 6 slides. Each slide has a background image and a rotating tagline. Leave empty to use the built-in defaults.
+          </p>
+          <RepeatableList<HeroSlide>
+            label="Slides"
+            maxItems={6}
+            items={form.slides ?? []}
+            onChange={slides => setForm(f => ({ ...f, slides }))}
+            createEmpty={() => ({ image: '', tagline: '' })}
+            renderItem={(item, _i, onChange) => (
+              <div className="space-y-3 bg-navy/40 border border-gold-brushed/10 rounded-lg p-4">
+                <ImageUpload value={item.image} onChange={url => onChange({ ...item, image: url })} label="Slide Image" />
+                <input
+                  value={item.tagline}
+                  onChange={e => onChange({ ...item, tagline: e.target.value })}
+                  className={inp}
+                  placeholder="Slide tagline / headline"
+                />
+              </div>
+            )}
+          />
+        </div>
+
         <div className="bg-navy-card border border-gold-brushed/15 rounded-xl p-6 space-y-6">
           <div>
             <label className="block text-[11px] font-sans font-semibold uppercase tracking-[0.15em] text-gold-brushed mb-1.5">

@@ -3,25 +3,28 @@
 import React, { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
 import { CheckCircle, Play, X } from 'lucide-react'
-import { motion } from 'motion/react'
+import { motion, AnimatePresence } from 'motion/react'
 import { useConsultationModal } from '@/context/ConsultationModalContext'
 import Link from 'next/link'
-import type { HeroSettingsDoc } from '@/types/firestore'
+import type { HeroSettingsDoc, HeroSlide } from '@/types/firestore'
 
-const BRAND_GRADIENT = 'linear-gradient(135deg, #1FA968 0%, #0E5C54 50%, #0A3A52 100%)'
+const BRAND_GRADIENT = 'linear-gradient(135deg, #22B877 0%, #0E9C6E 55%, #0E7C5A 100%)'
 
 const TRUST_POINTS = [
   'UAE Licensed',
   'Regulated Counsel',
-  '98% Visa Success',
+  '95% Success Ratio',
   'Confidential Process',
 ]
 
-// Fallback Ken-Burns slide images (when no video configured)
-const FALLBACK_IMAGES = [
-  '/images/city1.png',
-  '/images/city2.png',
-  '/images/immigration.png',
+// Default slides — placeholder Dubai imagery + the 5 brief taglines (rotated).
+// The client will supply 4 final images; slides are editable from /admin/hero.
+const DEFAULT_SLIDES: HeroSlide[] = [
+  { image: '/images/city1.png',      tagline: 'Supporting Your Business Investment & Migration Across the UAE' },
+  { image: '/images/city2.png',      tagline: 'Reliable & Professional Legal Advisory Services for You & Your Businesses Abroad' },
+  { image: '/images/immigration.png', tagline: 'Your Gateway to Life in the Emirates' },
+  { image: '/images/city1.png',      tagline: 'Live Your Story in the UAE' },
+  { image: '/images/city2.png',      tagline: 'Power & Inspire Your Next Step Abroad' },
 ]
 
 function VideoModal({ src, onClose }: { src: string; onClose: () => void }) {
@@ -47,44 +50,8 @@ function VideoModal({ src, onClose }: { src: string; onClose: () => void }) {
         >
           <X className="w-7 h-7" />
         </button>
-        <video
-          src={src}
-          controls
-          autoPlay
-          className="w-full h-full rounded-xl object-contain bg-black"
-        />
+        <video src={src} controls autoPlay className="w-full h-full rounded-xl object-contain bg-black" />
       </div>
-    </div>
-  )
-}
-
-function KenBurnsCarousel() {
-  const [idx, setIdx] = useState(0)
-  useEffect(() => {
-    const t = setInterval(() => setIdx(i => (i + 1) % FALLBACK_IMAGES.length), 8000)
-    return () => clearInterval(t)
-  }, [])
-
-  return (
-    <div className="absolute inset-0 overflow-hidden">
-      {FALLBACK_IMAGES.map((src, i) => (
-        <div
-          key={src}
-          className={`absolute inset-0 transition-opacity duration-1000 ${i === idx ? 'opacity-100' : 'opacity-0'}`}
-        >
-          <Image
-            src={src}
-            alt=""
-            fill
-            className="object-cover opacity-40 animate-ken-burns"
-            priority={i === 0}
-            sizes="100vw"
-          />
-        </div>
-      ))}
-      {/* Dot grid decorative overlay */}
-      <div className="absolute inset-0 opacity-[0.03]"
-        style={{ backgroundImage: 'radial-gradient(circle at 50% 50%, #E6D9A8 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
     </div>
   )
 }
@@ -93,6 +60,7 @@ export function Hero({ heroSettings }: { heroSettings?: HeroSettingsDoc | null }
   const { open: openConsultation } = useConsultationModal()
   const [videoModal, setVideoModal] = useState(false)
   const [liveSettings, setLiveSettings] = useState<HeroSettingsDoc | null | undefined>(heroSettings)
+  const [idx, setIdx] = useState(0)
 
   // Client-side re-fetch for freshness
   useEffect(() => {
@@ -101,37 +69,53 @@ export function Hero({ heroSettings }: { heroSettings?: HeroSettingsDoc | null }
     )
   }, [])
 
+  const slides = (liveSettings?.slides && liveSettings.slides.length > 0)
+    ? liveSettings.slides
+    : DEFAULT_SLIDES
+
+  // Rotate slides (image crossfade + tagline) every 6s
+  useEffect(() => {
+    if (slides.length <= 1) return
+    const t = setInterval(() => setIdx(i => (i + 1) % slides.length), 6000)
+    return () => clearInterval(t)
+  }, [slides.length])
+
   const videoUrl     = liveSettings?.heroVideoUrl?.trim()     ?? ''
   const fullVideoUrl = liveSettings?.heroVideoFullUrl?.trim() ?? ''
-  const fallbackImg  = liveSettings?.heroImage?.trim()        ?? ''
+  const activeTagline = slides[idx]?.tagline ?? slides[0].tagline
 
   return (
     <section className="relative min-h-screen overflow-hidden" aria-label="Hero">
-      {/* Background — video or Ken-Burns fallback */}
-      {videoUrl ? (
-        <video
-          key={videoUrl}
-          src={videoUrl}
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover opacity-60"
-          aria-hidden="true"
-        />
-      ) : fallbackImg ? (
-        <div className="absolute inset-0 overflow-hidden">
-          <Image src={fallbackImg} alt="" fill className="object-cover opacity-40 animate-ken-burns" priority sizes="100vw" />
-          <div className="absolute inset-0 opacity-[0.03]"
-            style={{ backgroundImage: 'radial-gradient(circle at 50% 50%, #E6D9A8 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
-        </div>
-      ) : (
-        <KenBurnsCarousel />
-      )}
+      {/* Background — image slider (crossfade) */}
+      <div className="absolute inset-0 overflow-hidden">
+        {slides.map((s, i) => (
+          <div
+            key={`${s.image}-${i}`}
+            className={`absolute inset-0 transition-opacity duration-1000 ${i === idx ? 'opacity-100' : 'opacity-0'}`}
+          >
+            <Image
+              src={s.image}
+              alt=""
+              fill
+              className="object-cover opacity-45 animate-ken-burns"
+              priority={i === 0}
+              sizes="100vw"
+            />
+          </div>
+        ))}
+        <div className="absolute inset-0 opacity-[0.03]"
+          style={{ backgroundImage: 'radial-gradient(circle at 50% 50%, #E6D9A8 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
+      </div>
 
-      {/* Dark emerald gradient overlays */}
-      <div className="absolute inset-0 bg-gradient-to-r from-navy/95 via-navy/80 to-navy/30 pointer-events-none" />
-      <div className="absolute bottom-0 inset-x-0 h-40 bg-gradient-to-t from-navy to-transparent pointer-events-none" />
+      {/* Lighter emerald/teal screen gradient — brighter than navy, still legible left */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{ background: 'linear-gradient(105deg, rgba(14,92,84,0.88) 0%, rgba(15,124,90,0.58) 45%, rgba(31,169,104,0.22) 100%)' }}
+      />
+      <div
+        className="absolute bottom-0 inset-x-0 h-40 pointer-events-none"
+        style={{ background: 'linear-gradient(to top, rgba(11,61,46,0.65), transparent)' }}
+      />
 
       {/* Content */}
       <div className="relative z-10 min-h-screen flex flex-col justify-center">
@@ -151,32 +135,37 @@ export function Hero({ heroSettings }: { heroSettings?: HeroSettingsDoc | null }
             </div>
           </motion.div>
 
-          {/* Headline */}
-          <motion.div
-            initial={{ opacity: 0, y: 32 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.15, ease: 'easeOut' }}
-          >
-            <h1 className="font-serif font-semibold text-[48px] md:text-[62px] lg:text-[76px] leading-[1.08] text-white mb-2">
-              Your gateway to life in the Emirates,
-            </h1>
-            <h1
-              className="font-serif font-semibold text-[48px] md:text-[62px] lg:text-[76px] leading-[1.08] mb-6"
-              style={{ background: BRAND_GRADIENT, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}
-            >
-              done right.
-            </h1>
-          </motion.div>
+          {/* Rotating headline (driven by active slide) */}
+          <div className="min-h-[180px] md:min-h-[230px] lg:min-h-[270px] mb-6 flex items-start">
+            <AnimatePresence mode="wait">
+              <motion.h1
+                key={idx}
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -16 }}
+                transition={{ duration: 0.5, ease: 'easeOut' }}
+                className="font-serif font-semibold text-[40px] md:text-[56px] lg:text-[68px] leading-[1.08] text-white max-w-4xl"
+              >
+                {activeTagline}
+              </motion.h1>
+            </AnimatePresence>
+          </div>
 
-          {/* Subtext */}
-          <motion.p
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.25, ease: 'easeOut' }}
-            className="max-w-xl text-[17px] font-sans text-cream/75 leading-relaxed mb-10"
-          >
-            UAE Golden Visas, Global-Talent, work, investor and student permits — plus long-term residency, handled end-to-end by a full-service Dubai advisory firm serving Dubai, Abu Dhabi and Sharjah.
-          </motion.p>
+          {/* Slide indicators */}
+          {slides.length > 1 && (
+            <div className="flex gap-2 mb-10" role="tablist" aria-label="Hero slides">
+              {slides.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setIdx(i)}
+                  aria-label={`Go to slide ${i + 1}`}
+                  aria-selected={i === idx}
+                  role="tab"
+                  className={`h-1.5 rounded-full transition-all ${i === idx ? 'w-8 bg-gold-brushed' : 'w-2 bg-cream/30 hover:bg-cream/50'}`}
+                />
+              ))}
+            </div>
+          )}
 
           {/* CTAs */}
           <motion.div
@@ -190,7 +179,7 @@ export function Hero({ heroSettings }: { heroSettings?: HeroSettingsDoc | null }
               className="inline-flex items-center gap-2 px-7 py-3.5 text-white text-[14px] font-sans font-semibold uppercase tracking-[0.08em] rounded-[6px] transition-all hover:-translate-y-px hover:shadow-[0_8px_24px_rgba(31,169,104,.45)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal"
               style={{ background: BRAND_GRADIENT }}
             >
-              Book a Consultation
+              Book Your Free Consultation
             </button>
             <Link
               href="/contact"

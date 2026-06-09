@@ -65,7 +65,7 @@ export default function StatsPage() {
                   {name} — Value
                 </label>
                 <Controller name={`${key}.value`} control={control} render={({ field }) => (
-                  <input {...field} placeholder={key === 'applications' ? '10K+' : key === 'successRate' ? '98%' : key === 'destinations' ? '15+' : '9'} className={inputCls()} />
+                  <input {...field} placeholder={key === 'applications' ? '5,000+' : key === 'successRate' ? '15+' : key === 'destinations' ? '20,000+' : '95%'} className={inputCls()} />
                 )} />
               </div>
               <div>

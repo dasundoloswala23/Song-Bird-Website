@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Cormorant_Garamond, Jost } from 'next/font/google'
 import '../src/styles/index.css'
 import { DirectionProvider } from '@/context/DirectionContext'
+import { LanguageProvider } from '@/context/LanguageContext'
 
 const serif = Cormorant_Garamond({
   subsets: ['latin'],
@@ -38,7 +39,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" suppressHydrationWarning className={`${serif.variable} ${sans.variable}`}>
       <body className="min-h-screen flex flex-col bg-cream font-sans antialiased">
         <DirectionProvider>
-          {children}
+          <LanguageProvider>
+            {children}
+          </LanguageProvider>
         </DirectionProvider>
       </body>
     </html>

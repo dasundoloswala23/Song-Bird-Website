@@ -139,7 +139,7 @@ export function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-4 py-2.5 text-white text-[12px] font-sans font-semibold uppercase tracking-[0.08em] rounded-[6px] transition-all hover:-translate-y-px hover:shadow-[0_6px_18px_rgba(31,169,104,.35)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal"
-              style={{ background: 'linear-gradient(95deg, #1FA968 0%, #0E5C54 100%)' }}
+              style={{ background: 'linear-gradient(95deg, #22B877 0%, #0E7C5A 100%)' }}
             >
               WhatsApp Us Now
             </a>

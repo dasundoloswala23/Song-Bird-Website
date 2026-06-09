@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils'
 import { useConsultationModal } from '@/context/ConsultationModalContext'
 import { SERVICE_CLUSTERS } from '@/lib/services'
 
-const BRAND_GRADIENT = 'linear-gradient(135deg, #1FA968 0%, #0E5C54 50%, #0A3A52 100%)'
+const BRAND_GRADIENT = 'linear-gradient(135deg, #22B877 0%, #0E9C6E 55%, #0E7C5A 100%)'
 
 const DESTINATION_LINKS = [
   { label: 'Dubai',      href: '/destinations/dubai',      desc: 'Golden Visa · Business Setup' },
@@ -18,15 +18,15 @@ const DESTINATION_LINKS = [
 ]
 
 const TOP_LINKS = [
-  { label: 'About',    href: '/about' },
-  { label: 'Process',  href: '/#process' },
-  { label: 'Insights', href: '/insights' },
-  { label: 'Contact',  href: '/contact' },
+  { label: 'About',         href: '/about' },
+  { label: 'Collaborations', href: '/collaborations' },
+  { label: 'Insights',      href: '/insights' },
+  { label: 'Contact',       href: '/contact' },
 ]
 
 function ServicesMegaPanel({ onClose }: { onClose: () => void }) {
   return (
-    <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[720px] max-w-[95vw] bg-navy-deep/95 backdrop-blur-xl border border-gold-brushed/10 rounded-2xl shadow-[0_24px_64px_rgba(4,38,28,.7)] p-6 z-50">
+    <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[720px] max-w-[95vw] bg-white border border-hairline rounded-2xl shadow-[0_24px_64px_rgba(4,38,28,.18)] p-6 z-50">
       <div className="grid grid-cols-3 gap-6">
         {SERVICE_CLUSTERS.map(cluster => (
           <div key={cluster.key}>
@@ -36,21 +36,21 @@ function ServicesMegaPanel({ onClose }: { onClose: () => void }) {
                   key={s.slug}
                   href={`/services/${s.slug}`}
                   onClick={onClose}
-                  className="block px-3 py-2 rounded-lg hover:bg-white/5 transition-colors group"
+                  className="block px-3 py-2 rounded-lg hover:bg-surface-muted transition-colors group"
                 >
-                  <p className="text-[13px] font-sans font-medium text-cream/90 group-hover:text-white">{s.title}</p>
-                  <p className="text-[11px] font-sans text-cream/40 leading-tight mt-0.5 line-clamp-1">{s.shortDesc}</p>
+                  <p className="text-[13px] font-sans font-medium text-ink group-hover:text-emerald">{s.title}</p>
+                  <p className="text-[11px] font-sans text-slate leading-tight mt-0.5 line-clamp-1">{s.shortDesc}</p>
                 </Link>
               ))}
             </div>
           </div>
         ))}
       </div>
-      <div className="mt-4 pt-4 border-t border-gold-brushed/10 flex justify-between items-center">
+      <div className="mt-4 pt-4 border-t border-hairline flex justify-between items-center">
         <Link
           href="/services"
           onClick={onClose}
-          className="text-[12px] font-sans text-gold-brushed hover:text-gold transition-colors"
+          className="text-[12px] font-sans text-emerald hover:text-teal transition-colors"
         >
           View all services →
         </Link>
@@ -69,19 +69,19 @@ function ServicesMegaPanel({ onClose }: { onClose: () => void }) {
 
 function DestinationsMegaPanel({ onClose }: { onClose: () => void }) {
   return (
-    <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-80 bg-navy-deep/95 backdrop-blur-xl border border-gold-brushed/10 rounded-2xl shadow-[0_24px_64px_rgba(4,38,28,.7)] p-4 z-50">
-      <p className="text-[10px] font-sans font-semibold uppercase tracking-[0.2em] text-gold-brushed mb-3 px-2">Our Locations</p>
+    <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-80 bg-white border border-hairline rounded-2xl shadow-[0_24px_64px_rgba(4,38,28,.18)] p-4 z-50">
+      <p className="text-[10px] font-sans font-semibold uppercase tracking-[0.2em] text-gold-deep mb-3 px-2">Our Locations</p>
       <div className="space-y-1">
         {DESTINATION_LINKS.map(d => (
           <Link
             key={d.href}
             href={d.href}
             onClick={onClose}
-            className="flex items-start gap-3 px-3 py-2.5 rounded-lg hover:bg-white/5 transition-colors group"
+            className="flex items-start gap-3 px-3 py-2.5 rounded-lg hover:bg-surface-muted transition-colors group"
           >
             <div>
-              <p className="text-[13px] font-sans font-medium text-cream/90 group-hover:text-white">{d.label}</p>
-              <p className="text-[11px] font-sans text-cream/40 mt-0.5">{d.desc}</p>
+              <p className="text-[13px] font-sans font-medium text-ink group-hover:text-emerald">{d.label}</p>
+              <p className="text-[11px] font-sans text-slate mt-0.5">{d.desc}</p>
             </div>
           </Link>
         ))}
@@ -130,7 +130,7 @@ export function Header() {
   const togglePanel = (panel: 'services' | 'destinations') =>
     setActivePanel(prev => prev === panel ? null : panel)
 
-  const navLinkCls = 'px-3 py-2 text-[13px] font-sans font-medium uppercase tracking-[0.06em] text-cream/80 hover:text-gold-brushed transition-colors rounded focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gold-brushed inline-flex items-center gap-1'
+  const navLinkCls = 'px-3 py-2 text-[13px] font-sans font-medium uppercase tracking-[0.06em] text-ink/80 hover:text-emerald transition-colors rounded focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-emerald inline-flex items-center gap-1'
 
   return (
     <header
@@ -138,25 +138,31 @@ export function Header() {
       className={cn(
         'fixed top-10 inset-x-0 z-40 transition-all duration-300 border-b',
         scrolled
-          ? 'bg-navy/95 backdrop-blur-md shadow-[0_4px_32px_rgba(4,38,28,.5)] border-white/10 h-16'
-          : 'bg-navy/90 backdrop-blur-sm border-white/5 h-20',
+          ? 'bg-white/95 backdrop-blur-md shadow-[0_4px_32px_rgba(4,38,28,.12)] border-hairline h-16'
+          : 'bg-white/90 backdrop-blur-sm border-hairline/60 h-20',
       )}
     >
       <div className="h-full mx-auto px-4 md:px-8 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2.5 shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-brushed rounded">
+        <Link href="/" className="flex items-center gap-3 shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald rounded">
           <Image src="/logo.png" alt="Songbird Consultancy" width={56} height={56} className="h-12 w-auto" priority />
+          <span className="hidden sm:flex flex-col leading-none">
+            <span className="font-serif font-semibold text-[18px] text-ink">Songbird Consultancy</span>
+            <span className="font-sans text-[11px] uppercase tracking-[0.22em] text-gold-deep mt-1">Uplift Your Status</span>
+          </span>
         </Link>
 
         {/* Desktop nav */}
         <nav className="hidden lg:flex items-center gap-1 relative" aria-label="Main navigation">
+          <Link href="/" className={navLinkCls}>Home</Link>
+
           {/* Services mega */}
           <div className="relative">
             <button
               onClick={() => togglePanel('services')}
               aria-expanded={activePanel === 'services'}
               aria-haspopup="true"
-              className={cn(navLinkCls, activePanel === 'services' && 'text-gold-brushed')}
+              className={cn(navLinkCls, activePanel === 'services' && 'text-emerald')}
             >
               Services
               <ChevronDown className={cn('w-3.5 h-3.5 transition-transform duration-200', activePanel === 'services' && 'rotate-180')} />
@@ -170,7 +176,7 @@ export function Header() {
               onClick={() => togglePanel('destinations')}
               aria-expanded={activePanel === 'destinations'}
               aria-haspopup="true"
-              className={cn(navLinkCls, activePanel === 'destinations' && 'text-gold-brushed')}
+              className={cn(navLinkCls, activePanel === 'destinations' && 'text-emerald')}
             >
               Destinations
               <ChevronDown className={cn('w-3.5 h-3.5 transition-transform duration-200', activePanel === 'destinations' && 'rotate-180')} />
@@ -198,7 +204,7 @@ export function Header() {
 
         {/* Mobile hamburger */}
         <button
-          className="lg:hidden p-2 text-cream/80 hover:text-gold-brushed focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gold-brushed rounded"
+          className="lg:hidden p-2 text-ink/80 hover:text-emerald focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-emerald rounded"
           onClick={() => setMobileOpen(v => !v)}
           aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
           aria-expanded={mobileOpen}
@@ -209,12 +215,20 @@ export function Header() {
 
       {/* Mobile overlay */}
       {mobileOpen && (
-        <div className="lg:hidden fixed inset-0 top-0 bg-navy z-30 flex flex-col pt-28 overflow-y-auto">
+        <div className="lg:hidden fixed inset-0 top-0 bg-white z-30 flex flex-col pt-28 overflow-y-auto">
           <nav className="flex flex-col px-6 mb-6">
+            <Link
+              href="/"
+              onClick={() => setMobileOpen(false)}
+              className="py-4 border-b border-hairline text-[18px] font-serif font-medium text-ink hover:text-emerald transition-colors block"
+            >
+              Home
+            </Link>
+
             {/* Services accordion */}
             <button
               onClick={() => setMobileExpanded(p => p === 'services' ? null : 'services')}
-              className="flex items-center justify-between py-4 border-b border-gold-brushed/10 text-[18px] font-serif font-medium text-cream hover:text-gold-brushed transition-colors"
+              className="flex items-center justify-between py-4 border-b border-hairline text-[18px] font-serif font-medium text-ink hover:text-emerald transition-colors"
             >
               Services
               <ChevronDown className={cn('w-5 h-5 transition-transform', mobileExpanded === 'services' && 'rotate-180')} />
@@ -228,7 +242,7 @@ export function Header() {
                         key={s.slug}
                         href={`/services/${s.slug}`}
                         onClick={() => setMobileOpen(false)}
-                        className="block py-2 text-[15px] font-sans text-cream/80 hover:text-gold-brushed"
+                        className="block py-2 text-[15px] font-sans text-ink/80 hover:text-emerald"
                       >
                         {s.title}
                       </Link>
@@ -241,7 +255,7 @@ export function Header() {
             {/* Destinations accordion */}
             <button
               onClick={() => setMobileExpanded(p => p === 'destinations' ? null : 'destinations')}
-              className="flex items-center justify-between py-4 border-b border-gold-brushed/10 text-[18px] font-serif font-medium text-cream hover:text-gold-brushed transition-colors"
+              className="flex items-center justify-between py-4 border-b border-hairline text-[18px] font-serif font-medium text-ink hover:text-emerald transition-colors"
             >
               Destinations
               <ChevronDown className={cn('w-5 h-5 transition-transform', mobileExpanded === 'destinations' && 'rotate-180')} />
@@ -266,7 +280,7 @@ export function Header() {
                 key={link.label}
                 href={link.href}
                 onClick={() => setMobileOpen(false)}
-                className="py-4 border-b border-gold-brushed/10 text-[18px] font-serif font-medium text-cream hover:text-gold-brushed transition-colors block"
+                className="py-4 border-b border-hairline text-[18px] font-serif font-medium text-ink hover:text-emerald transition-colors block"
               >
                 {link.label}
               </Link>

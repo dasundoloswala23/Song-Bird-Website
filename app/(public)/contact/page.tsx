@@ -1,9 +1,10 @@
 import type { Metadata } from 'next'
-import { MapPin, Phone, Mail, Clock, MessageCircle } from 'lucide-react'
+import { MapPin, Phone, Mail, Clock, MessageCircle, Facebook, Instagram, Linkedin } from 'lucide-react'
 import { ContactForm } from '@/components/ContactForm'
+import { BookingFlow } from '@/components/BookingFlow'
 import { EyebrowTag } from '@/components/EyebrowTag'
 import { buildWhatsAppUrl } from '@/lib/utils'
-import { WHATSAPP_NUMBER, OFFICE_ADDRESS, OFFICE_PHONE, CONTACT_EMAIL, OFFICE_HOURS, MAPS_URL } from '@/lib/constants'
+import { WHATSAPP_NUMBER, OFFICE_ADDRESS, OFFICE_PHONE, CONTACT_EMAIL, OFFICE_HOURS, MAPS_URL, SOCIAL } from '@/lib/constants'
 
 export const dynamic = 'force-static'
 
@@ -12,7 +13,7 @@ export const metadata: Metadata = {
   description: 'Get in touch with Songbird Consultancy. Visit our Dubai office or reach us by phone, email, or WhatsApp.',
 }
 
-const BRAND_GRADIENT = 'linear-gradient(135deg, #1FA968 0%, #0E5C54 50%, #0A3A52 100%)'
+const BRAND_GRADIENT = 'linear-gradient(135deg, #22B877 0%, #0E9C6E 55%, #0E7C5A 100%)'
 const WA_GREEN = '#25D366'
 
 export default function ContactPage() {
@@ -79,7 +80,7 @@ export default function ContactPage() {
                   {[
                     { Icon: Phone, label: 'Phone', value: OFFICE_PHONE, href: `tel:${OFFICE_PHONE.replace(/\s/g,'')}` },
                     { Icon: Mail, label: 'Email', value: CONTACT_EMAIL, href: `mailto:${CONTACT_EMAIL}` },
-                    { Icon: Clock, label: 'Hours', value: OFFICE_HOURS, href: undefined },
+                    { Icon: Clock, label: 'Hours', value: `${OFFICE_HOURS.weekdays}\n${OFFICE_HOURS.weekend}`, href: undefined },
                     { Icon: MapPin, label: 'Address', value: OFFICE_ADDRESS, href: MAPS_URL },
                   ].map(({ Icon, label, value, href }) => (
                     <div key={label} className="flex items-start gap-3">
@@ -94,14 +95,51 @@ export default function ContactPage() {
                             {value}
                           </a>
                         ) : (
-                          <p className="text-[13px] font-sans text-cream/75">{value}</p>
+                          <p className="text-[13px] font-sans text-cream/75 whitespace-pre-line">{value}</p>
                         )}
                       </div>
                     </div>
                   ))}
                 </div>
+
+                {/* Social links */}
+                <div className="mt-6 pt-4 border-t border-gold-brushed/15">
+                  <p className="text-[10px] font-sans font-semibold uppercase tracking-[0.15em] text-gold-brushed/70 mb-3">Follow Us</p>
+                  <div className="flex items-center gap-3">
+                    <a href={SOCIAL.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook"
+                      className="w-9 h-9 rounded-full bg-white/5 border border-gold-brushed/20 flex items-center justify-center text-cream/70 hover:text-gold-brushed hover:border-gold-brushed/50 transition-colors">
+                      <Facebook className="w-4 h-4" />
+                    </a>
+                    <a href={SOCIAL.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram"
+                      className="w-9 h-9 rounded-full bg-white/5 border border-gold-brushed/20 flex items-center justify-center text-cream/70 hover:text-gold-brushed hover:border-gold-brushed/50 transition-colors">
+                      <Instagram className="w-4 h-4" />
+                    </a>
+                    <a href={SOCIAL.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"
+                      className="w-9 h-9 rounded-full bg-white/5 border border-gold-brushed/20 flex items-center justify-center text-cream/70 hover:text-gold-brushed hover:border-gold-brushed/50 transition-colors">
+                      <Linkedin className="w-4 h-4" />
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Appointment booking calendar */}
+      <section className="py-16 bg-navy-deep" aria-labelledby="booking-heading">
+        <div className="mx-auto px-6 md:px-12 max-w-5xl">
+          <div className="text-center mb-10">
+            <EyebrowTag light>Book an Appointment</EyebrowTag>
+            <h2 id="booking-heading" className="font-serif font-semibold text-[32px] md:text-[42px] leading-tight text-white">
+              Pick a date that works for you
+            </h2>
+            <p className="mt-4 text-[15px] font-sans text-cream/55 max-w-xl mx-auto">
+              Choose a date and time on the calendar below — we’ll confirm your appointment within 24 hours.
+            </p>
+          </div>
+          <div className="bg-navy-card border border-gold-brushed/15 rounded-2xl p-6 md:p-8">
+            <BookingFlow />
           </div>
         </div>
       </section>

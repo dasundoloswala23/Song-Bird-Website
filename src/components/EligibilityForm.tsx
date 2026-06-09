@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { Loader2, Send, CheckCircle2 } from 'lucide-react'
 
-const BRAND_GRADIENT = 'linear-gradient(135deg, #1FA968 0%, #0E5C54 50%, #0A3A52 100%)'
+const BRAND_GRADIENT = 'linear-gradient(135deg, #22B877 0%, #0E9C6E 55%, #0E7C5A 100%)'
 
 const DESTINATION_OPTIONS = [
   'UAE (Dubai)', 'UAE (Abu Dhabi)', 'UAE (Sharjah)',

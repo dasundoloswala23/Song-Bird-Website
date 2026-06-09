@@ -66,7 +66,7 @@ export function ExitIntentModal() {
                 Get Your Free<br />Immigration Assessment
               </h2>
               <p className="text-[14px] font-sans text-cream/60 mb-7 leading-relaxed">
-                Talk to a specialist — no forms, no commitment. Just an honest conversation about your options.
+                Talk to a specialist — just an honest conversation about your options. We will respond to you within 24 hours.
               </p>
 
               <div className="flex flex-col gap-3">
@@ -75,7 +75,7 @@ export function ExitIntentModal() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center gap-2 w-full py-3 text-white text-[13px] font-sans font-semibold uppercase tracking-[0.08em] rounded-[6px] transition-all hover:-translate-y-px hover:shadow-[0_8px_24px_rgba(31,169,104,.4)]"
-                  style={{ background: 'linear-gradient(95deg, #1FA968 0%, #0E5C54 100%)' }}
+                  style={{ background: 'linear-gradient(95deg, #22B877 0%, #0E7C5A 100%)' }}
                 >
                   <MessageCircle className="w-4 h-4" />
                   WhatsApp Free Assessment

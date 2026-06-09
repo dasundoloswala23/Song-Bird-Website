@@ -187,14 +187,58 @@ export interface GlobalReachDoc {
 
 // ── Hero Settings ─────────────────────────────────────────────────────────────
 
+export interface HeroSlide {
+  image: string
+  tagline: string
+}
+
 export interface HeroSettingsDoc {
   heroVideoUrl: string      // looping background video (Firebase Storage URL)
   heroVideoFullUrl: string  // full-quality video for modal player
   heroImage: string         // Ken-Burns fallback still image
+  slides?: HeroSlide[]      // 4-image slider with rotating taglines
 }
 
 // ── Testimonials (extended) ───────────────────────────────────────────────────
 
 export interface TestimonialItemExtended extends TestimonialItem {
   avatarUrl?: string
+}
+
+// ── Welcome / Who We Are (siteContent/welcome) ─────────────────────────────────
+
+export interface WelcomeDoc {
+  eyebrow: string
+  title: string
+  slogan: string
+  body: string          // multi-paragraph (split on blank lines for rendering)
+}
+
+// ── Accreditations & Licenses (siteContent/accreditations) ─────────────────────
+
+export interface AccreditationItem {
+  name: string
+  logo: string          // image URL (placeholder until supplied)
+}
+
+export interface AccreditationsDoc {
+  title: string
+  subline: string
+  items: AccreditationItem[]
+}
+
+// ── Collaborations / Partnerships (siteContent/collaborations) ─────────────────
+
+export interface PartnerItem {
+  name: string
+  logo: string
+  url: string
+  blurb: string
+}
+
+export interface CollaborationsDoc {
+  eyebrow: string
+  title: string
+  intro: string
+  partners: PartnerItem[]
 }

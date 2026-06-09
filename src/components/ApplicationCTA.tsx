@@ -6,7 +6,7 @@ import { MessageCircle, Mail, X } from 'lucide-react'
 import { buildWhatsAppUrl } from '@/lib/utils'
 import { WHATSAPP_NUMBER } from '@/lib/constants'
 
-export function ApplicationCTA() {
+export function ApplicationCTA({ label = 'Start Your Application' }: { label?: string }) {
   const [open, setOpen] = useState(false)
   const router = useRouter()
 
@@ -27,7 +27,7 @@ export function ApplicationCTA() {
         onClick={() => setOpen(true)}
         className="inline-flex items-center gap-2 px-8 py-3.5 bg-gold hover:bg-gold-deep text-navy text-[14px] font-sans font-semibold uppercase tracking-[0.08em] rounded-[6px] transition-all hover:-translate-y-px hover:shadow-[0_8px_24px_rgba(200,145,30,.3)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold"
       >
-        Start Your Application
+        {label}
       </button>
 
       {open && (

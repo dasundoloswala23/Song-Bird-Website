@@ -7,16 +7,19 @@ export const OFFICE_ADDRESS = 'Level 42, Emirates Towers, Sheikh Zayed Rd, Dubai
 
 export const OFFICE_PHONE = '+971 4 000 0000'
 
-export const OFFICE_HOURS = 'Sun – Thu  9 am – 6 pm GST'
+export const OFFICE_HOURS = {
+  weekdays: 'Mon – Fri  10:00 am – 7:00 pm',
+  weekend:  'Sat & Sun  8:00 am – 11:00 pm',
+} as const
 
 export const MAPS_URL =
   'https://www.google.com/maps/search/?api=1&query=Emirates+Towers+Dubai'
 
 export const STATS = [
-  { value: '10K+', label: 'Applications Filed' },
-  { value: '98%',  label: 'Success Rate' },
-  { value: '15+',  label: 'Destinations' },
-  { value: '9',    label: 'Service Lines' },
+  { value: '5,000+',  label: 'Successful Steps' },
+  { value: '15+',     label: 'Years of International Recognition' },
+  { value: '20,000+', label: 'Clients Served' },
+  { value: '95%',     label: 'Success Ratio' },
 ] as const
 
 export const DESTINATIONS = [

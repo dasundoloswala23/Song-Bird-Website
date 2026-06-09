@@ -84,7 +84,7 @@ export default async function DestinationDetailPage({ params }: { params: { slug
             <Link
               href="/book-a-consultation"
               className="px-8 py-3.5 text-[14px] font-sans font-semibold uppercase tracking-[0.08em] text-white rounded-[6px] transition-all hover:-translate-y-px hover:shadow-[0_8px_24px_rgba(31,169,104,.4)]"
-              style={{ background: 'linear-gradient(135deg, #1FA968 0%, #0E5C54 50%, #0A3A52 100%)' }}
+              style={{ background: 'linear-gradient(135deg, #22B877 0%, #0E9C6E 55%, #0E7C5A 100%)' }}
             >
               Book a Consultation
             </Link>

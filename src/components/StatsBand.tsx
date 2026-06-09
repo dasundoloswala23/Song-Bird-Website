@@ -3,8 +3,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import type { StatsDoc, StatEntry } from '@/types/firestore'
 
-const GRADIENT = 'linear-gradient(135deg, #1FA968 0%, #0E5C54 50%, #0A3A52 100%)'
-
 function useCountUp(target: string, active: boolean) {
   const [display, setDisplay] = useState('0')
 
@@ -50,15 +48,12 @@ function StatItem({ value, label, isLast }: { value: string; label: string; isLa
   return (
     <div
       ref={ref}
-      className={`flex flex-col items-center gap-2 px-6 ${!isLast ? 'border-r border-gold-brushed/20' : ''}`}
+      className={`flex flex-col items-center gap-2 px-6 ${!isLast ? 'border-r border-hairline' : ''}`}
     >
-      <span
-        className="font-serif font-semibold text-[56px] md:text-[72px] leading-none"
-        style={{ background: GRADIENT, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}
-      >
+      <span className="font-serif font-semibold text-[56px] md:text-[72px] leading-none text-gold">
         {active ? display : value}
       </span>
-      <span className="text-[11px] font-sans font-semibold uppercase tracking-[0.2em] text-cream/50 text-center">
+      <span className="text-[11px] font-sans font-semibold uppercase tracking-[0.2em] text-slate text-center">
         {label}
       </span>
     </div>
@@ -82,7 +77,7 @@ export function StatsBand({ stats }: StatsBandProps) {
   if (entries.length === 0) return null
 
   return (
-    <section className="py-20 bg-navy border-t border-gold-brushed/25" aria-label="Key statistics">
+    <section className="py-20 bg-surface-muted border-y border-hairline" aria-label="Key statistics">
       <div className="mx-auto px-6 md:px-12 max-w-5xl">
         <div
           className="grid"

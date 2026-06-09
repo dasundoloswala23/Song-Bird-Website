@@ -11,11 +11,11 @@ export function EyebrowTag({ children, className, light }: EyebrowTagProps) {
     <p
       className={cn(
         'inline-block text-[11px] font-sans font-semibold uppercase tracking-[0.22em] mb-4',
-        light ? 'text-gold-brushed' : 'text-gold-brushed',
+        light ? 'text-gold-brushed' : 'text-gold-deep',
         className,
       )}
     >
-      <span className="inline-block w-6 h-px bg-gold-brushed align-middle mr-2" />
+      <span className={cn('inline-block w-6 h-px align-middle mr-2', light ? 'bg-gold-brushed' : 'bg-gold')} />
       {children}
     </p>
   )

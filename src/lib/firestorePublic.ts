@@ -4,7 +4,7 @@
  */
 import { getFirestore, collection, query, where, orderBy, getDocs, doc, getDoc, setDoc, addDoc, deleteDoc, updateDoc } from 'firebase/firestore'
 import { firebaseApp } from './firebase'
-import type { ServiceDoc, WhyChooseUsDoc, StatsDoc, ProcessSectionDoc, TestimonialsSectionDoc, LeadDoc, DestinationDoc, SlotDoc, BookingDoc, GlobalReachDoc, HeroSettingsDoc } from '@/types/firestore'
+import type { ServiceDoc, WhyChooseUsDoc, StatsDoc, ProcessSectionDoc, TestimonialsSectionDoc, LeadDoc, DestinationDoc, SlotDoc, BookingDoc, GlobalReachDoc, HeroSettingsDoc, WelcomeDoc, AccreditationsDoc, CollaborationsDoc } from '@/types/firestore'
 
 const db = getFirestore(firebaseApp)
 
@@ -178,6 +178,27 @@ export async function getHeroSettings(): Promise<HeroSettingsDoc | null> {
   } catch { return null }
 }
 
+export async function getWelcome(): Promise<WelcomeDoc | null> {
+  try {
+    const snap = await getDoc(doc(db, 'siteContent', 'welcome'))
+    return snap.exists() ? (snap.data() as WelcomeDoc) : null
+  } catch { return null }
+}
+
+export async function getAccreditations(): Promise<AccreditationsDoc | null> {
+  try {
+    const snap = await getDoc(doc(db, 'siteContent', 'accreditations'))
+    return snap.exists() ? (snap.data() as AccreditationsDoc) : null
+  } catch { return null }
+}
+
+export async function getCollaborations(): Promise<CollaborationsDoc | null> {
+  try {
+    const snap = await getDoc(doc(db, 'siteContent', 'collaborations'))
+    return snap.exists() ? (snap.data() as CollaborationsDoc) : null
+  } catch { return null }
+}
+
 // ── Admin writes ──────────────────────────────────────────────────────────────
 
 export async function saveService(data: Omit<ServiceDoc, 'id'>, id?: string): Promise<string> {
@@ -240,6 +261,18 @@ export async function saveGlobalReach(data: GlobalReachDoc): Promise<void> {
 
 export async function saveHeroSettings(data: HeroSettingsDoc): Promise<void> {
   await setDoc(doc(db, 'siteContent', 'heroSettings'), data)
+}
+
+export async function saveWelcome(data: WelcomeDoc): Promise<void> {
+  await setDoc(doc(db, 'siteContent', 'welcome'), data)
+}
+
+export async function saveAccreditations(data: AccreditationsDoc): Promise<void> {
+  await setDoc(doc(db, 'siteContent', 'accreditations'), data)
+}
+
+export async function saveCollaborations(data: CollaborationsDoc): Promise<void> {
+  await setDoc(doc(db, 'siteContent', 'collaborations'), data)
 }
 
 export async function saveSlot(data: Omit<SlotDoc, 'id'>, id?: string): Promise<string> {

@@ -134,22 +134,70 @@ const WHY_CHOOSE_US = {
   title: 'The Songbird Difference',
   intro: 'We combine legal rigour with genuine care — treating every client\'s future as if it were our own. Our track record speaks clearly, and our process is built around your success.',
   image: '',
-  badge: { value: '10+', label: 'Years of Excellence' },
+  badge: { value: '15+', label: 'Years of Recognition' },
   features: [
-    { icon: 'Shield', title: 'Dubai-Based & Licensed', description: 'Fully licensed advisory firm operating under UAE regulatory frameworks, offering you the assurance of professional accountability.' },
-    { icon: 'Eye', title: 'Transparent Process', description: 'No hidden fees, no surprises. We lay out every step, every cost, and every timeline expectation before we begin.' },
-    { icon: 'Globe2', title: 'Multi-Destination Expertise', description: 'From UAE residency to citizenship programmes in Europe, North America, and Oceania — we cover 15+ jurisdictions.' },
-    { icon: 'UserCheck', title: 'Dedicated Case Manager', description: 'A single point of contact throughout your entire journey — someone who knows your file inside and out.' },
+    { icon: 'Layers', title: 'Full-Spectrum Consultancy Services Under One Roof', description: 'Immigration, legal, business and HR advisory — handled by one accountable team.' },
+    { icon: 'Award', title: 'Over 15+ Years of Combined Professional Experience', description: 'Proven leadership across multiple international jurisdictions.' },
+    { icon: 'Languages', title: 'Multilingual Team for Enhanced, Accurate Access', description: 'Guidance in your language, so nothing is lost in translation.' },
+    { icon: 'UserCheck', title: 'Client-Centric Approach', description: 'Customised solutions built around your goals, timeline and budget.' },
+    { icon: 'TrendingUp', title: 'Proven Track Record for a Higher Success Ratio', description: 'A 95% success ratio backed by thousands of successful steps.' },
   ],
 }
 
-// ─── Stats ────────────────────────────────────────────────────────────────────
+// ─── Stats (locked values per client brief) ─────────────────────────────────────
 
 const STATS = {
-  applications: { value: '10K+', label: 'Applications Filed' },
-  successRate:  { value: '98%',  label: 'Success Rate' },
-  destinations: { value: '15+',  label: 'Destinations' },
-  serviceLines: { value: '9',    label: 'Service Lines' },
+  applications: { value: '5,000+',  label: 'Successful Steps' },
+  successRate:  { value: '15+',     label: 'Years of International Recognition' },
+  destinations: { value: '20,000+', label: 'Clients Served' },
+  serviceLines: { value: '95%',     label: 'Success Ratio' },
+}
+
+// ─── Process / How It Works ─────────────────────────────────────────────────────
+
+const PROCESS_SECTION = {
+  title: 'We Guide You Through 4 Simple Steps',
+  steps: [
+    { title: 'Step 1', description: 'Step wording to be provided by the client.' },
+    { title: 'Step 2', description: 'Step wording to be provided by the client.' },
+    { title: 'Step 3', description: 'Step wording to be provided by the client.' },
+    { title: 'Step 4', description: 'Step wording to be provided by the client.' },
+  ],
+}
+
+// ─── Welcome / Who We Are ───────────────────────────────────────────────────────
+
+const WELCOME = {
+  eyebrow: 'Welcome to Songbird Consultancy',
+  title: 'Who We Are',
+  slogan: 'Uplift Your Status',
+  body:
+    'Since 2015, we have supported clients across different regions with expert legal leadership. ' +
+    'With proven experience in different jurisdictions, we are responsible for your outcome in any arena.\n\n' +
+    'From residency and immigration to foreign investment, corporate structuring and beyond, our multilingual ' +
+    'team delivers tailored consultations grounded in a deep understanding of UAE and international laws.',
+}
+
+// ─── Accreditations ─────────────────────────────────────────────────────────────
+
+const ACCREDITATIONS = {
+  title: 'Accreditations & Licenses',
+  subline: 'Recognised and regulated by leading professional bodies.',
+  items: [
+    { name: 'MARN',  logo: '' },
+    { name: 'ICCRC', logo: '' },
+    { name: 'BASL',  logo: '' },
+    { name: 'IBA',   logo: '' },
+  ],
+}
+
+// ─── Collaborations ─────────────────────────────────────────────────────────────
+
+const COLLABORATIONS = {
+  eyebrow: 'Our Network',
+  title: 'Collaborations & Partnerships',
+  intro: 'We work alongside trusted partners and affiliated institutions to deliver full-spectrum advisory across jurisdictions. Partner logos and details will appear here.',
+  partners: [],
 }
 
 // ─── Run ──────────────────────────────────────────────────────────────────────
@@ -173,6 +221,22 @@ async function seed() {
   // Stats
   await db.collection('siteStats').doc('home').set(STATS, { merge: true })
   console.log('  ✓ siteStats/home written')
+
+  // Process / How It Works
+  await db.collection('siteContent').doc('processSection').set(PROCESS_SECTION, { merge: true })
+  console.log('  ✓ siteContent/processSection written')
+
+  // Welcome / Who We Are
+  await db.collection('siteContent').doc('welcome').set(WELCOME, { merge: true })
+  console.log('  ✓ siteContent/welcome written')
+
+  // Accreditations
+  await db.collection('siteContent').doc('accreditations').set(ACCREDITATIONS, { merge: true })
+  console.log('  ✓ siteContent/accreditations written')
+
+  // Collaborations
+  await db.collection('siteContent').doc('collaborations').set(COLLABORATIONS, { merge: true })
+  console.log('  ✓ siteContent/collaborations written')
 
   console.log('✅ Seed complete!')
   process.exit(0)
