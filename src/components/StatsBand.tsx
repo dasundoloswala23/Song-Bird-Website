@@ -48,12 +48,12 @@ function StatItem({ value, label, isLast }: { value: string; label: string; isLa
   return (
     <div
       ref={ref}
-      className={`flex flex-col items-center gap-2 px-6 ${!isLast ? 'border-r border-hairline' : ''}`}
+      className={`flex flex-col items-center gap-2 px-2 sm:px-6 ${!isLast ? 'md:border-r md:border-hairline' : ''}`}
     >
-      <span className="font-serif font-semibold text-[56px] md:text-[72px] leading-none text-gold">
+      <span className="font-serif font-semibold text-[34px] sm:text-[52px] md:text-[72px] leading-none text-gold">
         {active ? display : value}
       </span>
-      <span className="text-[11px] font-sans font-semibold uppercase tracking-[0.2em] text-slate text-center">
+      <span className="text-[10px] sm:text-[11px] font-sans font-semibold uppercase tracking-[0.18em] text-slate text-center">
         {label}
       </span>
     </div>
@@ -79,10 +79,7 @@ export function StatsBand({ stats }: StatsBandProps) {
   return (
     <section className="py-20 bg-surface-muted border-y border-hairline" aria-label="Key statistics">
       <div className="mx-auto px-6 md:px-12 max-w-5xl">
-        <div
-          className="grid"
-          style={{ gridTemplateColumns: `repeat(${Math.min(entries.length, 4)}, 1fr)` }}
-        >
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-y-10">
           {entries.map((s, i) => (
             <StatItem key={s.label} value={s.value} label={s.label} isLast={i === entries.length - 1} />
           ))}

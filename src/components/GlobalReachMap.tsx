@@ -3,9 +3,7 @@
 import React, { useEffect, useState, useRef } from 'react'
 import type { GlobalReachDoc, GlobalReachPin } from '@/types/firestore'
 
-const BRAND_GRADIENT = 'linear-gradient(135deg, #22B877 0%, #0E9C6E 55%, #0E7C5A 100%)'
-
-// Default pins if no CMS data — regions Songbird serves
+// Default pins if no CMS data — regions Songbird serves (shown as chips below the map)
 const DEFAULT_PINS: GlobalReachPin[] = [
   { label: 'Dubai',       lat: 25.2,  lng: 55.3  },
   { label: 'Abu Dhabi',   lat: 24.5,  lng: 54.4  },
@@ -21,40 +19,6 @@ const DEFAULT_CONTENT: GlobalReachDoc = {
   headline: 'We serve clients across the UAE, South Asia and beyond',
   subline: 'From the GCC to Sri Lanka, India and the wider Asian region — local expertise with international reach.',
   pins: DEFAULT_PINS,
-}
-
-// Equirectangular projection: map lat/lng → SVG x/y (viewBox 0 0 1000 500)
-function project(lat: number, lng: number) {
-  const x = ((lng + 180) / 360) * 1000
-  const y = ((90 - lat) / 180) * 500
-  return { x, y }
-}
-
-function PulsingPin({ pin, delay }: { pin: GlobalReachPin; delay: number }) {
-  const { x, y } = project(pin.lat, pin.lng)
-  return (
-    <g style={{ animationDelay: `${delay}ms` }}>
-      {/* Pulse ring */}
-      <circle cx={x} cy={y} r="8" fill="none" stroke="#5EEA8A" strokeWidth="1.5" opacity="0.4">
-        <animate attributeName="r" values="4;14;4" dur="2.4s" begin={`${delay * 0.001}s`} repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0.6;0;0.6" dur="2.4s" begin={`${delay * 0.001}s`} repeatCount="indefinite" />
-      </circle>
-      {/* Core dot */}
-      <circle cx={x} cy={y} r="4" fill="#1FA968" stroke="#5EEA8A" strokeWidth="1" />
-      {/* Label */}
-      <text
-        x={x}
-        y={y - 9}
-        textAnchor="middle"
-        fontSize="11"
-        fill="rgba(243,250,244,0.7)"
-        fontFamily="sans-serif"
-        style={{ pointerEvents: 'none', userSelect: 'none' }}
-      >
-        {pin.label}
-      </text>
-    </g>
-  )
 }
 
 interface Props {
@@ -98,37 +62,22 @@ export function GlobalReachMap({ fallback }: Props) {
           <p className="max-w-xl mx-auto text-[15px] font-sans text-cream/60 leading-relaxed">{content.subline}</p>
         </div>
 
-        {/* SVG world map */}
+        {/* World map */}
         <div
-          className="relative mx-auto rounded-2xl overflow-hidden border border-gold-brushed/10"
+          className="relative mx-auto rounded-2xl overflow-hidden border border-gold-brushed/10 bg-[#0A2A20]"
           style={{
-            background: 'radial-gradient(ellipse at 50% 80%, rgba(31,169,104,0.06) 0%, transparent 70%), #0F3225',
             opacity: visible ? 1 : 0,
             transform: visible ? 'translateY(0)' : 'translateY(20px)',
             transition: 'opacity 0.8s ease, transform 0.8s ease',
           }}
         >
-          {/* Static world-map silhouette behind the pins */}
           <img
-            src="/images/world-map.svg"
-            alt=""
-            aria-hidden="true"
-            className="absolute inset-0 w-full h-full object-contain opacity-30 pointer-events-none select-none"
+            src="/images/world-map.png"
+            alt="Map highlighting the regions Songbird Consultancy serves"
+            className="block w-full h-auto select-none"
           />
-          <svg
-            viewBox="0 0 1000 500"
-            className="relative w-full"
-            aria-hidden="true"
-            style={{ display: 'block' }}
-          >
-            {/* Pins */}
-            {pins.map((pin, i) => (
-              <PulsingPin key={pin.label} pin={pin} delay={i * 200} />
-            ))}
-          </svg>
-
-          {/* Bottom fade */}
-          <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-navy-deep/80 to-transparent pointer-events-none" />
+          {/* Bottom fade for seamless blend into the section */}
+          <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-navy-deep/70 to-transparent pointer-events-none" />
         </div>
 
         {/* Country chips */}

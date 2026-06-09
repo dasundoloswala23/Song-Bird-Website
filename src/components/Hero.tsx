@@ -1,14 +1,17 @@
 'use client'
 
 import React, { useState, useEffect, useRef } from 'react'
-import Image from 'next/image'
 import { CheckCircle, Play, X } from 'lucide-react'
 import { motion, AnimatePresence } from 'motion/react'
 import { useConsultationModal } from '@/context/ConsultationModalContext'
 import Link from 'next/link'
-import type { HeroSettingsDoc, HeroSlide } from '@/types/firestore'
+import type { HeroSettingsDoc } from '@/types/firestore'
 
 const BRAND_GRADIENT = 'linear-gradient(135deg, #22B877 0%, #0E9C6E 55%, #0E7C5A 100%)'
+
+// Hardcoded looping background video (Dubai skyline). Reliable, no CMS dependency.
+const HERO_VIDEO = '/hero-dubai.mp4'
+const HERO_POSTER = '/images/city1.png'
 
 const TRUST_POINTS = [
   'UAE Licensed',
@@ -17,14 +20,14 @@ const TRUST_POINTS = [
   'Confidential Process',
 ]
 
-// Default slides — placeholder Dubai imagery + the 5 brief taglines (rotated).
-// The client will supply 4 final images; slides are editable from /admin/hero.
-const DEFAULT_SLIDES: HeroSlide[] = [
-  { image: '/images/city1.png',      tagline: 'Supporting Your Business Investment & Migration Across the UAE' },
-  { image: '/images/city2.png',      tagline: 'Reliable & Professional Legal Advisory Services for You & Your Businesses Abroad' },
-  { image: '/images/immigration.png', tagline: 'Your Gateway to Life in the Emirates' },
-  { image: '/images/city1.png',      tagline: 'Live Your Story in the UAE' },
-  { image: '/images/city2.png',      tagline: 'Power & Inspire Your Next Step Abroad' },
+// Built-in rotating taglines (the 5 brief lines). Used unless the admin has set
+// non-empty taglines in /admin/hero.
+const DEFAULT_TAGLINES = [
+  'Supporting Your Business Investment & Migration Across the UAE',
+  'Reliable & Professional Legal Advisory Services for You & Your Businesses Abroad',
+  'Your Gateway to Life in the Emirates',
+  'Live Your Story in the UAE',
+  'Power & Inspire Your Next Step Abroad',
 ]
 
 function VideoModal({ src, onClose }: { src: string; onClose: () => void }) {
@@ -69,40 +72,39 @@ export function Hero({ heroSettings }: { heroSettings?: HeroSettingsDoc | null }
     )
   }, [])
 
-  const slides = (liveSettings?.slides && liveSettings.slides.length > 0)
-    ? liveSettings.slides
-    : DEFAULT_SLIDES
+  // Taglines: admin-set non-empty taglines, else the built-in defaults.
+  const taglines = (() => {
+    const fromCms = (liveSettings?.slides ?? []).map(s => s.tagline?.trim()).filter(Boolean) as string[]
+    return fromCms.length > 0 ? fromCms : DEFAULT_TAGLINES
+  })()
 
-  // Rotate slides (image crossfade + tagline) every 6s
+  // Rotate the headline every 6s
   useEffect(() => {
-    if (slides.length <= 1) return
-    const t = setInterval(() => setIdx(i => (i + 1) % slides.length), 6000)
+    setIdx(0)
+    if (taglines.length <= 1) return
+    const t = setInterval(() => setIdx(i => (i + 1) % taglines.length), 6000)
     return () => clearInterval(t)
-  }, [slides.length])
+  }, [taglines.length])
 
-  const videoUrl     = liveSettings?.heroVideoUrl?.trim()     ?? ''
   const fullVideoUrl = liveSettings?.heroVideoFullUrl?.trim() ?? ''
-  const activeTagline = slides[idx]?.tagline ?? slides[0].tagline
+  const activeTagline = taglines[idx] ?? taglines[0]
 
   return (
     <section className="relative min-h-screen overflow-hidden" aria-label="Hero">
-      {/* Background — image slider (crossfade) */}
-      <div className="absolute inset-0 overflow-hidden">
-        {slides.map((s, i) => (
-          <div
-            key={`${s.image}-${i}`}
-            className={`absolute inset-0 transition-opacity duration-1000 ${i === idx ? 'opacity-100' : 'opacity-0'}`}
-          >
-            <Image
-              src={s.image}
-              alt=""
-              fill
-              className="object-cover opacity-45 animate-ken-burns"
-              priority={i === 0}
-              sizes="100vw"
-            />
-          </div>
-        ))}
+      {/* Background — hardcoded looping Dubai skyline video */}
+      <div className="absolute inset-0 overflow-hidden bg-navy">
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          poster={HERO_POSTER}
+          className="absolute inset-0 w-full h-full object-cover"
+          aria-hidden="true"
+        >
+          <source src={HERO_VIDEO} type="video/mp4" />
+        </video>
         <div className="absolute inset-0 opacity-[0.03]"
           style={{ backgroundImage: 'radial-gradient(circle at 50% 50%, #E6D9A8 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
       </div>
@@ -152,9 +154,9 @@ export function Hero({ heroSettings }: { heroSettings?: HeroSettingsDoc | null }
           </div>
 
           {/* Slide indicators */}
-          {slides.length > 1 && (
+          {taglines.length > 1 && (
             <div className="flex gap-2 mb-10" role="tablist" aria-label="Hero slides">
-              {slides.map((_, i) => (
+              {taglines.map((_, i) => (
                 <button
                   key={i}
                   onClick={() => setIdx(i)}
@@ -188,7 +190,7 @@ export function Hero({ heroSettings }: { heroSettings?: HeroSettingsDoc | null }
             >
               Free Eligibility Check →
             </Link>
-            {(videoUrl || fullVideoUrl) && (
+            {fullVideoUrl && (
               <button
                 onClick={() => setVideoModal(true)}
                 className="inline-flex items-center gap-2 px-5 py-3.5 text-[13px] font-sans font-medium text-cream/70 hover:text-white border border-white/15 hover:border-white/30 rounded-[6px] transition-all backdrop-blur-sm"
@@ -217,8 +219,8 @@ export function Hero({ heroSettings }: { heroSettings?: HeroSettingsDoc | null }
       </div>
 
       {/* Video modal */}
-      {videoModal && (videoUrl || fullVideoUrl) && (
-        <VideoModal src={fullVideoUrl || videoUrl} onClose={() => setVideoModal(false)} />
+      {videoModal && fullVideoUrl && (
+        <VideoModal src={fullVideoUrl} onClose={() => setVideoModal(false)} />
       )}
     </section>
   )

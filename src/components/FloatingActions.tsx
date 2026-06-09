@@ -1,12 +1,12 @@
 'use client'
 
-import { Phone, Mail, MessageCircle } from 'lucide-react'
-import { WHATSAPP_NUMBER, OFFICE_PHONE, CONTACT_EMAIL } from '@/lib/constants'
+import { Mail, MessageCircle } from 'lucide-react'
+import { WHATSAPP_NUMBER, CONTACT_EMAIL } from '@/lib/constants'
 import { buildWhatsAppUrl } from '@/lib/utils'
 
 /**
  * Vertical right-side floating action stack (reference: globalmobilityadvisory.com).
- * Email · Phone · WhatsApp — WhatsApp in its distinct green with the pulse animation.
+ * Email · WhatsApp — WhatsApp in its distinct green with the pulse animation.
  */
 export function FloatingActions() {
   const waUrl = buildWhatsAppUrl(
@@ -22,13 +22,6 @@ export function FloatingActions() {
         className="flex items-center justify-center w-12 h-12 rounded-full bg-navy text-cream shadow-[0_6px_18px_rgba(4,38,28,.3)] hover:-translate-y-0.5 transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-brushed"
       >
         <Mail className="w-5 h-5" />
-      </a>
-      <a
-        href={`tel:${OFFICE_PHONE.replace(/\s/g, '')}`}
-        aria-label="Call us"
-        className="flex items-center justify-center w-12 h-12 rounded-full bg-navy text-cream shadow-[0_6px_18px_rgba(4,38,28,.3)] hover:-translate-y-0.5 transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-brushed"
-      >
-        <Phone className="w-5 h-5" />
       </a>
       <a
         href={waUrl}
