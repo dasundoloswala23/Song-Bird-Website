@@ -3,9 +3,11 @@
 import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { EyebrowTag } from './EyebrowTag'
+import { useT } from '@/context/LanguageContext'
 import type { AccreditationsDoc } from '@/types/firestore'
 
 export function Accreditations({ fallback }: { fallback?: AccreditationsDoc | null }) {
+  const { t } = useT()
   const [content, setContent] = useState<AccreditationsDoc | null>(fallback ?? null)
 
   useEffect(() => {
@@ -22,7 +24,7 @@ export function Accreditations({ fallback }: { fallback?: AccreditationsDoc | nu
   return (
     <section className="py-20 bg-surface-muted border-y border-hairline" aria-labelledby="accreditations-heading">
       <div className="mx-auto px-6 md:px-12 max-w-5xl text-center">
-        <EyebrowTag>Trust & Compliance</EyebrowTag>
+        <EyebrowTag>{t('accred.eyebrow')}</EyebrowTag>
         <h2 id="accreditations-heading" className="font-serif font-semibold text-[30px] md:text-[40px] leading-tight text-ink mb-3">
           {content.title}
         </h2>

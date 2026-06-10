@@ -68,6 +68,8 @@ const fr: Partial<Record<MessageKey, string>> = {
 
   'accred.eyebrow': 'Confiance et conformité',
   'reach.eyebrow': 'Présence mondiale',
+  'dest.eyebrow': 'Où nous opérons',
+  'dest.heading': 'Nos destinations',
 
   'combined.eyebrow': 'Évaluation gratuite',
   'combined.heading': 'Êtes-vous éligible ? Contactez-nous',

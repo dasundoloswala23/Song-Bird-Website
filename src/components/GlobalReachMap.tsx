@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useEffect, useState, useRef } from 'react'
+import { useT } from '@/context/LanguageContext'
 import type { GlobalReachDoc, GlobalReachPin } from '@/types/firestore'
 
 // Default pins if no CMS data — regions Songbird serves (shown as chips below the map)
@@ -26,6 +27,7 @@ interface Props {
 }
 
 export function GlobalReachMap({ fallback }: Props) {
+  const { t } = useT()
   const [content, setContent] = useState<GlobalReachDoc>(fallback ?? DEFAULT_CONTENT)
   const [visible, setVisible] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
@@ -52,7 +54,7 @@ export function GlobalReachMap({ fallback }: Props) {
     <section className="py-24 bg-navy-deep overflow-hidden" aria-labelledby="reach-heading" ref={ref}>
       <div className="mx-auto px-6 md:px-12 max-w-7xl">
         <div className="text-center mb-12">
-          <p className="text-[11px] font-sans font-semibold uppercase tracking-[0.25em] text-gold-brushed mb-3">Global Reach</p>
+          <p className="text-[11px] font-sans font-semibold uppercase tracking-[0.25em] text-gold-brushed mb-3">{t('reach.eyebrow')}</p>
           <h2
             id="reach-heading"
             className="font-serif font-semibold text-[36px] md:text-[48px] leading-tight text-white mb-4"

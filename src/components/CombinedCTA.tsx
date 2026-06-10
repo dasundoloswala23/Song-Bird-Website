@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { MessageCircle, Phone } from 'lucide-react'
 import { EligibilityQuiz } from './EligibilityQuiz'
 import { buildWhatsAppUrl } from '@/lib/utils'
+import { useT } from '@/context/LanguageContext'
 import { WHATSAPP_NUMBER, OFFICE_PHONE } from '@/lib/constants'
 
 /**
@@ -11,18 +12,19 @@ import { WHATSAPP_NUMBER, OFFICE_PHONE } from '@/lib/constants'
  * (eligibility quiz on the left, direct connect options on the right).
  */
 export function CombinedCTA() {
+  const { t } = useT()
   const waUrl = buildWhatsAppUrl(WHATSAPP_NUMBER, 'Hello Songbird, I would like to check my eligibility and connect.')
 
   return (
     <section className="py-24 bg-navy-deep" aria-labelledby="combined-cta-heading">
       <div className="mx-auto px-6 md:px-12 max-w-6xl">
         <div className="text-center mb-12">
-          <p className="text-[11px] font-sans font-semibold uppercase tracking-[0.25em] text-gold-brushed mb-3">Free Assessment</p>
+          <p className="text-[11px] font-sans font-semibold uppercase tracking-[0.25em] text-gold-brushed mb-3">{t('combined.eyebrow')}</p>
           <h2 id="combined-cta-heading" className="font-serif font-semibold text-[34px] md:text-[46px] leading-tight text-white mb-4">
-            Are You Eligible? Connect With Us
+            {t('combined.heading')}
           </h2>
           <p className="text-[16px] font-sans text-cream/55 max-w-xl mx-auto">
-            Answer four quick questions for a personalised pathway — or reach us directly. We respond within 24 hours.
+            {t('combined.subline')}
           </p>
         </div>
 
@@ -34,8 +36,8 @@ export function CombinedCTA() {
 
           {/* Connect options */}
           <div className="bg-navy-card border border-gold-brushed/20 rounded-2xl p-7">
-            <h3 className="font-serif font-semibold text-[22px] text-white mb-2">Prefer to talk now?</h3>
-            <p className="text-[14px] font-sans text-cream/55 mb-6">Connect with a Songbird advisor directly.</p>
+            <h3 className="font-serif font-semibold text-[22px] text-white mb-2">{t('combined.prefer')}</h3>
+            <p className="text-[14px] font-sans text-cream/55 mb-6">{t('combined.preferSub')}</p>
             <div className="flex flex-col gap-3">
               <a
                 href={waUrl}
@@ -43,7 +45,7 @@ export function CombinedCTA() {
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2 w-full py-3.5 rounded-[6px] bg-whatsapp text-white text-[13px] font-sans font-semibold uppercase tracking-[0.08em] transition-all hover:-translate-y-px"
               >
-                <MessageCircle className="w-4 h-4" /> Connect via WhatsApp
+                <MessageCircle className="w-4 h-4" /> {t('cta.connectWhatsApp')}
               </a>
               <a
                 href={`tel:${OFFICE_PHONE.replace(/\s/g, '')}`}
@@ -55,7 +57,7 @@ export function CombinedCTA() {
                 href="/contact"
                 className="flex items-center justify-center gap-2 w-full py-3.5 rounded-[6px] border border-gold-brushed/40 text-cream/80 hover:text-white hover:bg-white/5 text-[13px] font-sans font-semibold uppercase tracking-[0.08em] transition-colors"
               >
-                Contact Us
+                {t('cta.contactUs')}
               </Link>
             </div>
           </div>

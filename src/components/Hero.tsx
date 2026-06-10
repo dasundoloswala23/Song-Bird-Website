@@ -4,8 +4,10 @@ import React, { useState, useEffect, useRef } from 'react'
 import { CheckCircle, Play, X } from 'lucide-react'
 import { motion, AnimatePresence } from 'motion/react'
 import { useConsultationModal } from '@/context/ConsultationModalContext'
+import { useT } from '@/context/LanguageContext'
 import Link from 'next/link'
 import type { HeroSettingsDoc } from '@/types/firestore'
+import type { MessageKey } from '@/i18n'
 
 const BRAND_GRADIENT = 'linear-gradient(135deg, #22B877 0%, #0E9C6E 55%, #0E7C5A 100%)'
 
@@ -13,21 +15,17 @@ const BRAND_GRADIENT = 'linear-gradient(135deg, #22B877 0%, #0E9C6E 55%, #0E7C5A
 const HERO_VIDEO = '/hero-dubai.mp4'
 const HERO_POSTER = '/images/city1.png'
 
-const TRUST_POINTS = [
-  'UAE Licensed',
-  'Regulated Counsel',
-  '95% Success Ratio',
-  'Confidential Process',
+const TRUST_KEYS: MessageKey[] = [
+  'hero.trust.licensed',
+  'hero.trust.counsel',
+  'hero.trust.success',
+  'hero.trust.confidential',
 ]
 
-// Built-in rotating taglines (the 5 brief lines). Used unless the admin has set
-// non-empty taglines in /admin/hero.
-const DEFAULT_TAGLINES = [
-  'Supporting Your Business Investment & Migration Across the UAE',
-  'Reliable & Professional Legal Advisory Services for You & Your Businesses Abroad',
-  'Your Gateway to Life in the Emirates',
-  'Live Your Story in the UAE',
-  'Power & Inspire Your Next Step Abroad',
+// Built-in rotating taglines (translated via these keys). Used unless the admin has
+// set non-empty taglines in /admin/hero.
+const DEFAULT_TAGLINE_KEYS: MessageKey[] = [
+  'hero.slide1', 'hero.slide2', 'hero.slide3', 'hero.slide4', 'hero.slide5',
 ]
 
 function VideoModal({ src, onClose }: { src: string; onClose: () => void }) {
@@ -61,6 +59,7 @@ function VideoModal({ src, onClose }: { src: string; onClose: () => void }) {
 
 export function Hero({ heroSettings }: { heroSettings?: HeroSettingsDoc | null }) {
   const { open: openConsultation } = useConsultationModal()
+  const { t } = useT()
   const [videoModal, setVideoModal] = useState(false)
   const [liveSettings, setLiveSettings] = useState<HeroSettingsDoc | null | undefined>(heroSettings)
   const [idx, setIdx] = useState(0)
@@ -72,10 +71,10 @@ export function Hero({ heroSettings }: { heroSettings?: HeroSettingsDoc | null }
     )
   }, [])
 
-  // Taglines: admin-set non-empty taglines, else the built-in defaults.
+  // Taglines: admin-set non-empty taglines, else the built-in (translated) defaults.
   const taglines = (() => {
     const fromCms = (liveSettings?.slides ?? []).map(s => s.tagline?.trim()).filter(Boolean) as string[]
-    return fromCms.length > 0 ? fromCms : DEFAULT_TAGLINES
+    return fromCms.length > 0 ? fromCms : DEFAULT_TAGLINE_KEYS.map(k => t(k))
   })()
 
   // Rotate the headline every 6s
@@ -132,7 +131,7 @@ export function Hero({ heroSettings }: { heroSettings?: HeroSettingsDoc | null }
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-gold-brushed/40 bg-gold-brushed/10 mb-8">
               <span className="w-1.5 h-1.5 rounded-full bg-gold-brushed animate-pulse" />
               <span className="text-[12px] font-sans font-semibold uppercase tracking-[0.2em] text-gold-brushed">
-                UAE-Licensed · Immigration &amp; Global Mobility
+                {t('hero.eyebrow')}
               </span>
             </div>
           </motion.div>
@@ -181,14 +180,14 @@ export function Hero({ heroSettings }: { heroSettings?: HeroSettingsDoc | null }
               className="inline-flex items-center gap-2 px-7 py-3.5 text-white text-[14px] font-sans font-semibold uppercase tracking-[0.08em] rounded-[6px] transition-all hover:-translate-y-px hover:shadow-[0_8px_24px_rgba(31,169,104,.45)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal"
               style={{ background: BRAND_GRADIENT }}
             >
-              Book Your Free Consultation
+              {t('cta.bookFreeConsultation')}
             </button>
             <Link
               href="/contact"
               className="inline-flex items-center gap-2 px-7 py-3.5 text-[14px] font-sans font-semibold uppercase tracking-[0.08em] rounded-[6px] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-brushed"
               style={{ color: '#E6D9A8', background: 'transparent' }}
             >
-              Free Eligibility Check →
+              {t('cta.freeEligibility')}
             </Link>
             {fullVideoUrl && (
               <button
@@ -208,10 +207,10 @@ export function Hero({ heroSettings }: { heroSettings?: HeroSettingsDoc | null }
             transition={{ duration: 0.7, delay: 0.5 }}
             className="flex flex-wrap gap-x-6 gap-y-2"
           >
-            {TRUST_POINTS.map(p => (
-              <div key={p} className="flex items-center gap-2">
+            {TRUST_KEYS.map(k => (
+              <div key={k} className="flex items-center gap-2">
                 <CheckCircle className="w-4 h-4 text-gold-brushed shrink-0" />
-                <span className="text-[13px] font-sans text-cream/70">{p}</span>
+                <span className="text-[13px] font-sans text-cream/70">{t(k)}</span>
               </div>
             ))}
           </motion.div>

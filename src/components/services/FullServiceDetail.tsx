@@ -20,7 +20,7 @@ export function FullServiceDetail({ service }: { service: ServiceDoc }) {
         ) : (
           <div className="absolute inset-0 bg-gradient-to-br from-navy via-navy-card to-navy-deep" />
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-navy/90 via-navy/60 to-navy/20" />
+        <div className="absolute inset-0 bg-gradient-to-t from-navy/95 via-navy/45 to-navy/10" />
         <div className="relative z-10 mx-auto px-6 md:px-12 max-w-4xl pb-16 w-full">
           <EyebrowTag>{service.heroEyebrow || 'Advisory Services'}</EyebrowTag>
           <h1 className="font-serif font-semibold text-[42px] md:text-[58px] leading-tight text-white mb-4">

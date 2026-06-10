@@ -83,6 +83,10 @@ const en = {
   // ── Global reach ──
   'reach.eyebrow': 'Global Reach',
 
+  // ── Destinations ──
+  'dest.eyebrow': 'Where We Operate',
+  'dest.heading': 'Our Destinations',
+
   // ── Combined CTA ──
   'combined.eyebrow': 'Free Assessment',
   'combined.heading': 'Are You Eligible? Connect With Us',

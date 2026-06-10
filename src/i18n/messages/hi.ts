@@ -68,6 +68,8 @@ const hi: Partial<Record<MessageKey, string>> = {
 
   'accred.eyebrow': 'विश्वास और अनुपालन',
   'reach.eyebrow': 'वैश्विक पहुँच',
+  'dest.eyebrow': 'हम कहाँ काम करते हैं',
+  'dest.heading': 'हमारे गंतव्य',
 
   'combined.eyebrow': 'निःशुल्क मूल्यांकन',
   'combined.heading': 'क्या आप पात्र हैं? हमसे जुड़ें',

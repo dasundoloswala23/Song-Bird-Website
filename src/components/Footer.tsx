@@ -5,20 +5,22 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { MapPin, Phone, Mail, Facebook, Instagram, Linkedin, ArrowRight } from 'lucide-react'
 import { buildWhatsAppUrl } from '@/lib/utils'
+import { useT } from '@/context/LanguageContext'
 import { WHATSAPP_NUMBER, OFFICE_ADDRESS, OFFICE_PHONE, CONTACT_EMAIL, SOCIAL } from '@/lib/constants'
 import { SERVICES } from '@/lib/services'
 
 const QUICK_LINKS = [
-  { label: 'Home',           href: '/' },
-  { label: 'About Us',       href: '/#about' },
-  { label: 'Our Process',    href: '/#process' },
-  { label: 'Testimonials',   href: '/#testimonials' },
-  { label: 'Insights',       href: '/insights' },
-  { label: 'Contact',        href: '/contact' },
-  { label: 'Privacy Policy', href: '/privacy' },
-]
+  { key: 'footer.link.home',        href: '/' },
+  { key: 'footer.link.about',       href: '/about' },
+  { key: 'footer.link.process',     href: '/#process' },
+  { key: 'footer.link.testimonials', href: '/#testimonials' },
+  { key: 'footer.link.insights',    href: '/insights' },
+  { key: 'footer.link.contact',     href: '/contact' },
+  { key: 'footer.link.privacy',     href: '/privacy' },
+] as const
 
 function NewsletterRow() {
+  const { t } = useT()
   const [email, setEmail] = useState('')
   const [submitted, setSubmitted] = useState(false)
 
@@ -31,18 +33,18 @@ function NewsletterRow() {
     <div className="border-b border-gold-brushed/10 pb-10 mb-10">
       <div className="flex flex-col md:flex-row md:items-center gap-5 justify-between">
         <div>
-          <p className="text-[13px] font-sans font-semibold text-cream/80 mb-0.5">Stay informed</p>
-          <p className="text-[12px] font-sans text-cream/45">UAE immigration updates and advisory insights, straight to your inbox.</p>
+          <p className="text-[13px] font-sans font-semibold text-cream/80 mb-0.5">{t('footer.stayInformed')}</p>
+          <p className="text-[12px] font-sans text-cream/45">{t('footer.stayInformedSub')}</p>
         </div>
         {submitted ? (
-          <p className="text-[13px] font-sans text-teal-end">Thank you — you&apos;re subscribed.</p>
+          <p className="text-[13px] font-sans text-teal-end">{t('footer.subscribed')}</p>
         ) : (
           <form onSubmit={handleSubmit} className="flex gap-2 w-full md:w-auto">
             <input
               type="email"
               value={email}
               onChange={e => setEmail(e.target.value)}
-              placeholder="Your email address"
+              placeholder={t('footer.emailPlaceholder')}
               required
               className="flex-1 md:w-60 px-3.5 py-2.5 bg-navy/50 border border-gold-brushed/20 rounded-[6px] text-[13px] font-sans text-cream placeholder:text-cream/25 focus:outline-none focus:ring-2 focus:ring-gold-brushed/40"
             />
@@ -50,7 +52,7 @@ function NewsletterRow() {
               type="submit"
               className="shrink-0 flex items-center gap-1.5 px-4 py-2.5 border border-gold-brushed/50 text-gold-brushed hover:bg-gold-brushed/10 text-[12px] font-sans font-semibold uppercase tracking-[0.08em] rounded-[6px] transition-colors"
             >
-              Subscribe <ArrowRight className="w-3 h-3" />
+              {t('cta.subscribe')} <ArrowRight className="w-3 h-3" />
             </button>
           </form>
         )}
@@ -60,6 +62,7 @@ function NewsletterRow() {
 }
 
 export function Footer() {
+  const { t } = useT()
   const waUrl = buildWhatsAppUrl(WHATSAPP_NUMBER, 'Hello Songbird, I would like to enquire about your services.')
 
   return (
@@ -80,7 +83,7 @@ export function Footer() {
               />
             </Link>
             <p className="text-[13px] font-sans text-cream/60 leading-relaxed mb-5">
-              Dubai&apos;s premier multi-service advisory firm — your gateway to global residency, done right.
+              {t('footer.brandLine')}
             </p>
             <div className="flex gap-3">
               <SocialIcon href={SOCIAL.facebook} label="Facebook" Icon={Facebook} />
@@ -91,7 +94,7 @@ export function Footer() {
 
           {/* Services */}
           <div>
-            <h3 className="text-[11px] font-sans font-semibold uppercase tracking-[0.22em] text-gold-brushed mb-4">Our Services</h3>
+            <h3 className="text-[11px] font-sans font-semibold uppercase tracking-[0.22em] text-gold-brushed mb-4">{t('footer.ourServices')}</h3>
             <ul className="space-y-2">
               {SERVICES.map(s => (
                 <li key={s.slug}>
@@ -105,12 +108,12 @@ export function Footer() {
 
           {/* Quick links */}
           <div>
-            <h3 className="text-[11px] font-sans font-semibold uppercase tracking-[0.22em] text-gold-brushed mb-4">Quick Links</h3>
+            <h3 className="text-[11px] font-sans font-semibold uppercase tracking-[0.22em] text-gold-brushed mb-4">{t('footer.quickLinks')}</h3>
             <ul className="space-y-2">
               {QUICK_LINKS.map(l => (
                 <li key={l.href}>
                   <Link href={l.href} className="text-[13px] font-sans text-cream/60 hover:text-teal-end transition-colors">
-                    {l.label}
+                    {t(l.key)}
                   </Link>
                 </li>
               ))}
@@ -119,7 +122,7 @@ export function Footer() {
 
           {/* Contact */}
           <div>
-            <h3 className="text-[11px] font-sans font-semibold uppercase tracking-[0.22em] text-gold-brushed mb-4">Contact Us</h3>
+            <h3 className="text-[11px] font-sans font-semibold uppercase tracking-[0.22em] text-gold-brushed mb-4">{t('footer.contactUs')}</h3>
             <ul className="space-y-3 mb-5">
               <li className="flex items-start gap-2.5">
                 <MapPin className="w-4 h-4 text-gold-brushed shrink-0 mt-0.5" />
@@ -141,7 +144,7 @@ export function Footer() {
               className="inline-flex items-center gap-2 px-4 py-2.5 text-white text-[12px] font-sans font-semibold uppercase tracking-[0.08em] rounded-[6px] transition-all hover:-translate-y-px hover:shadow-[0_6px_18px_rgba(31,169,104,.35)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal"
               style={{ background: 'linear-gradient(95deg, #22B877 0%, #0E7C5A 100%)' }}
             >
-              WhatsApp Us Now
+              {t('cta.whatsappNow')}
             </a>
           </div>
         </div>
@@ -149,11 +152,11 @@ export function Footer() {
         {/* Bottom bar */}
         <div className="border-t border-gold-brushed/10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-[12px] font-sans text-cream/35">
-            &copy; {new Date().getFullYear()} Songbird Consultancy LLC. All rights reserved. UAE Licensed.
+            &copy; {new Date().getFullYear()} Songbird Consultancy LLC. {t('footer.rights')}
           </p>
           <div className="flex gap-4">
-            <Link href="/privacy" className="text-[12px] font-sans text-cream/35 hover:text-gold-brushed transition-colors">Privacy Policy</Link>
-            <Link href="/terms"   className="text-[12px] font-sans text-cream/35 hover:text-gold-brushed transition-colors">Terms of Service</Link>
+            <Link href="/privacy" className="text-[12px] font-sans text-cream/35 hover:text-gold-brushed transition-colors">{t('footer.link.privacy')}</Link>
+            <Link href="/terms"   className="text-[12px] font-sans text-cream/35 hover:text-gold-brushed transition-colors">{t('footer.terms')}</Link>
           </div>
         </div>
       </div>

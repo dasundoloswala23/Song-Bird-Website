@@ -6,23 +6,24 @@ import Image from 'next/image'
 import { Menu, X, ChevronDown } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useConsultationModal } from '@/context/ConsultationModalContext'
+import { useT } from '@/context/LanguageContext'
 import { SERVICE_CLUSTERS } from '@/lib/services'
 
 const BRAND_GRADIENT = 'linear-gradient(135deg, #22B877 0%, #0E9C6E 55%, #0E7C5A 100%)'
 
 const DESTINATION_LINKS = [
-  { label: 'Dubai',      href: '/destinations/dubai',      desc: 'Golden Visa · Business Setup' },
-  { label: 'Abu Dhabi',  href: '/destinations/abu-dhabi',   desc: 'Investor Visa · Residency' },
-  { label: 'Sharjah',    href: '/destinations/sharjah',     desc: 'Residence Permit · Free Zones' },
-  { label: 'All Destinations', href: '/destinations',       desc: 'Explore every pathway' },
+  { label: 'Dubai',      href: '/destinations',  desc: 'Golden Visa · Business Setup' },
+  { label: 'Abu Dhabi',  href: '/destinations',  desc: 'Investor Visa · Residency' },
+  { label: 'Sharjah',    href: '/destinations',  desc: 'Residence Permit · Free Zones' },
+  { label: 'All Destinations', href: '/destinations', desc: 'Explore every pathway' },
 ]
 
 const TOP_LINKS = [
-  { label: 'About',         href: '/about' },
-  { label: 'Collaborations', href: '/collaborations' },
-  { label: 'Insights',      href: '/insights' },
-  { label: 'Contact',       href: '/contact' },
-]
+  { key: 'nav.about',          href: '/about' },
+  { key: 'nav.collaborations', href: '/collaborations' },
+  { key: 'nav.insights',       href: '/insights' },
+  { key: 'nav.contact',        href: '/contact' },
+] as const
 
 function ServicesMegaPanel({ onClose }: { onClose: () => void }) {
   return (
@@ -97,6 +98,7 @@ export function Header() {
   const [mobileExpanded, setMobileExpanded] = useState<string | null>(null)
   const headerRef = useRef<HTMLElement>(null)
   const { open: openConsultation } = useConsultationModal()
+  const { t } = useT()
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 20)
@@ -148,13 +150,13 @@ export function Header() {
           <Image src="/logo.png" alt="Songbird Consultancy" width={56} height={56} className="h-12 w-auto" priority />
           <span className="hidden sm:flex flex-col leading-none">
             <span className="font-serif font-semibold text-[18px] text-ink">Songbird Consultancy</span>
-            <span className="font-sans text-[11px] uppercase tracking-[0.22em] text-gold-deep mt-1">Uplift Your Status</span>
+            <span className="font-sans text-[11px] uppercase tracking-[0.22em] text-gold-deep mt-1">{t('brand.slogan')}</span>
           </span>
         </Link>
 
         {/* Desktop nav */}
         <nav className="hidden lg:flex items-center gap-1 relative" aria-label="Main navigation">
-          <Link href="/" className={navLinkCls}>Home</Link>
+          <Link href="/" className={navLinkCls}>{t('nav.home')}</Link>
 
           {/* Services mega */}
           <div className="relative">
@@ -164,7 +166,7 @@ export function Header() {
               aria-haspopup="true"
               className={cn(navLinkCls, activePanel === 'services' && 'text-emerald')}
             >
-              Services
+              {t('nav.services')}
               <ChevronDown className={cn('w-3.5 h-3.5 transition-transform duration-200', activePanel === 'services' && 'rotate-180')} />
             </button>
             {activePanel === 'services' && <ServicesMegaPanel onClose={() => setActivePanel(null)} />}
@@ -178,15 +180,15 @@ export function Header() {
               aria-haspopup="true"
               className={cn(navLinkCls, activePanel === 'destinations' && 'text-emerald')}
             >
-              Destinations
+              {t('nav.destinations')}
               <ChevronDown className={cn('w-3.5 h-3.5 transition-transform duration-200', activePanel === 'destinations' && 'rotate-180')} />
             </button>
             {activePanel === 'destinations' && <DestinationsMegaPanel onClose={() => setActivePanel(null)} />}
           </div>
 
           {TOP_LINKS.map(link => (
-            <Link key={link.label} href={link.href} className={navLinkCls}>
-              {link.label}
+            <Link key={link.key} href={link.href} className={navLinkCls}>
+              {t(link.key)}
             </Link>
           ))}
         </nav>
@@ -198,7 +200,7 @@ export function Header() {
             className="px-4 py-2 text-[12px] font-sans font-semibold uppercase tracking-[0.08em] text-white rounded-[6px] transition-all hover:-translate-y-px hover:shadow-[0_6px_18px_rgba(31,169,104,.4)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal"
             style={{ background: BRAND_GRADIENT }}
           >
-            Book a Consultation
+            {t('cta.bookConsultation')}
           </button>
         </div>
 
@@ -222,7 +224,7 @@ export function Header() {
               onClick={() => setMobileOpen(false)}
               className="py-4 border-b border-hairline text-[18px] font-serif font-medium text-ink hover:text-emerald transition-colors block"
             >
-              Home
+              {t('nav.home')}
             </Link>
 
             {/* Services accordion */}
@@ -230,7 +232,7 @@ export function Header() {
               onClick={() => setMobileExpanded(p => p === 'services' ? null : 'services')}
               className="flex items-center justify-between py-4 border-b border-hairline text-[18px] font-serif font-medium text-ink hover:text-emerald transition-colors"
             >
-              Services
+              {t('nav.services')}
               <ChevronDown className={cn('w-5 h-5 transition-transform', mobileExpanded === 'services' && 'rotate-180')} />
             </button>
             {mobileExpanded === 'services' && (
@@ -257,7 +259,7 @@ export function Header() {
               onClick={() => setMobileExpanded(p => p === 'destinations' ? null : 'destinations')}
               className="flex items-center justify-between py-4 border-b border-hairline text-[18px] font-serif font-medium text-ink hover:text-emerald transition-colors"
             >
-              Destinations
+              {t('nav.destinations')}
               <ChevronDown className={cn('w-5 h-5 transition-transform', mobileExpanded === 'destinations' && 'rotate-180')} />
             </button>
             {mobileExpanded === 'destinations' && (
@@ -277,12 +279,12 @@ export function Header() {
 
             {TOP_LINKS.map(link => (
               <Link
-                key={link.label}
+                key={link.key}
                 href={link.href}
                 onClick={() => setMobileOpen(false)}
                 className="py-4 border-b border-hairline text-[18px] font-serif font-medium text-ink hover:text-emerald transition-colors block"
               >
-                {link.label}
+                {t(link.key)}
               </Link>
             ))}
           </nav>

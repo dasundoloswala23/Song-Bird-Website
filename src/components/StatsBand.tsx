@@ -50,7 +50,7 @@ function StatItem({ value, label, isLast }: { value: string; label: string; isLa
       ref={ref}
       className={`flex flex-col items-center gap-2 px-2 sm:px-6 ${!isLast ? 'md:border-r md:border-hairline' : ''}`}
     >
-      <span className="font-serif font-semibold text-[34px] sm:text-[52px] md:text-[72px] leading-none text-gold">
+      <span className="font-serif font-semibold text-[34px] sm:text-[48px] md:text-[56px] leading-none text-gold">
         {active ? display : value}
       </span>
       <span className="text-[10px] sm:text-[11px] font-sans font-semibold uppercase tracking-[0.18em] text-slate text-center">
@@ -77,7 +77,7 @@ export function StatsBand({ stats }: StatsBandProps) {
   if (entries.length === 0) return null
 
   return (
-    <section className="py-20 bg-surface-muted border-y border-hairline" aria-label="Key statistics">
+    <section className="py-12 md:py-14 bg-surface-muted border-y border-hairline" aria-label="Key statistics">
       <div className="mx-auto px-6 md:px-12 max-w-5xl">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-y-10">
           {entries.map((s, i) => (

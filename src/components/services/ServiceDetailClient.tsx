@@ -16,14 +16,14 @@ export function ServiceDetailClient({ slug, initial }: { slug: string; initial: 
   const [notFound, setNotFound] = useState(false)
 
   useEffect(() => {
-    if (initial) return
-    // Try exact slug, then lowercase fallback (handles case-sensitivity on Firebase Hosting)
+    // Always re-fetch on mount for freshness — so content/images saved in the admin
+    // after the last build/deploy appear without requiring a rebuild.
     const lower = slug.toLowerCase()
     getServiceBySlug(slug)
       .then(s => s ?? getServiceBySlug(lower))
       .then(s => {
-        if (!s) setNotFound(true)
-        else setService(s)
+        if (s) setService(s)
+        else if (!initial) setNotFound(true)
       })
       .finally(() => setLoading(false))
   }, [slug, initial, router])

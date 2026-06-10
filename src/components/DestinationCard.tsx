@@ -1,6 +1,4 @@
 import Image from 'next/image'
-import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
 import type { DestinationDoc } from '@/types/firestore'
 
 interface Props {
@@ -8,12 +6,11 @@ interface Props {
 }
 
 export function DestinationCard({ destination }: Props) {
-  const { slug, name, blurb, image, routes } = destination
+  const { name, blurb, image, routes } = destination
 
   return (
-    <Link
-      href={`/destinations/${slug}`}
-      className="group relative overflow-hidden rounded-2xl block bg-navy-card border border-gold-brushed/10 hover:border-gold-brushed/25 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_48px_rgba(4,38,28,.5)]"
+    <div
+      className="group relative overflow-hidden rounded-2xl block bg-navy-card border border-gold-brushed/10 transition-all duration-300"
     >
       {/* Image */}
       <div className="relative aspect-[4/3] overflow-hidden">
@@ -47,10 +44,7 @@ export function DestinationCard({ destination }: Props) {
             )}
           </div>
         )}
-        <div className="flex items-center gap-1 text-[12px] font-sans font-medium text-gold-brushed group-hover:text-gold transition-colors">
-          View details <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
-        </div>
       </div>
-    </Link>
+    </div>
   )
 }
