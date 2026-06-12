@@ -12,8 +12,8 @@ export interface Service {
 export const SERVICES: Service[] = [
   {
     slug: 'immigration',
-    title: 'Immigration Advisory',
-    shortDesc: 'Expert guidance on visas, residency, and citizenship pathways worldwide.',
+    title: 'Immigration',
+    shortDesc: 'Your trusted partner for global immigration — UK, UAE, USA, Australia, Canada, New Zealand and Asia, covering study, visit, work, business, residency and citizenship pathways.',
     description:
       'Our immigration specialists navigate the complex landscape of global visa and residency programmes on your behalf. From UAE golden visas to investor routes in Canada, Australia, and the EU, we handle every aspect of your application with precision and discretion.',
     cluster: 'legal',

@@ -93,7 +93,8 @@ export interface LeadDoc {
   destination?: string
   subject?: string
   message?: string
-  type: 'inquiry' | 'consultation'
+  type: 'inquiry' | 'consultation' | 'collaboration'
+  attachments?: string[]
   createdAt: number // unix ms
 }
 
@@ -250,9 +251,21 @@ export interface PartnerItem {
   blurb: string
 }
 
+export interface CollabCategory {
+  groupLabel: string
+  items: string[]
+}
+
 export interface CollaborationsDoc {
   eyebrow: string
   title: string
   intro: string
   partners: PartnerItem[]
+  // Join With Us section
+  tagline?: string
+  joinEyebrow?: string
+  joinTitle?: string
+  joinIntro?: string
+  categories?: CollabCategory[]
+  benefits?: string[]
 }

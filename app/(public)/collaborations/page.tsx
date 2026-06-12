@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import { EyebrowTag } from '@/components/EyebrowTag'
 import { FinalCTA } from '@/components/FinalCTA'
+import { CollaborationJoinSection } from '@/components/CollaborationJoinSection'
 import { getCollaborations } from '@/lib/firestorePublic'
 import type { CollaborationsDoc } from '@/types/firestore'
 
@@ -20,7 +21,7 @@ const DEFAULT: CollaborationsDoc = {
 }
 
 export default async function CollaborationsPage() {
-  const content = (await getCollaborations()) ?? DEFAULT
+  const content  = (await getCollaborations()) ?? DEFAULT
   const partners = content.partners?.length ? content.partners : []
 
   return (
@@ -70,6 +71,8 @@ export default async function CollaborationsPage() {
           )}
         </div>
       </section>
+
+      <CollaborationJoinSection content={content} />
 
       <FinalCTA />
     </>

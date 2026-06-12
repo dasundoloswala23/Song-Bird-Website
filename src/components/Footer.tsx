@@ -10,13 +10,14 @@ import { WHATSAPP_NUMBER, OFFICE_ADDRESS, OFFICE_PHONE, CONTACT_EMAIL, SOCIAL } 
 import { SERVICES } from '@/lib/services'
 
 const QUICK_LINKS = [
-  { key: 'footer.link.home',        href: '/' },
-  { key: 'footer.link.about',       href: '/about' },
-  { key: 'footer.link.process',     href: '/#process' },
-  { key: 'footer.link.testimonials', href: '/#testimonials' },
-  { key: 'footer.link.insights',    href: '/insights' },
-  { key: 'footer.link.contact',     href: '/contact' },
-  { key: 'footer.link.privacy',     href: '/privacy' },
+  { key: 'footer.link.home',           href: '/' },
+  { key: 'footer.link.about',          href: '/about' },
+  { key: 'footer.link.process',        href: '/#process' },
+  { key: 'footer.link.testimonials',   href: '/#testimonials' },
+  { key: 'footer.link.collaborations', href: '/collaborations' },
+  { key: 'footer.link.insights',       href: '/insights' },
+  { key: 'footer.link.contact',        href: '/contact' },
+  { key: 'footer.link.privacy',        href: '/privacy' },
 ] as const
 
 function NewsletterRow() {

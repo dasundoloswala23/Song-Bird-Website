@@ -40,7 +40,11 @@ export default function AdminLeadsPage() {
                   <td className="px-5 py-3 text-[13px] font-sans text-cream">{lead.name || '—'}</td>
                   <td className="px-5 py-3 text-[13px] font-sans text-cream/60">{lead.email || '—'}</td>
                   <td className="px-5 py-3">
-                    <span className={`px-2 py-0.5 rounded text-[10px] font-sans uppercase tracking-wider ${lead.type === 'consultation' ? 'bg-gold/15 text-gold-brushed' : 'bg-cream/10 text-cream/50'}`}>
+                    <span className={`px-2 py-0.5 rounded text-[10px] font-sans uppercase tracking-wider ${
+                      lead.type === 'consultation' ? 'bg-gold/15 text-gold-brushed' :
+                      lead.type === 'collaboration' ? 'bg-teal/15 text-teal' :
+                      'bg-cream/10 text-cream/50'
+                    }`}>
                       {lead.type}
                     </span>
                   </td>

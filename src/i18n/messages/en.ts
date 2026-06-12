@@ -133,6 +133,7 @@ const en = {
   'footer.link.about': 'About Us',
   'footer.link.process': 'Our Process',
   'footer.link.testimonials': 'Testimonials',
+  'footer.link.collaborations': 'Collaborations',
   'footer.link.insights': 'Insights',
   'footer.link.contact': 'Contact',
   'footer.link.privacy': 'Privacy Policy',
