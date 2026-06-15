@@ -43,25 +43,50 @@ export function SongbirdDifference({ content }: SongbirdDifferenceProps) {
       <div className="mx-auto px-6 md:px-12 max-w-7xl">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           {/* Image side */}
-          <div className="relative">
-            <div className="relative aspect-[3/4] rounded-2xl overflow-hidden bg-surface-muted border border-hairline shadow-[0_24px_64px_rgba(4,38,28,.12)]">
+          <div className="relative py-6 pr-6">
+
+            {/* Teal accent block — sits behind and offset */}
+            <div className="absolute top-0 right-0 w-[88%] h-[88%] rounded-3xl bg-gradient-to-br from-teal/20 via-emerald/10 to-transparent" />
+
+            {/* Dot-grid decoration — top-left corner */}
+            <div className="absolute top-2 left-0 grid grid-cols-5 gap-[6px] opacity-30">
+              {Array.from({ length: 25 }).map((_, i) => (
+                <span key={i} className="w-1 h-1 rounded-full bg-gold-brushed block" />
+              ))}
+            </div>
+
+            {/* Gold accent bar — left edge */}
+            <div className="absolute left-0 top-1/4 w-[3px] h-28 rounded-full bg-gradient-to-b from-gold via-gold-brushed to-transparent" />
+
+            {/* Main image — fixed height, not aspect ratio */}
+            <div className="relative h-[420px] md:h-[480px] rounded-2xl overflow-hidden shadow-[0_28px_64px_rgba(4,38,28,.16)]">
               {image ? (
-                <Image src={image} alt="Songbird team" fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
+                <Image
+                  src={image}
+                  alt="Songbird office"
+                  fill
+                  className="object-cover object-center"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                />
               ) : (
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <p className="text-slate/60 text-[13px] font-sans text-center px-8">Office / Team photo</p>
+                <div className="absolute inset-0 bg-gradient-to-br from-navy-card via-navy to-navy-deep flex items-center justify-center">
+                  <p className="text-cream/30 text-[13px] font-sans text-center px-8">Office / Team photo</p>
                 </div>
               )}
+              {/* Subtle bottom vignette */}
+              <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-navy/35 to-transparent" />
             </div>
+
+            {/* Badge — overlaps bottom-right of image */}
             {badge?.value && (
-              <div className="absolute -bottom-5 -right-5 md:bottom-8 md:-right-8 bg-white border-2 border-teal/40 rounded-2xl px-6 py-4 shadow-[0_12px_32px_rgba(31,169,104,.18)]">
+              <div className="absolute bottom-2 -right-2 md:bottom-0 md:-right-4 bg-white border-2 border-teal/30 rounded-2xl px-5 py-4 shadow-[0_12px_32px_rgba(31,169,104,.20)]">
                 <p
-                  className="font-serif font-semibold text-[36px] leading-none"
+                  className="font-serif font-semibold text-[34px] leading-none"
                   style={{ background: BRAND_GRADIENT, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}
                 >
                   {badge.value}
                 </p>
-                <p className="text-[11px] font-sans font-semibold uppercase tracking-[0.15em] text-slate mt-0.5 whitespace-pre-line">{badge.label}</p>
+                <p className="text-[10px] font-sans font-semibold uppercase tracking-[0.15em] text-slate mt-0.5 whitespace-pre-line">{badge.label}</p>
               </div>
             )}
           </div>

@@ -1,16 +1,27 @@
+'use client'
+
+import { useEffect, useState } from 'react'
 import { CheckCircle2 } from 'lucide-react'
 import { EyebrowTag } from '@/components/EyebrowTag'
 import { CollaborationJoinForm } from '@/components/CollaborationJoinForm'
 import type { CollaborationsDoc } from '@/types/firestore'
 
-export function CollaborationJoinSection({ content }: { content: CollaborationsDoc }) {
+export function CollaborationJoinSection({ fallback }: { fallback: CollaborationsDoc }) {
+  const [content, setContent] = useState(fallback)
+
+  useEffect(() => {
+    import('@/lib/firestorePublic').then(({ getCollaborations }) =>
+      getCollaborations().then(d => { if (d) setContent(d) })
+    )
+  }, [])
+
   if (!content.joinTitle) return null
 
   const categories = content.categories ?? []
   const benefits   = content.benefits   ?? []
 
   return (
-    <section className="py-24 bg-navy">
+    <section className="pt-[160px] pb-24 bg-navy">
       <div className="mx-auto px-6 md:px-12 max-w-6xl">
 
         {/* Header */}
@@ -37,7 +48,6 @@ export function CollaborationJoinSection({ content }: { content: CollaborationsD
           {/* Left: Categories + Benefits */}
           <div className="space-y-10">
 
-            {/* Categories */}
             {categories.length > 0 && (
               <div>
                 <h3 className="font-serif font-semibold text-[22px] text-white mb-6">Who Can Join?</h3>
@@ -61,7 +71,6 @@ export function CollaborationJoinSection({ content }: { content: CollaborationsD
               </div>
             )}
 
-            {/* Benefits */}
             {benefits.length > 0 && (
               <div>
                 <h3 className="font-serif font-semibold text-[22px] text-white mb-6">Business Benefits</h3>

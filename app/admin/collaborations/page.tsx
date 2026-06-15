@@ -9,9 +9,37 @@ import type { CollaborationsDoc, PartnerItem, CollabCategory } from '@/types/fir
 const inp = 'w-full px-3.5 py-2.5 bg-navy/40 border border-gold-brushed/20 rounded-[6px] text-[13px] font-sans text-cream placeholder:text-cream/30 focus:outline-none focus:ring-2 focus:ring-gold-brushed/50'
 const lbl = 'block text-[11px] font-sans font-semibold uppercase tracking-[0.15em] text-gold-brushed mb-1.5'
 
+const JOIN_DEFAULTS: Partial<CollaborationsDoc> = {
+  joinEyebrow: 'COLLABORATION',
+  joinTitle:   'Collaborating & Partnering with Songbird',
+  tagline:     'Grow your potential globally',
+  joinIntro:
+    'Joining with Songbird can accelerate your opportunities through our global platform. We invite you to confirm your strategic connection with our collaboration channel for individual or collective benefits. Your contribution is built on customer-centric business activity, creating aligned prospects across the enterprise.',
+  categories: [
+    { groupLabel: 'Partners',                 items: ['Startup Business Founders', 'Enterprises', 'Legal Professionals'] },
+    { groupLabel: 'Associates',               items: ['Recruiting Companies', 'HR Companies'] },
+    { groupLabel: 'Employer Companies',       items: ['Small & Medium Companies', 'Multi-national Companies', 'Legal Firms'] },
+    { groupLabel: 'Employees & Job Seekers',  items: ['Skilled Workers', 'Skilled Professionals', 'Researchers', 'Individual Job Seekers', 'Interns & Trainees'] },
+  ],
+  benefits: [
+    'Country Expert Guidance for your business expansion',
+    'Navigation on International Trade & Exports',
+    'Expanding your Business in Trade Fairs',
+    'Introducing International Tax-Free Trade Zones',
+    'Business, Office & Staff Management',
+    'Providing International Regulatory & Legal Advice',
+    'Supply Chain & Shipping Services',
+    'International Banking and Finance Assistance',
+    'Labor Agreements & Trade Negotiations',
+  ],
+}
+
 const DEFAULT: CollaborationsDoc = {
-  eyebrow: '', title: '', intro: '', partners: [],
-  tagline: '', joinEyebrow: '', joinTitle: '', joinIntro: '', categories: [], benefits: [],
+  eyebrow: 'Our Network',
+  title: 'Collaborations & Partnerships',
+  intro: 'We work alongside trusted partners and affiliated institutions to deliver full-spectrum advisory across jurisdictions.',
+  partners: [],
+  ...JOIN_DEFAULTS,
 }
 
 export default function AdminCollaborationsPage() {
@@ -23,7 +51,19 @@ export default function AdminCollaborationsPage() {
   useEffect(() => {
     import('@/lib/firestorePublic').then(({ getCollaborations }) =>
       getCollaborations().then(d => {
-        if (d) setForm({ ...DEFAULT, ...d })
+        if (d) {
+          // Merge: apply JOIN_DEFAULTS for any join fields not yet saved in Firestore
+          setForm({
+            ...DEFAULT,
+            ...d,
+            joinEyebrow: d.joinEyebrow || JOIN_DEFAULTS.joinEyebrow,
+            joinTitle:   d.joinTitle   || JOIN_DEFAULTS.joinTitle,
+            tagline:     d.tagline     || JOIN_DEFAULTS.tagline,
+            joinIntro:   d.joinIntro   || JOIN_DEFAULTS.joinIntro,
+            categories:  d.categories?.length  ? d.categories  : JOIN_DEFAULTS.categories,
+            benefits:    d.benefits?.length     ? d.benefits    : JOIN_DEFAULTS.benefits,
+          })
+        }
         setLoading(false)
       })
     )
