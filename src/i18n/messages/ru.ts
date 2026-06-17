@@ -9,6 +9,7 @@ const ru: Partial<Record<MessageKey, string>> = {
   'nav.collaborations': 'Партнёрства',
   'nav.insights': 'Аналитика',
   'nav.contact': 'Контакты',
+  'footer.link.eligibility': 'Бесплатная проверка соответствия',
 
   'brand.slogan': 'Поднимите свой статус',
 

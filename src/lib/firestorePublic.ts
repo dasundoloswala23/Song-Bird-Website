@@ -4,7 +4,7 @@
  */
 import { getFirestore, collection, query, where, orderBy, getDocs, doc, getDoc, setDoc, addDoc, deleteDoc, updateDoc } from 'firebase/firestore'
 import { firebaseApp } from './firebase'
-import type { ServiceDoc, WhyChooseUsDoc, StatsDoc, ProcessSectionDoc, TestimonialsSectionDoc, LeadDoc, DestinationDoc, SlotDoc, BookingDoc, GlobalReachDoc, HeroSettingsDoc, WelcomeDoc, AccreditationsDoc, CollaborationsDoc, InsightsDoc } from '@/types/firestore'
+import type { ServiceDoc, ServicesIntroDoc, WhyChooseUsDoc, StatsDoc, ProcessSectionDoc, TestimonialsSectionDoc, LeadDoc, DestinationDoc, SlotDoc, BookingDoc, GlobalReachDoc, HeroSettingsDoc, WelcomeDoc, AccreditationsDoc, CollaborationsDoc, InsightsDoc, NewsletterSignupDoc } from '@/types/firestore'
 
 const db = getFirestore(firebaseApp)
 
@@ -88,6 +88,18 @@ export async function getLeadById(id: string): Promise<LeadDoc | null> {
     const snap = await getDoc(doc(db, 'leads', id))
     return snap.exists() ? ({ id: snap.id, ...snap.data() } as LeadDoc) : null
   } catch { return null }
+}
+
+export async function getNewsletterSignups(): Promise<NewsletterSignupDoc[]> {
+  try {
+    const q = query(collection(db, 'newsletter'), orderBy('createdAt', 'desc'))
+    const snap = await getDocs(q)
+    return snap.docs.map(d => ({ id: d.id, ...d.data() } as NewsletterSignupDoc))
+  } catch { return [] }
+}
+
+export async function saveNewsletterSignup(email: string): Promise<void> {
+  await addDoc(collection(db, 'newsletter'), { email: email.trim().toLowerCase(), createdAt: Date.now() })
 }
 
 // ── Destinations ──────────────────────────────────────────────────────────────
@@ -206,6 +218,20 @@ export async function getInsights(): Promise<InsightsDoc | null> {
   } catch { return null }
 }
 
+export async function getServicesIntro(): Promise<ServicesIntroDoc | null> {
+  try {
+    const snap = await getDoc(doc(db, 'siteContent', 'servicesIntro'))
+    return snap.exists() ? (snap.data() as ServicesIntroDoc) : null
+  } catch { return null }
+}
+
+export async function getServicesPageIntro(): Promise<ServicesIntroDoc | null> {
+  try {
+    const snap = await getDoc(doc(db, 'siteContent', 'servicesPageIntro'))
+    return snap.exists() ? (snap.data() as ServicesIntroDoc) : null
+  } catch { return null }
+}
+
 // ── Admin writes ──────────────────────────────────────────────────────────────
 
 export async function saveService(data: Omit<ServiceDoc, 'id'>, id?: string): Promise<string> {
@@ -284,6 +310,14 @@ export async function saveCollaborations(data: CollaborationsDoc): Promise<void>
 
 export async function saveInsights(data: InsightsDoc): Promise<void> {
   await setDoc(doc(db, 'siteContent', 'insights'), data)
+}
+
+export async function saveServicesIntro(data: ServicesIntroDoc): Promise<void> {
+  await setDoc(doc(db, 'siteContent', 'servicesIntro'), data)
+}
+
+export async function saveServicesPageIntro(data: ServicesIntroDoc): Promise<void> {
+  await setDoc(doc(db, 'siteContent', 'servicesPageIntro'), data)
 }
 
 export async function saveSlot(data: Omit<SlotDoc, 'id'>, id?: string): Promise<string> {

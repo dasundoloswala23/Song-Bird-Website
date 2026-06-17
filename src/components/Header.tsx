@@ -25,49 +25,6 @@ const TOP_LINKS = [
   { key: 'nav.contact',        href: '/contact' },
 ] as const
 
-function ServicesMegaPanel({ onClose }: { onClose: () => void }) {
-  return (
-    <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[720px] max-w-[95vw] bg-white border border-hairline rounded-2xl shadow-[0_24px_64px_rgba(4,38,28,.18)] p-6 z-50">
-      <div className="grid grid-cols-3 gap-6">
-        {SERVICE_CLUSTERS.map(cluster => (
-          <div key={cluster.key}>
-            <div className="space-y-1">
-              {cluster.services.map(s => (
-                <Link
-                  key={s.slug}
-                  href={`/services/${s.slug}`}
-                  onClick={onClose}
-                  className="block px-3 py-2 rounded-lg hover:bg-surface-muted transition-colors group"
-                >
-                  <p className="text-[13px] font-sans font-medium text-ink group-hover:text-emerald">{s.title}</p>
-                  <p className="text-[11px] font-sans text-slate leading-tight mt-0.5 line-clamp-1">{s.shortDesc}</p>
-                </Link>
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
-      <div className="mt-4 pt-4 border-t border-hairline flex justify-between items-center">
-        <Link
-          href="/services"
-          onClick={onClose}
-          className="text-[12px] font-sans text-emerald hover:text-teal transition-colors"
-        >
-          View all services →
-        </Link>
-        <Link
-          href="/book-a-consultation"
-          onClick={onClose}
-          className="px-4 py-2 text-[12px] font-sans font-semibold uppercase tracking-[0.08em] text-white rounded-[6px] transition-all hover:-translate-y-px"
-          style={{ background: BRAND_GRADIENT }}
-        >
-          Book Consultation
-        </Link>
-      </div>
-    </div>
-  )
-}
-
 function DestinationsMegaPanel({ onClose }: { onClose: () => void }) {
   return (
     <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-80 bg-white border border-hairline rounded-2xl shadow-[0_24px_64px_rgba(4,38,28,.18)] p-4 z-50">
@@ -149,7 +106,7 @@ export function Header() {
         <Link href="/" className="flex items-center gap-3 shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald rounded">
           <Image src="/logo.png" alt="Songbird Consultancy" width={56} height={56} className="h-12 w-auto" priority />
           <span className="hidden sm:flex flex-col leading-none">
-            <span className="font-serif font-semibold text-[18px] text-ink">Songbird Consultancy</span>
+            <span className="font-serif font-medium text-[18px] text-ink">Songbird Consultancy</span>
             <span className="font-sans text-[11px] uppercase tracking-[0.22em] text-gold-deep mt-1">{t('brand.slogan')}</span>
           </span>
         </Link>
@@ -158,19 +115,10 @@ export function Header() {
         <nav className="hidden lg:flex items-center gap-1 relative" aria-label="Main navigation">
           <Link href="/" className={navLinkCls}>{t('nav.home')}</Link>
 
-          {/* Services mega */}
-          <div className="relative">
-            <button
-              onClick={() => togglePanel('services')}
-              aria-expanded={activePanel === 'services'}
-              aria-haspopup="true"
-              className={cn(navLinkCls, activePanel === 'services' && 'text-emerald')}
-            >
-              {t('nav.services')}
-              <ChevronDown className={cn('w-3.5 h-3.5 transition-transform duration-200', activePanel === 'services' && 'rotate-180')} />
-            </button>
-            {activePanel === 'services' && <ServicesMegaPanel onClose={() => setActivePanel(null)} />}
-          </div>
+          {/* Services — navigates straight to the services page (no dropdown) */}
+          <Link href="/services" className={navLinkCls}>
+            {t('nav.services')}
+          </Link>
 
           {/* Destinations mega */}
           <div className="relative">
@@ -227,14 +175,23 @@ export function Header() {
               {t('nav.home')}
             </Link>
 
-            {/* Services accordion */}
-            <button
-              onClick={() => setMobileExpanded(p => p === 'services' ? null : 'services')}
-              className="flex items-center justify-between py-4 border-b border-hairline text-[18px] font-serif font-medium text-ink hover:text-emerald transition-colors"
-            >
-              {t('nav.services')}
-              <ChevronDown className={cn('w-5 h-5 transition-transform', mobileExpanded === 'services' && 'rotate-180')} />
-            </button>
+            {/* Services — label navigates, chevron expands the sub-list */}
+            <div className="flex items-center justify-between border-b border-hairline">
+              <Link
+                href="/services"
+                onClick={() => setMobileOpen(false)}
+                className="flex-1 py-4 text-[18px] font-serif font-medium text-ink hover:text-emerald transition-colors"
+              >
+                {t('nav.services')}
+              </Link>
+              <button
+                onClick={() => setMobileExpanded(p => p === 'services' ? null : 'services')}
+                aria-label="Expand services"
+                className="p-2 text-ink hover:text-emerald transition-colors"
+              >
+                <ChevronDown className={cn('w-5 h-5 transition-transform', mobileExpanded === 'services' && 'rotate-180')} />
+              </button>
+            </div>
             {mobileExpanded === 'services' && (
               <div className="py-2 pl-4 space-y-0">
                 {SERVICE_CLUSTERS.map(cluster => (

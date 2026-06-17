@@ -17,7 +17,7 @@ export function ServiceCTABand({ serviceTitle }: ServiceCTABandProps) {
           <span className="inline-block w-5 h-px bg-gold-brushed align-middle mr-2" />
           Take the First Step
         </p>
-        <h2 className="font-serif font-semibold text-[30px] md:text-[38px] text-white leading-tight mb-2">
+        <h2 className="font-serif font-medium text-[30px] md:text-[38px] text-white leading-tight mb-2">
           Ready to Start Your Journey?
         </h2>
         <div className="w-12 h-px bg-gold-brushed mx-auto mb-5" />

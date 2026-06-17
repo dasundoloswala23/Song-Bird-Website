@@ -37,7 +37,7 @@ export default function AdminAccreditationsPage() {
 
   return (
     <div className="p-8 max-w-2xl">
-      <h1 className="font-serif font-semibold text-[28px] text-white mb-2">Accreditations & Licenses</h1>
+      <h1 className="font-serif font-medium text-[28px] text-white mb-2">Accreditations & Licenses</h1>
       <p className="text-[13px] font-sans text-cream/50 mb-8">Logos/badges shown on the homepage (e.g. MARN, ICCRC, BASL, IBA). Upload a logo or leave blank to show the name as text.</p>
 
       <form onSubmit={onSubmit}>

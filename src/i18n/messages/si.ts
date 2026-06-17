@@ -9,6 +9,7 @@ const si: Partial<Record<MessageKey, string>> = {
   'nav.collaborations': 'සහයෝගිතා',
   'nav.insights': 'තීක්ෂණ',
   'nav.contact': 'සම්බන්ධ වන්න',
+  'footer.link.eligibility': 'නොමිලේ සුදුසුකම් පරීක්ෂාව',
 
   'brand.slogan': 'ඔබේ තත්ත්වය උසස් කරන්න',
 

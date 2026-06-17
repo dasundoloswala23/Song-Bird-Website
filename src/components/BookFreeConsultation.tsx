@@ -30,6 +30,8 @@ export function BookFreeConsultation() {
     try {
       await saveLead({ ...data, type: 'consultation', createdAt: Date.now() })
     } catch { /* best-effort */ }
+    const { sendLeadEmail } = await import('@/lib/email')
+    await sendLeadEmail({ type: 'consultation', name: data.name, email: data.email, phone: data.phone, destination: data.destination, message: data.message })
     reset()
   }
 
@@ -43,7 +45,7 @@ export function BookFreeConsultation() {
           {/* Copy */}
           <div>
             <EyebrowTag>Free Consultation</EyebrowTag>
-            <h2 id="book-free-heading" className="font-serif font-semibold text-[36px] md:text-[44px] leading-tight text-ink mb-4">
+            <h2 id="book-free-heading" className="font-serif font-medium text-[36px] md:text-[44px] leading-tight text-ink mb-4">
               Book Your Free Consultation
             </h2>
             <p className="text-[16px] font-sans text-slate leading-relaxed mb-2">
@@ -69,7 +71,7 @@ export function BookFreeConsultation() {
                 <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-5" style={{ background: BRAND_GRADIENT }}>
                   <CheckCircle2 className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="font-serif font-semibold text-[24px] text-ink mb-2">Thank you!</h3>
+                <h3 className="font-serif font-medium text-[24px] text-ink mb-2">Thank you!</h3>
                 <p className="text-[14px] font-sans text-slate">We will respond to you within 24 hours.</p>
               </div>
             ) : (

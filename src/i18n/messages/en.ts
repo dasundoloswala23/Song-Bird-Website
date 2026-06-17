@@ -17,7 +17,7 @@ const en = {
 
   // ── Calls to action ──
   'cta.bookConsultation': 'Book a Consultation',
-  'cta.bookFreeConsultation': 'Book Your Free Consultation',
+  'cta.bookFreeConsultation': 'Reserve Your Free Consultation',
   'cta.reserveConsultation': 'Reserve Your Consultation',
   'cta.connectWhatsApp': 'Connect via WhatsApp',
   'cta.freeEligibility': 'Free Eligibility Check →',
@@ -90,7 +90,7 @@ const en = {
   // ── Combined CTA ──
   'combined.eyebrow': 'Free Assessment',
   'combined.heading': 'Are You Eligible? Connect With Us',
-  'combined.subline': 'Answer four quick questions for a personalised pathway — or reach us directly. We respond within 24 hours.',
+  'combined.subline': 'Tell us your goal, share a few details, and pick a time for a personalised consultation — or reach us directly. We respond within 24 hours.',
   'combined.prefer': 'Prefer to talk now?',
   'combined.preferSub': 'Connect with a Songbird advisor directly.',
 
@@ -121,8 +121,8 @@ const en = {
   'form.submit': 'Submit',
 
   // ── Footer ──
-  'footer.stayInformed': 'Stay informed',
-  'footer.stayInformedSub': 'UAE immigration updates and advisory insights, straight to your inbox.',
+  'footer.stayInformed': 'Subscribe to our Newsletter',
+  'footer.stayInformedSub': 'Our monthly newsletter with all the news and important updates, delivered to your inbox.',
   'footer.subscribed': 'Thank you — you’re subscribed.',
   'footer.emailPlaceholder': 'Your email address',
   'footer.brandLine': 'Dubai’s premier multi-service advisory firm — your gateway to global residency, done right.',
@@ -131,6 +131,7 @@ const en = {
   'footer.contactUs': 'Contact Us',
   'footer.link.home': 'Home',
   'footer.link.about': 'About Us',
+  'footer.link.eligibility': 'Free Eligibility Check',
   'footer.link.process': 'Our Process',
   'footer.link.testimonials': 'Testimonials',
   'footer.link.collaborations': 'Collaborations',

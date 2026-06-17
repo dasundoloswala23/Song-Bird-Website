@@ -30,7 +30,7 @@ export function DestinationCard({ destination }: Props) {
 
       {/* Glass panel overlay at bottom */}
       <div className="absolute bottom-0 inset-x-0 p-5 bg-navy/70 backdrop-blur-sm border-t border-gold-brushed/10">
-        <h3 className="font-serif font-semibold text-[20px] text-white mb-1">{name}</h3>
+        <h3 className="font-serif font-medium text-[20px] text-white mb-1">{name}</h3>
         {blurb && <p className="text-[12px] font-sans text-cream/60 mb-3 line-clamp-1">{blurb}</p>}
         {routes?.length > 0 && (
           <div className="flex flex-wrap gap-1.5 mb-3">

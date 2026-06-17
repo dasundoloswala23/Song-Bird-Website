@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { ChevronLeft, ChevronRight, CheckCircle2, Clock, Loader2 } from 'lucide-react'
+import { MonthCalendar } from './MonthCalendar'
 import type { SlotDoc } from '@/types/firestore'
 
 const BRAND_GRADIENT = 'linear-gradient(135deg, #22B877 0%, #0E9C6E 55%, #0E7C5A 100%)'
@@ -59,80 +60,17 @@ function StepIndicator({ step }: { step: number }) {
   )
 }
 
-// Calendar helpers
-function getDaysInMonth(year: number, month: number) {
-  return new Date(year, month + 1, 0).getDate()
-}
-function getFirstDayOfMonth(year: number, month: number) {
-  return new Date(year, month, 1).getDay()
-}
-function isoDate(y: number, m: number, d: number) {
-  return `${y}-${String(m + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`
-}
-
-function MonthCalendar({
-  year, month, selectedDate, onSelect,
-}: {
-  year: number; month: number; selectedDate: string | null; onSelect: (d: string) => void;
-}) {
-  const days    = getDaysInMonth(year, month)
-  const first   = getFirstDayOfMonth(year, month)
-  const today   = new Date()
-  const dayLabels = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']
-
-  return (
-    <div>
-      <div className="grid grid-cols-7 gap-1 mb-1">
-        {dayLabels.map(d => (
-          <div key={d} className="text-center text-[10px] font-sans font-semibold uppercase tracking-[0.1em] text-cream/30 py-1">{d}</div>
-        ))}
-      </div>
-      <div className="grid grid-cols-7 gap-1">
-        {Array.from({ length: first }).map((_, i) => <div key={`blank-${i}`} />)}
-        {Array.from({ length: days }).map((_, i) => {
-          const day  = i + 1
-          const date = isoDate(year, month, day)
-          const isPast = new Date(date) < new Date(today.getFullYear(), today.getMonth(), today.getDate())
-          const sel  = date === selectedDate
-          return (
-            <button
-              key={day}
-              disabled={isPast}
-              onClick={() => onSelect(date)}
-              className={`aspect-square rounded-lg text-[13px] font-sans font-medium transition-all ${
-                sel
-                  ? 'text-white scale-105'
-                  : isPast
-                  ? 'text-cream/20 cursor-not-allowed'
-                  : 'text-cream/70 hover:bg-white/10 hover:text-white'
-              }`}
-              style={sel ? { background: BRAND_GRADIENT } : {}}
-            >
-              {day}
-            </button>
-          )
-        })}
-      </div>
-    </div>
-  )
-}
-
 // Step 1: Date + Slot picker
 function Step1({
   onNext,
 }: {
   onNext: (slot: SlotDoc, duration: number) => void
 }) {
-  const today = new Date()
-  const [year, setYear]           = useState(today.getFullYear())
-  const [month, setMonth]         = useState(today.getMonth())
   const [selectedDate, setDate]   = useState<string | null>(null)
   const [duration, setDuration]   = useState(30)
   const [slots, setSlots]         = useState<SlotDoc[]>([])
   const [loadingSlots, setLoading] = useState(false)
   const [selectedSlot, setSlot]   = useState<SlotDoc | null>(null)
-
-  const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
 
   useEffect(() => {
     if (!selectedDate) { setSlots([]); setSlot(null); return }
@@ -143,30 +81,15 @@ function Step1({
     )
   }, [selectedDate])
 
-  const prevMonth = () => { if (month === 0) { setYear(y => y - 1); setMonth(11) } else setMonth(m => m - 1) }
-  const nextMonth = () => { if (month === 11) { setYear(y => y + 1); setMonth(0) } else setMonth(m => m + 1) }
-
   const canNext = selectedSlot !== null
-  const inp = 'w-full px-3.5 py-2.5 bg-navy/40 border border-gold-brushed/20 rounded-[6px] text-[13px] font-sans text-cream placeholder:text-cream/30 focus:outline-none focus:ring-2 focus:ring-gold-brushed/50'
 
   return (
     <div>
-      <h2 className="font-serif font-semibold text-[28px] text-white mb-8">Pick a time</h2>
+      <h2 className="font-serif font-medium text-[28px] text-white mb-8">Pick a time</h2>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Calendar */}
-        <div className="bg-navy-card border border-gold-brushed/15 rounded-xl p-5">
-          <div className="flex items-center justify-between mb-4">
-            <button onClick={prevMonth} className="p-1.5 rounded hover:bg-white/5 text-cream/60 hover:text-white transition-colors">
-              <ChevronLeft className="w-4 h-4" />
-            </button>
-            <p className="text-[14px] font-sans font-semibold text-white">{MONTHS[month]} {year}</p>
-            <button onClick={nextMonth} className="p-1.5 rounded hover:bg-white/5 text-cream/60 hover:text-white transition-colors">
-              <ChevronRight className="w-4 h-4" />
-            </button>
-          </div>
-          <MonthCalendar year={year} month={month} selectedDate={selectedDate} onSelect={d => { setDate(d); setSlot(null) }} />
-        </div>
+        <MonthCalendar selectedDate={selectedDate} onSelect={d => { setDate(d); setSlot(null) }} />
 
         {/* Duration + Time slots */}
         <div className="space-y-5">
@@ -240,7 +163,7 @@ function Step2({
 
   return (
     <div>
-      <h2 className="font-serif font-semibold text-[28px] text-white mb-8">Your details</h2>
+      <h2 className="font-serif font-medium text-[28px] text-white mb-8">Your details</h2>
       <form onSubmit={handleSubmit(onNext)} className="space-y-5 max-w-lg">
         <div>
           <label className="block text-[11px] font-sans font-semibold uppercase tracking-[0.15em] text-gold-brushed mb-1.5">Full Name</label>
@@ -293,7 +216,7 @@ function Step3({
 }) {
   return (
     <div>
-      <h2 className="font-serif font-semibold text-[28px] text-white mb-8">Confirm your booking</h2>
+      <h2 className="font-serif font-medium text-[28px] text-white mb-8">Confirm your booking</h2>
       <div className="max-w-lg bg-navy-card border border-gold-brushed/15 rounded-xl p-6 mb-8 space-y-4">
         <Row label="Date"      value={slot.date} />
         <Row label="Time"      value={`${slot.startTime} (${details.timezone})`} />
@@ -339,7 +262,7 @@ function SuccessScreen({ bookingId }: { bookingId: string }) {
       >
         <CheckCircle2 className="w-10 h-10 text-white" />
       </div>
-      <h2 className="font-serif font-semibold text-[32px] text-white mb-3">Booking confirmed!</h2>
+      <h2 className="font-serif font-medium text-[32px] text-white mb-3">Booking confirmed!</h2>
       <p className="text-[15px] font-sans text-cream/65 max-w-md mx-auto mb-2">
         Thank you. We'll reach out shortly to confirm your session details.
       </p>
@@ -378,6 +301,18 @@ export function BookingFlow() {
         status: 'pending',
       })
       await updateSlotAvailability(slot.id!, false, details.email)
+      const { sendLeadEmail } = await import('@/lib/email')
+      await sendLeadEmail({
+        type: 'booking',
+        name: details.name,
+        email: details.email,
+        phone: details.phone,
+        date: slot.date,
+        startTime: slot.startTime,
+        durationMin: duration,
+        timezone: details.timezone,
+        message: details.notes,
+      })
       setBookingId(id)
     } catch { /* booking failed silently — could add toast */ }
     setSubmitting(false)

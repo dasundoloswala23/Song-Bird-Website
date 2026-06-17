@@ -11,7 +11,7 @@ export function MinimalServiceDetail({ service }: { service: ServiceDoc }) {
       <section className="pt-[160px] pb-16 bg-navy">
         <div className="mx-auto px-6 md:px-12 max-w-4xl">
           <EyebrowTag>{service.heroEyebrow || 'Advisory Services'}</EyebrowTag>
-          <h1 className="font-serif font-semibold text-[42px] md:text-[56px] leading-tight text-white mb-4">
+          <h1 className="font-serif font-medium text-[42px] md:text-[56px] leading-tight text-white mb-4">
             {service.detailTitle || service.frontTitle}
           </h1>
           <div className="w-16 h-px bg-gold-brushed mb-5" />

@@ -19,7 +19,7 @@ export default function AdminLeadsPage() {
 
   return (
     <div className="p-8">
-      <h1 className="font-serif font-semibold text-[28px] text-white mb-1">Leads</h1>
+      <h1 className="font-serif font-medium text-[28px] text-white mb-1">Leads</h1>
       <p className="text-[13px] font-sans text-cream/50 mb-8">{leads.length} total submissions</p>
 
       {loading ? (

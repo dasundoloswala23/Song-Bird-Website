@@ -7,6 +7,7 @@ import { ArrowLeft, Loader2 } from 'lucide-react'
 import { getServiceBySlug } from '@/lib/firestorePublic'
 import { FullServiceDetail } from '@/components/services/FullServiceDetail'
 import { MinimalServiceDetail } from '@/components/services/MinimalServiceDetail'
+import { SectionedServiceDetail } from '@/components/services/SectionedServiceDetail'
 import type { ServiceDoc } from '@/types/firestore'
 
 export function ServiceDetailClient({ slug, initial }: { slug: string; initial: ServiceDoc | null }) {
@@ -60,7 +61,9 @@ export function ServiceDetailClient({ slug, initial }: { slug: string; initial: 
       </div>
       {service.layout === 'full'
         ? <FullServiceDetail service={service} />
-        : <MinimalServiceDetail service={service} />
+        : service.layout === 'sectioned'
+          ? <SectionedServiceDetail service={service} />
+          : <MinimalServiceDetail service={service} />
       }
     </>
   )

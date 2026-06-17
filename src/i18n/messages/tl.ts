@@ -9,6 +9,7 @@ const tl: Partial<Record<MessageKey, string>> = {
   'nav.collaborations': 'Mga Pakikipagtulungan',
   'nav.insights': 'Mga Insight',
   'nav.contact': 'Kontak',
+  'footer.link.eligibility': 'Libreng Pagsusuri ng Pagiging Karapat-dapat',
 
   'brand.slogan': 'Itaas ang Iyong Katayuan',
 

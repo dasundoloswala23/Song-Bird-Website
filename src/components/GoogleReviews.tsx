@@ -10,7 +10,7 @@ export function GoogleReviews() {
     <section className="py-24 bg-cream" aria-labelledby="google-reviews-heading">
       <div className="mx-auto px-6 md:px-12 max-w-3xl text-center">
         <EyebrowTag>Reviews</EyebrowTag>
-        <h2 id="google-reviews-heading" className="font-serif font-semibold text-[36px] md:text-[48px] leading-tight text-ink mb-3">
+        <h2 id="google-reviews-heading" className="font-serif font-medium text-[36px] md:text-[48px] leading-tight text-ink mb-3">
           Review on Google
         </h2>
         <p className="text-[16px] font-sans text-slate mb-8">We are proud to pronounce your compliments.</p>

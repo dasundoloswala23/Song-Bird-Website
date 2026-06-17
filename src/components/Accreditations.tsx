@@ -25,7 +25,7 @@ export function Accreditations({ fallback }: { fallback?: AccreditationsDoc | nu
     <section className="py-20 bg-surface-muted border-y border-hairline" aria-labelledby="accreditations-heading">
       <div className="mx-auto px-6 md:px-12 max-w-5xl text-center">
         <EyebrowTag>{t('accred.eyebrow')}</EyebrowTag>
-        <h2 id="accreditations-heading" className="font-serif font-semibold text-[30px] md:text-[40px] leading-tight text-ink mb-3">
+        <h2 id="accreditations-heading" className="font-serif font-medium text-[30px] md:text-[40px] leading-tight text-ink mb-3">
           {content.title}
         </h2>
         <p className="text-[15px] font-sans text-slate max-w-xl mx-auto mb-12">{content.subline}</p>
@@ -36,7 +36,7 @@ export function Accreditations({ fallback }: { fallback?: AccreditationsDoc | nu
               {item.logo ? (
                 <Image src={item.logo} alt={item.name} width={120} height={60} className="object-contain max-h-16 w-auto" unoptimized />
               ) : (
-                <span className="font-serif font-semibold text-[22px] text-slate/70">{item.name}</span>
+                <span className="font-serif font-medium text-[22px] text-slate/70">{item.name}</span>
               )}
             </div>
           ))}

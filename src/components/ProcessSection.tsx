@@ -27,7 +27,7 @@ export function ProcessSection({ content }: Props) {
       <div className="mx-auto px-6 md:px-12 max-w-7xl">
         <div className="text-center mb-16">
           <EyebrowTag>{t('process.eyebrow')}</EyebrowTag>
-          <h2 id="process-heading" className="font-serif font-semibold text-[38px] md:text-[48px] leading-tight text-ink">
+          <h2 id="process-heading" className="font-serif font-medium text-[38px] md:text-[48px] leading-tight text-ink">
             {sectionTitle}
           </h2>
           <div className="mx-auto mt-4 w-16 h-px bg-gold-brushed" />
@@ -97,7 +97,7 @@ function StepCard({ step, num }: { step: { title: string; description: string };
       >
         <span className="font-serif font-bold text-[18px] text-white select-none">{num}</span>
       </div>
-      <h3 className="font-serif font-semibold text-[17px] text-ink mb-2 leading-snug">{step.title}</h3>
+      <h3 className="font-serif font-medium text-[17px] text-ink mb-2 leading-snug">{step.title}</h3>
       <p className="text-[13px] font-sans text-slate leading-relaxed">{step.description}</p>
     </div>
   )
@@ -126,10 +126,10 @@ function MobileStepCard({ step, num }: { step: { title: string; description: str
         className="relative z-10 w-10 h-10 rounded-full flex items-center justify-center ring-4 ring-teal/10 shrink-0"
         style={{ background: NODE_GRADIENT }}
       >
-        <span className="font-serif font-semibold text-[14px] text-white select-none">{num}</span>
+        <span className="font-serif font-medium text-[14px] text-white select-none">{num}</span>
       </div>
       <div className="pt-1 flex-1 min-w-0">
-        <h3 className="font-serif font-semibold text-[17px] text-ink mb-1.5 leading-snug">{step.title}</h3>
+        <h3 className="font-serif font-medium text-[17px] text-ink mb-1.5 leading-snug">{step.title}</h3>
         <p className="text-[13px] font-sans text-slate leading-relaxed">{step.description}</p>
       </div>
     </div>

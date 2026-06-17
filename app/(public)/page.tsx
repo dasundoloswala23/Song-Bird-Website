@@ -1,4 +1,4 @@
-import { getPublishedServices, getWhyChooseUs, getSiteStats, getProcessSection, getTestimonials, getHeroSettings, getGlobalReach, getDestinations, getAccreditations, getInsights } from '@/lib/firestorePublic'
+import { getPublishedServices, getWhyChooseUs, getSiteStats, getProcessSection, getTestimonials, getHeroSettings, getGlobalReach, getDestinations, getAccreditations, getInsights, getServicesIntro } from '@/lib/firestorePublic'
 import { Hero } from '@/components/Hero'
 import { UaeLicensedBadge } from '@/components/UaeLicensedBadge'
 import { StatsBandClient } from '@/components/StatsBandClient'
@@ -17,7 +17,7 @@ import { FinalCTA } from '@/components/FinalCTA'
 export const dynamic = 'force-static'
 
 export default async function HomePage() {
-  const [services, whyChooseUs, stats, processSection, testimonials, heroSettings, globalReach, destinations, accreditations, insights] = await Promise.all([
+  const [services, whyChooseUs, stats, processSection, testimonials, heroSettings, globalReach, destinations, accreditations, insights, servicesIntro] = await Promise.all([
     getPublishedServices(),
     getWhyChooseUs(),
     getSiteStats(),
@@ -28,6 +28,7 @@ export default async function HomePage() {
     getDestinations(),
     getAccreditations(),
     getInsights(),
+    getServicesIntro(),
   ])
 
   return (
@@ -35,9 +36,9 @@ export default async function HomePage() {
       <Hero heroSettings={heroSettings} />
       <UaeLicensedBadge />
       <StatsBandClient fallback={stats} />
-      <GlobalReachMap fallback={globalReach} />
-      <ServicesBandClient fallback={services} />
       <SongbirdDifferenceClient fallback={whyChooseUs} />
+      <GlobalReachMap fallback={globalReach} />
+      <ServicesBandClient fallback={services} intro={servicesIntro} />
       <Insights fallback={insights} />
       <PowerBand />
       <Accreditations fallback={accreditations} />

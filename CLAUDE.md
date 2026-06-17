@@ -26,11 +26,18 @@ firebase deploy --only firestore
 # Deploy Storage rules
 firebase deploy --only storage
 
+# Build + deploy Cloud Functions (transactional email — see functions/)
+npm --prefix functions run build
+firebase deploy --only functions
+
+# Tail Cloud Function logs
+npm --prefix functions run logs
+
 # Seed Firestore with initial data (run once to bootstrap)
 node scripts/seed.mjs
 ```
 
-No test runner is configured.
+No test runner is configured. The `functions/` package is a **separate npm project** with its own `package.json`/`node_modules` — run `npm i` inside `functions/` before building it.
 
 ## Environment Variables
 
@@ -41,9 +48,14 @@ Required in `.env.local`:
 | `NEXT_PUBLIC_FIREBASE_*` | 7 Firebase Client SDK config vars |
 | `FIREBASE_ADMIN_CREDENTIALS` | Service account JSON as a single line (server-only) |
 | `ADMIN_SESSION_SECRET` | JWT signing secret for admin sessions |
-| `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS` | Nodemailer email delivery |
 | `CONTACT_EMAIL` | Admin email for leads (also falls back to `constants.ts`) |
 | `NEXT_PUBLIC_WHATSAPP_NUMBER` | WhatsApp link number (also falls back to `constants.ts`) |
+
+Email is **no longer sent from the Next.js app** — it is delivered by a Firebase Cloud Function (see below). The Gmail credential is a **Cloud Function secret**, not an `.env.local` var:
+
+```bash
+firebase functions:secrets:set GMAIL_APP_PASSWORD
+```
 
 ## Architecture
 
@@ -63,6 +75,17 @@ There are no `middleware.ts` or `app/api/` route handlers — this is a fully st
 All dynamic content lives in Firestore. Public pages are **async Server Components** with `export const dynamic = 'force-static'`, fetching from Firestore at build time. Service detail pages at `/services/[slug]` use `generateStaticParams()` + `generateMetadata()`.
 
 After adding or editing content in the admin panel, run `npm run build && firebase deploy --only hosting` to publish changes to the static site.
+
+### Email via Cloud Function (Lead Notifications)
+
+Because the site is a static export with no `app/api/` routes, all transactional email goes through a **single callable Cloud Function** in `functions/src/index.ts`:
+
+- **`sendLeadEmail`** — `onCall` (region `us-central1`), sends an HTML lead notification to `info@songbird.ae` via Gmail SMTP (nodemailer + the `GMAIL_APP_PASSWORD` secret). Requires the Firebase **Blaze plan**.
+- Client side: `src/lib/email.ts` exports `sendLeadEmail(payload)` which lazily imports `firebase/functions` and invokes the callable. It is **best-effort** — failures are swallowed so they never block the Firestore write or the form's success UI.
+- `LeadEmailPayload.type` is `'inquiry' | 'consultation' | 'eligibility' | 'booking'` and drives the email subject/layout. The payload can carry scheduling fields (`date`, `startTime`, `durationMin`, `timezone`, `sessionType`, `charge`) and a CV attachment (`cvUrl`/`cvFileName`).
+- Callers: `ContactForm`, `ConsultationModal`, `BookFreeConsultation`, `BookingFlow`, `EligibilityFlow`, `EligibilityForm`, `CollaborationJoinForm`.
+
+`src/lib/uploadFile.ts` uploads a `File` to Firebase Storage (`<folder>/<timestamp>_<name>`) and returns a download URL — used for CV/document attachments that are then passed to `sendLeadEmail` as `cvUrl`. Storage rules must allow writes to the target folder.
 
 ### Dual Firestore Module Pattern
 
@@ -131,15 +154,24 @@ This pattern is used by `ServicesBandClient` and `ServicesGrid`. It avoids a loa
 
 ### CMS Collections in Firestore
 
-All types defined in `src/types/firestore.ts`:
+All types defined in `src/types/firestore.ts`. There are three kinds of storage: **collections** (multiple docs, queried), **singleton docs under `siteContent/*`** (one doc per page section, fetched by id), and **`siteStats/home`**.
+
+Collections:
 
 - **services** — `ServiceDoc`: slug, layout, published, order, hero, stat strip, overview, key benefits, procedure, FAQs, etc.
-- **siteContent/whyChooseUs** — `WhyChooseUsDoc`: eyebrow, title, intro, image, badge, features[]
-- **siteContent/processSection** — `ProcessSectionDoc`: title, steps[]
-- **siteContent/testimonials** — `TestimonialsSectionDoc`: items[]
-- **siteStats/home** — `StatsDoc`: applications, successRate, destinations, serviceLines
-- **leads** — `LeadDoc`: name, email, phone, destination, type (`'inquiry'|'consultation'`), createdAt
+- **destinations** — `DestinationDoc`: slug, published, country/region content (mirrors the services pattern — has its own detail pages)
+- **slots** — `SlotDoc`: bookable consultation time slots (queried by `date`)
+- **bookings** — `BookingDoc`: confirmed consultation bookings (created by `BookingFlow`)
+- **leads** — `LeadDoc`: name, email, phone, destination, `type` (`'inquiry'|'consultation'|'eligibility'|'booking'`), createdAt
 - **users** — `UserDoc`: uid, email, role (`'admin'|'editor'`), active
+
+Singleton `siteContent/*` docs (each edited by a dedicated admin page, fetched via its own `getX()` helper in `firestorePublic.ts`):
+
+- **whyChooseUs**, **processSection**, **testimonials**, **globalReach**, **heroSettings**, **welcome**, **accreditations**, **collaborations**, **insights**, **servicesIntro**
+
+Plus **siteStats/home** — `StatsDoc`: applications, successRate, destinations, serviceLines.
+
+When adding a new `siteContent` section, the pattern is: add the `*Doc` type → add `getX()`/`saveX()` in `firestorePublic.ts` → add a client component with a `DEFAULT_*` fallback constant (e.g. `ServicesIntro` / `DEFAULT_SERVICES_INTRO`) → add an admin page under `app/admin/`.
 
 ### Styling System
 
@@ -184,4 +216,6 @@ Custom color palette (CSS variables in `src/styles/theme.css`):
 - `lucide-react` — icons
 - `motion` — animations (`src/lib/motionVariants.ts` has shared presets: `fadeUp`, `fadeIn`, `staggerContainer`, `slideInLeft`, `scaleIn`)
 - `embla-carousel-react` — testimonials/hero carousel
-- `nodemailer` — contact form email
+- `@mui/material` + `@mui/icons-material` (+ `@emotion/*`) — MUI is used alongside Tailwind/shadcn in some newer components (e.g. booking/calendar UI); prefer the existing Tailwind tokens + shadcn primitives for new work unless matching an MUI component already in place
+- `firebase/functions` — invokes the `sendLeadEmail` callable (lazy-imported in `src/lib/email.ts`)
+- `nodemailer` — used **only inside `functions/`** for the email Cloud Function (the copy in the root `package.json` is vestigial; the app no longer sends mail directly)

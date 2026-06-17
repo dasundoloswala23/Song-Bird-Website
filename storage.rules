@@ -13,5 +13,13 @@ service firebase.storage {
          || request.resource.contentType.matches('application/msword')
          || request.resource.contentType.matches('application/vnd.openxmlformats-officedocument\\..*'));
     }
+    match /eligibility-cv/{fileName} {
+      allow read: if true;
+      allow write: if request.resource.size < 10 * 1024 * 1024
+        && (request.resource.contentType.matches('application/pdf')
+         || request.resource.contentType.matches('image/.*')
+         || request.resource.contentType.matches('application/msword')
+         || request.resource.contentType.matches('application/vnd.openxmlformats-officedocument\\..*'));
+    }
   }
 }

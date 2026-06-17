@@ -9,6 +9,7 @@ const ta: Partial<Record<MessageKey, string>> = {
   'nav.collaborations': 'கூட்டிணைப்புகள்',
   'nav.insights': 'நுண்ணறிவுகள்',
   'nav.contact': 'தொடர்பு',
+  'footer.link.eligibility': 'இலவச தகுதி சரிபார்ப்பு',
 
   'brand.slogan': 'உங்கள் நிலையை உயர்த்துங்கள்',
 

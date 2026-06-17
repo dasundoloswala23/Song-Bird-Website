@@ -1,12 +1,12 @@
 import type { Metadata } from 'next'
-import { Cormorant_Garamond, Jost } from 'next/font/google'
+import { Playfair_Display, Jost } from 'next/font/google'
 import '../src/styles/index.css'
 import { DirectionProvider } from '@/context/DirectionContext'
 import { LanguageProvider } from '@/context/LanguageContext'
 
-const serif = Cormorant_Garamond({
+const serif = Playfair_Display({
   subsets: ['latin'],
-  weight: ['500', '600'],
+  weight: ['500', '600', '700'],
   variable: '--heading-font',
   display: 'swap',
 })

@@ -9,6 +9,7 @@ const hi: Partial<Record<MessageKey, string>> = {
   'nav.collaborations': 'सहयोग',
   'nav.insights': 'जानकारी',
   'nav.contact': 'संपर्क',
+  'footer.link.eligibility': 'निःशुल्क पात्रता जाँच',
 
   'brand.slogan': 'अपना दर्जा बढ़ाएँ',
 

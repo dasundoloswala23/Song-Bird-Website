@@ -34,7 +34,7 @@ export default function AdminBookingsPage() {
   return (
     <div className="p-8">
       <div className="mb-8">
-        <h1 className="font-serif font-semibold text-[28px] text-white mb-0.5">Bookings</h1>
+        <h1 className="font-serif font-medium text-[28px] text-white mb-0.5">Bookings</h1>
         <p className="text-[13px] font-sans text-cream/50">{bookings.length} total</p>
       </div>
 

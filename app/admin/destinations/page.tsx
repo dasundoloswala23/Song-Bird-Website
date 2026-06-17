@@ -120,7 +120,7 @@ export default function AdminDestinationsPage() {
     <div className="p-8">
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="font-serif font-semibold text-[28px] text-white mb-0.5">Destinations</h1>
+          <h1 className="font-serif font-medium text-[28px] text-white mb-0.5">Destinations</h1>
           <p className="text-[13px] font-sans text-cream/50">{destinations.length} total</p>
         </div>
         <button onClick={() => setEditing('new')}

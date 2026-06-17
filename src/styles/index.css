@@ -40,6 +40,51 @@ html {
   scroll-behavior: smooth;
 }
 
+/* ── Sectioned service page — rich-text body (no typography plugin) ── */
+.sb-prose { color: var(--slate); font-size: 15px; line-height: 1.7; }
+.sb-prose > * + * { margin-top: 1rem; }
+.sb-prose p { font-size: 15px; color: var(--slate); line-height: 1.7; }
+.sb-prose strong { color: var(--ink); font-weight: 600; }
+.sb-prose a { color: var(--gold-deep); text-decoration: none; }
+.sb-prose a:hover { text-decoration: underline; }
+.sb-prose h2 { font-family: var(--font-serif, serif); color: var(--ink); font-weight: 600; font-size: 24px; margin-top: 1.75rem; }
+.sb-prose h3 { font-family: var(--font-serif, serif); color: var(--ink); font-weight: 600; font-size: 20px; margin-top: 1.5rem; }
+.sb-prose ul, .sb-prose ol { padding-left: 1.5rem; }
+.sb-prose ul { list-style: none; }
+.sb-prose ul > li { position: relative; padding-left: 1.25rem; }
+.sb-prose ul > li::before {
+  content: ''; position: absolute; left: 0; top: 0.6em;
+  width: 6px; height: 6px; border-radius: 9999px; background-color: var(--gold);
+}
+.sb-prose ol { list-style: decimal; }
+.sb-prose li { color: var(--slate); margin-top: 0.35rem; }
+.sb-prose blockquote {
+  border-left: 3px solid var(--gold-brushed); padding-left: 1rem;
+  color: var(--slate); font-style: italic;
+}
+.sb-prose img { border-radius: 0.75rem; margin: 1.5rem 0; max-width: 100%; height: auto; }
+
+/* Hide horizontal scrollbar on mobile section tab bar */
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
+/* ── Quill rich-text editor — dark admin theme overrides ── */
+.sb-quill .ql-toolbar.ql-snow {
+  border: none; border-bottom: 1px solid rgba(230, 217, 168, 0.2);
+  border-radius: 6px 6px 0 0;
+}
+.sb-quill .ql-container.ql-snow { border: none; font-family: inherit; }
+.sb-quill .ql-editor { color: var(--cream); min-height: 12rem; font-size: 14px; }
+.sb-quill .ql-editor.ql-blank::before { color: rgba(241, 250, 244, 0.3); font-style: normal; }
+.sb-quill .ql-snow .ql-stroke { stroke: var(--gold-brushed); }
+.sb-quill .ql-snow .ql-fill { fill: var(--gold-brushed); }
+.sb-quill .ql-snow .ql-picker { color: var(--gold-brushed); }
+.sb-quill .ql-snow .ql-picker-options { background-color: var(--navy-card); }
+.sb-quill .ql-snow.ql-toolbar button:hover .ql-stroke,
+.sb-quill .ql-snow.ql-toolbar button.ql-active .ql-stroke { stroke: #fff; }
+.sb-quill .ql-snow.ql-toolbar button:hover .ql-fill,
+.sb-quill .ql-snow.ql-toolbar button.ql-active .ql-fill { fill: #fff; }
+
 /* Reduced-motion overrides */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

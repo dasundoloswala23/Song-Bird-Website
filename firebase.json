@@ -5,6 +5,11 @@
   "storage": {
     "rules": "storage.rules"
   },
+  "functions": {
+    "source": "functions",
+    "runtime": "nodejs20",
+    "predeploy": ["npm --prefix \"$RESOURCE_DIR\" run build"]
+  },
   "hosting": {
     "public": "out",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
@@ -15,6 +20,10 @@
       {
         "source": "/services/**",
         "destination": "/services/immigration/index.html"
+      },
+      {
+        "source": "/insights/**",
+        "destination": "/insights/coming-soon/index.html"
       }
     ],
     "headers": [

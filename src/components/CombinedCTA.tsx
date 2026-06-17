@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { MessageCircle, Phone } from 'lucide-react'
-import { EligibilityQuiz } from './EligibilityQuiz'
+import { EligibilityFlow } from './EligibilityFlow'
 import { buildWhatsAppUrl } from '@/lib/utils'
 import { useT } from '@/context/LanguageContext'
 import { WHATSAPP_NUMBER, OFFICE_PHONE } from '@/lib/constants'
@@ -16,11 +16,11 @@ export function CombinedCTA() {
   const waUrl = buildWhatsAppUrl(WHATSAPP_NUMBER, 'Hello Songbird, I would like to check my eligibility and connect.')
 
   return (
-    <section className="py-24 bg-navy-deep" aria-labelledby="combined-cta-heading">
+    <section id="eligibility" className="scroll-mt-24 py-24 bg-navy-deep" aria-labelledby="combined-cta-heading">
       <div className="mx-auto px-6 md:px-12 max-w-6xl">
         <div className="text-center mb-12">
           <p className="text-[11px] font-sans font-semibold uppercase tracking-[0.25em] text-gold-brushed mb-3">{t('combined.eyebrow')}</p>
-          <h2 id="combined-cta-heading" className="font-serif font-semibold text-[34px] md:text-[46px] leading-tight text-white mb-4">
+          <h2 id="combined-cta-heading" className="font-serif font-medium text-[34px] md:text-[46px] leading-tight text-white mb-4">
             {t('combined.heading')}
           </h2>
           <p className="text-[16px] font-sans text-cream/55 max-w-xl mx-auto">
@@ -29,14 +29,14 @@ export function CombinedCTA() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-10 items-start">
-          {/* Eligibility quiz */}
+          {/* Eligibility flow */}
           <div>
-            <EligibilityQuiz />
+            <EligibilityFlow />
           </div>
 
           {/* Connect options */}
           <div className="bg-navy-card border border-gold-brushed/20 rounded-2xl p-7">
-            <h3 className="font-serif font-semibold text-[22px] text-white mb-2">{t('combined.prefer')}</h3>
+            <h3 className="font-serif font-medium text-[22px] text-white mb-2">{t('combined.prefer')}</h3>
             <p className="text-[14px] font-sans text-cream/55 mb-6">{t('combined.preferSub')}</p>
             <div className="flex flex-col gap-3">
               <a

@@ -21,6 +21,13 @@ export interface FAQ {
   answer: string
 }
 
+export interface ServiceSection {
+  id: string      // stable anchor slug, e.g. "overview"
+  title: string   // nav label + H2 of the block
+  body: string    // rich HTML from Quill (may contain inline <img>)
+  stats?: StatStripItem[]   // optional row of figures shown within this section
+}
+
 export interface ServiceDoc {
   id?: string
   order: number
@@ -30,10 +37,12 @@ export interface ServiceDoc {
 
   // Card (front)
   frontTitle: string
-  frontSubtitle: string
+  frontSubtitle: string       // card description on the /services page grid
+  homeSubtitle?: string       // card description on the home "What We Offer" band (falls back to frontSubtitle)
+  cardImage: string   // background image shown on the service card (optional)
 
   // Detail page
-  layout: 'full' | 'minimal'
+  layout: 'full' | 'minimal' | 'sectioned'
   heroImage: string
   heroEyebrow: string
   detailTitle: string
@@ -50,6 +59,17 @@ export interface ServiceDoc {
   // Minimal layout
   whatWeProvide: string[]
   requirements: string[]
+
+  // Sectioned layout
+  sections?: ServiceSection[]
+  showContactNav?: boolean   // show "Contact an adviser" in side nav (defaults true)
+}
+
+// ── Services Intro ("One Firm. Every Path") (siteContent/servicesIntro) ─────────
+
+export interface ServicesIntroDoc {
+  title: string
+  body: string   // multi-paragraph (split on blank lines for rendering)
 }
 
 // ── Why Choose Us ─────────────────────────────────────────────────────────────
@@ -81,6 +101,14 @@ export interface StatsDoc {
   successRate:  StatEntry
   destinations: StatEntry
   serviceLines: StatEntry
+}
+
+// ── Newsletter ────────────────────────────────────────────────────────────────
+
+export interface NewsletterSignupDoc {
+  id?: string
+  email: string
+  createdAt: number // unix ms
 }
 
 // ── Leads ─────────────────────────────────────────────────────────────────────
@@ -178,6 +206,7 @@ export interface GlobalReachPin {
   label: string
   lat: number
   lng: number
+  chip?: boolean   // show this country's name as a pill below the map (markers always render)
 }
 
 export interface GlobalReachDoc {
@@ -235,11 +264,15 @@ export interface InsightItem {
   date: string
   title: string
   excerpt: string
-  href: string
+  slug?: string      // stable anchor for the /insights/[slug] detail page (generated from title)
+  image?: string     // hero / thumbnail image (Firebase Storage URL)
+  body?: string      // rich HTML article body (from Quill; may contain inline images)
+  href?: string      // legacy/external link — optional, detail page is preferred
 }
 
 export interface InsightsDoc {
   items: InsightItem[]
+  topVideoUrl?: string   // optional video shown at the top of the /insights page
 }
 
 // ── Collaborations / Partnerships (siteContent/collaborations) ─────────────────

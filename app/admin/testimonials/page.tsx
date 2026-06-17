@@ -47,7 +47,7 @@ export default function TestimonialsPage() {
 
   return (
     <div className="p-8 max-w-3xl">
-      <h1 className="font-serif font-semibold text-[28px] text-white mb-2">Client Stories</h1>
+      <h1 className="font-serif font-medium text-[28px] text-white mb-2">Client Stories</h1>
       <p className="text-[13px] font-sans text-cream/45 mb-8">
         Manage testimonials shown on the home page. Remove all items to hide the section entirely.
       </p>
@@ -55,7 +55,7 @@ export default function TestimonialsPage() {
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <div className="bg-navy-card border border-gold-brushed/15 rounded-xl p-6">
           <div className="flex items-center justify-between mb-5">
-            <p className="font-serif font-semibold text-[18px] text-white">Testimonials</p>
+            <p className="font-serif font-medium text-[18px] text-white">Testimonials</p>
             <button
               type="button"
               onClick={() => append({ quote: '', name: '', role: '' })}

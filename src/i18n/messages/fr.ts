@@ -9,6 +9,7 @@ const fr: Partial<Record<MessageKey, string>> = {
   'nav.collaborations': 'Collaborations',
   'nav.insights': 'Actualités',
   'nav.contact': 'Contact',
+  'footer.link.eligibility': 'Vérification d’éligibilité gratuite',
 
   'brand.slogan': 'Élevez Votre Statut',
 

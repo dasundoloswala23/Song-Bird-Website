@@ -81,7 +81,7 @@ export function SongbirdDifference({ content }: SongbirdDifferenceProps) {
             {badge?.value && (
               <div className="absolute bottom-2 -right-2 md:bottom-0 md:-right-4 bg-white border-2 border-teal/30 rounded-2xl px-5 py-4 shadow-[0_12px_32px_rgba(31,169,104,.20)]">
                 <p
-                  className="font-serif font-semibold text-[34px] leading-none"
+                  className="font-serif font-medium text-[34px] leading-none"
                   style={{ background: BRAND_GRADIENT, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}
                 >
                   {badge.value}
@@ -94,7 +94,7 @@ export function SongbirdDifference({ content }: SongbirdDifferenceProps) {
           {/* Text side */}
           <div>
             <EyebrowTag>{eyebrow}</EyebrowTag>
-            <h2 id="difference-heading" className="font-serif font-semibold text-[36px] md:text-[44px] leading-tight text-ink mb-4">
+            <h2 id="difference-heading" className="font-serif font-medium text-[36px] md:text-[44px] leading-tight text-ink mb-4">
               {title}
             </h2>
             <div className="w-12 h-px bg-gold mb-6" />

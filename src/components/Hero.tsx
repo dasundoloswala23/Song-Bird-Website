@@ -5,7 +5,6 @@ import { CheckCircle, Play, X } from 'lucide-react'
 import { motion, AnimatePresence } from 'motion/react'
 import { useConsultationModal } from '@/context/ConsultationModalContext'
 import { useT } from '@/context/LanguageContext'
-import Link from 'next/link'
 import type { HeroSettingsDoc } from '@/types/firestore'
 import type { MessageKey } from '@/i18n'
 
@@ -145,7 +144,7 @@ export function Hero({ heroSettings }: { heroSettings?: HeroSettingsDoc | null }
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -16 }}
                 transition={{ duration: 0.5, ease: 'easeOut' }}
-                className="font-serif font-semibold text-[40px] md:text-[56px] lg:text-[68px] leading-[1.08] text-white max-w-4xl"
+                className="font-serif font-medium text-[40px] md:text-[56px] lg:text-[68px] leading-[1.08] text-white max-w-4xl"
               >
                 {activeTagline}
               </motion.h1>
@@ -182,13 +181,6 @@ export function Hero({ heroSettings }: { heroSettings?: HeroSettingsDoc | null }
             >
               {t('cta.bookFreeConsultation')}
             </button>
-            <Link
-              href="/contact"
-              className="inline-flex items-center gap-2 px-7 py-3.5 text-[14px] font-sans font-semibold uppercase tracking-[0.08em] rounded-[6px] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-brushed"
-              style={{ color: '#E6D9A8', background: 'transparent' }}
-            >
-              {t('cta.freeEligibility')}
-            </Link>
             {fullVideoUrl && (
               <button
                 onClick={() => setVideoModal(true)}

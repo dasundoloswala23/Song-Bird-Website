@@ -6,12 +6,13 @@ import Image from 'next/image'
 import { MapPin, Phone, Mail, Facebook, Instagram, Linkedin, ArrowRight } from 'lucide-react'
 import { buildWhatsAppUrl } from '@/lib/utils'
 import { useT } from '@/context/LanguageContext'
-import { WHATSAPP_NUMBER, OFFICE_ADDRESS, OFFICE_PHONE, CONTACT_EMAIL, SOCIAL } from '@/lib/constants'
+import { WHATSAPP_NUMBER, OFFICES, OFFICE_PHONE, CONTACT_EMAIL, SOCIAL } from '@/lib/constants'
 import { SERVICES } from '@/lib/services'
 
 const QUICK_LINKS = [
   { key: 'footer.link.home',           href: '/' },
   { key: 'footer.link.about',          href: '/about' },
+  { key: 'footer.link.eligibility',    href: '/#eligibility' },
   { key: 'footer.link.process',        href: '/#process' },
   { key: 'footer.link.testimonials',   href: '/#testimonials' },
   { key: 'footer.link.collaborations', href: '/collaborations' },
@@ -23,41 +24,56 @@ const QUICK_LINKS = [
 function NewsletterRow() {
   const { t } = useT()
   const [email, setEmail] = useState('')
-  const [submitted, setSubmitted] = useState(false)
+  const [status, setStatus] = useState<'idle' | 'saving' | 'done' | 'error'>('idle')
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (email) setSubmitted(true)
+    if (!email || status === 'saving') return
+    setStatus('saving')
+    try {
+      const { saveNewsletterSignup } = await import('@/lib/firestorePublic')
+      await saveNewsletterSignup(email)
+      setStatus('done')
+      setEmail('')
+    } catch {
+      setStatus('error')
+    }
   }
 
   return (
     <div className="border-b border-gold-brushed/10 pb-10 mb-10">
       <div className="flex flex-col md:flex-row md:items-center gap-5 justify-between">
         <div>
-          <p className="text-[13px] font-sans font-semibold text-cream/80 mb-0.5">{t('footer.stayInformed')}</p>
+          <p className="text-[15px] font-serif font-medium text-cream mb-0.5">{t('footer.stayInformed')}</p>
           <p className="text-[12px] font-sans text-cream/45">{t('footer.stayInformedSub')}</p>
         </div>
-        {submitted ? (
+        {status === 'done' ? (
           <p className="text-[13px] font-sans text-teal-end">{t('footer.subscribed')}</p>
         ) : (
-          <form onSubmit={handleSubmit} className="flex gap-2 w-full md:w-auto">
+          <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2 w-full md:w-auto">
             <input
               type="email"
               value={email}
               onChange={e => setEmail(e.target.value)}
               placeholder={t('footer.emailPlaceholder')}
               required
-              className="flex-1 md:w-60 px-3.5 py-2.5 bg-navy/50 border border-gold-brushed/20 rounded-[6px] text-[13px] font-sans text-cream placeholder:text-cream/25 focus:outline-none focus:ring-2 focus:ring-gold-brushed/40"
+              disabled={status === 'saving'}
+              className="flex-1 md:w-60 px-3.5 py-2.5 bg-navy/50 border border-gold-brushed/20 rounded-[6px] text-[13px] font-sans text-cream placeholder:text-cream/25 focus:outline-none focus:ring-2 focus:ring-gold-brushed/40 disabled:opacity-60"
             />
             <button
               type="submit"
-              className="shrink-0 flex items-center gap-1.5 px-4 py-2.5 border border-gold-brushed/50 text-gold-brushed hover:bg-gold-brushed/10 text-[12px] font-sans font-semibold uppercase tracking-[0.08em] rounded-[6px] transition-colors"
+              disabled={status === 'saving'}
+              className="shrink-0 flex items-center justify-center gap-1.5 px-5 py-2.5 bg-gold hover:bg-gold-deep disabled:opacity-60 text-navy text-[12px] font-sans font-semibold uppercase tracking-[0.08em] rounded-[6px] transition-colors"
             >
-              {t('cta.subscribe')} <ArrowRight className="w-3 h-3" />
+              {status === 'saving' ? 'Subscribing…' : t('cta.subscribe')}
+              {status !== 'saving' && <ArrowRight className="w-3 h-3" />}
             </button>
           </form>
         )}
       </div>
+      {status === 'error' && (
+        <p className="mt-2 text-[12px] font-sans text-red-400">Something went wrong. Please try again.</p>
+      )}
     </div>
   )
 }
@@ -125,10 +141,14 @@ export function Footer() {
           <div>
             <h3 className="text-[11px] font-sans font-semibold uppercase tracking-[0.22em] text-gold-brushed mb-4">{t('footer.contactUs')}</h3>
             <ul className="space-y-3 mb-5">
-              <li className="flex items-start gap-2.5">
-                <MapPin className="w-4 h-4 text-gold-brushed shrink-0 mt-0.5" />
-                <span className="text-[13px] font-sans text-cream/60 leading-snug">{OFFICE_ADDRESS}</span>
-              </li>
+              {OFFICES.map(office => (
+                <li key={office.city} className="flex items-start gap-2.5">
+                  <MapPin className="w-4 h-4 text-gold-brushed shrink-0 mt-0.5" />
+                  <span className="text-[13px] font-sans text-cream/60 leading-snug">
+                    {office.address}
+                  </span>
+                </li>
+              ))}
               <li className="flex items-center gap-2.5">
                 <Phone className="w-4 h-4 text-gold-brushed shrink-0" />
                 <a href={`tel:${OFFICE_PHONE.replace(/\s/g, '')}`} className="text-[13px] font-sans text-cream/60 hover:text-teal-end transition-colors">{OFFICE_PHONE}</a>

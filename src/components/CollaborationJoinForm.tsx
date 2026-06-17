@@ -89,7 +89,7 @@ export function CollaborationJoinForm() {
     return (
       <div className="flex flex-col items-center justify-center gap-4 py-16 text-center">
         <CheckCircle2 className="w-12 h-12 text-teal" />
-        <h4 className="font-serif font-semibold text-[22px] text-white">Thank you!</h4>
+        <h4 className="font-serif font-medium text-[22px] text-white">Thank you!</h4>
         <p className="text-[14px] font-sans text-cream/65 max-w-sm">
           Your collaboration inquiry has been received. A Songbird advisor will be in touch within 24 hours.
         </p>

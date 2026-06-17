@@ -48,6 +48,8 @@ export function ConsultationModal() {
     try {
       await saveLead({ ...data, type: 'consultation', createdAt: Date.now() })
     } catch { /* best-effort */ }
+    const { sendLeadEmail } = await import('@/lib/email')
+    await sendLeadEmail({ type: 'consultation', name: data.name, email: data.email, phone: data.phone, destination: data.destination, message: data.message })
     const msg = `Hello Songbird, I would like a free consultation. My name is ${data.name}, I can be reached at ${data.phone}.`
     reset()
     close()
@@ -90,8 +92,8 @@ export function ConsultationModal() {
                 <span className="inline-block w-5 h-px bg-gold-brushed align-middle mr-2" />
                 Free Consultation
               </p>
-              <h2 id="consultation-title" className="font-serif font-semibold text-[28px] leading-tight text-white mb-2">
-                Book Your Free Consultation
+              <h2 id="consultation-title" className="font-serif font-medium text-[28px] leading-tight text-white mb-2">
+                Receive Your Free Consultation
               </h2>
               <p className="text-[14px] font-sans text-cream/70 mb-1">Make the best review of your application — let’s assist you.</p>
               <p className="text-[12px] font-sans text-gold-brushed mb-6">We will respond to you within 24 hours.</p>

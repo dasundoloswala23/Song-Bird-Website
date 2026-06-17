@@ -6,7 +6,9 @@ import { useForm, Controller } from 'react-hook-form'
 import { Loader2, Save } from 'lucide-react'
 import { ImageUpload } from './ImageUpload'
 import { RepeatableList } from './RepeatableList'
-import type { ServiceDoc, StatStripItem, KeyBenefit, ProcedureStep, FAQ } from '@/types/firestore'
+import { RichTextEditor } from './RichTextEditor'
+import { slugify } from '@/lib/utils'
+import type { ServiceDoc, StatStripItem, ServiceSection } from '@/types/firestore'
 
 type ServiceFormData = Omit<ServiceDoc, 'id'>
 
@@ -53,11 +55,12 @@ export function ServiceForm({ initialData, serviceId }: ServiceFormProps) {
 
   const defaults: ServiceFormData = {
     order: 99, slug: '', icon: 'Scale', published: false,
-    frontTitle: '', frontSubtitle: '',
+    frontTitle: '', frontSubtitle: '', homeSubtitle: '', cardImage: '',
     layout: 'minimal',
     heroImage: '', heroEyebrow: '', detailTitle: '', detailIntro: '',
     statStrip: [], overview: '', keyBenefits: [], procedure: [], whoIsThisFor: [], faqs: [],
     whatWeProvide: [], requirements: [],
+    sections: [], showContactNav: true,
     ...initialData,
   }
 
@@ -70,6 +73,21 @@ export function ServiceForm({ initialData, serviceId }: ServiceFormProps) {
     setToast('')
     // Always store slugs lowercase to avoid case-sensitive 404s on Firebase Hosting
     data.slug = data.slug.trim().toLowerCase()
+
+    // Normalize sectioned-layout anchors: trim titles, (re)generate stable slug ids,
+    // dedupe collisions, and drop fully-empty sections.
+    if (data.layout === 'sectioned' && data.sections) {
+      const seen = new Map<string, number>()
+      data.sections = data.sections
+        .map(s => ({ ...s, title: s.title.trim() }))
+        .filter(s => s.title || s.body.trim())
+        .map(s => {
+          const base = s.id && s.id === slugify(s.title) ? s.id : slugify(s.title) || 'section'
+          const count = seen.get(base) ?? 0
+          seen.set(base, count + 1)
+          return { ...s, id: count === 0 ? base : `${base}-${count + 1}` }
+        })
+    }
     try {
       const { saveService } = await import('@/lib/firestorePublic')
       await saveService(data, serviceId)
@@ -87,7 +105,7 @@ export function ServiceForm({ initialData, serviceId }: ServiceFormProps) {
 
       {/* ── FRONT VIEW ─────────────────────────────────── */}
       <section className="bg-navy-card border border-gold-brushed/15 rounded-xl p-6">
-        <h2 className="font-serif font-semibold text-[18px] text-white mb-5">Front View (Card)</h2>
+        <h2 className="font-serif font-medium text-[18px] text-white mb-5">Front View (Card)</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           <Field label="Service Title *" error={errors.frontTitle?.message}>
             <TextInput name="frontTitle" control={control} placeholder="Immigration Advisory" rules={{ required: 'Required' }} />
@@ -95,8 +113,11 @@ export function ServiceForm({ initialData, serviceId }: ServiceFormProps) {
           <Field label="Slug *" error={errors.slug?.message}>
             <TextInput name="slug" control={control} placeholder="immigration" rules={{ required: 'Required' }} />
           </Field>
-          <Field label="Subtitle (shown on card)" className="sm:col-span-2">
+          <Field label="Subtitle (services page card)" className="sm:col-span-2">
             <TextInput name="frontSubtitle" control={control} placeholder="Expert guidance on visas and residency pathways." />
+          </Field>
+          <Field label="Home card description (optional — falls back to subtitle)" className="sm:col-span-2">
+            <TextInput name="homeSubtitle" control={control} placeholder="Shown on the home page 'What We Offer' card." />
           </Field>
           <Field label="Icon name (Lucide)">
             <Controller
@@ -115,6 +136,12 @@ export function ServiceForm({ initialData, serviceId }: ServiceFormProps) {
             )} />
           </Field>
         </div>
+        <div className="mt-5">
+          <Controller name="cardImage" control={control} render={({ field }) => (
+            <ImageUpload value={field.value} onChange={field.onChange} label="Card Image (shown as card background)" />
+          )} />
+        </div>
+
         <div className="mt-4 flex items-center gap-3">
           <Controller name="published" control={control} render={({ field }) => (
             <button type="button" onClick={() => field.onChange(!field.value)}
@@ -128,17 +155,19 @@ export function ServiceForm({ initialData, serviceId }: ServiceFormProps) {
 
       {/* ── BACK VIEW ─────────────────────────────────── */}
       <section className="bg-navy-card border border-gold-brushed/15 rounded-xl p-6">
-        <h2 className="font-serif font-semibold text-[18px] text-white mb-5">Back View (Detail Page)</h2>
+        <h2 className="font-serif font-medium text-[18px] text-white mb-5">Back View (Detail Page)</h2>
 
         <Field label="Template" className="mb-5">
           <Controller name="layout" control={control} render={({ field }) => (
-            <div className="flex gap-4 mt-2">
-              {(['minimal', 'full'] as const).map(opt => (
+            <div className="flex flex-col gap-3 mt-2 sm:flex-row sm:gap-4">
+              {(['minimal', 'full', 'sectioned'] as const).map(opt => (
                 <label key={opt} className="flex items-center gap-2 cursor-pointer">
                   <input type="radio" value={opt} checked={field.value === opt} onChange={() => field.onChange(opt)}
                     className="w-4 h-4 accent-[#E6D9A8]" />
                   <span className="text-[13px] font-sans text-cream/70">
-                    {opt === 'minimal' ? 'Minimal details (image + checklist)' : 'Full details page (screenshots 1–5)'}
+                    {opt === 'minimal' ? 'Minimal details (image + checklist)'
+                      : opt === 'full' ? 'Full details page (screenshots 1–5)'
+                      : 'Sectioned page (scroll nav + rich text)'}
                   </span>
                 </label>
               ))}
@@ -199,11 +228,11 @@ export function ServiceForm({ initialData, serviceId }: ServiceFormProps) {
             {/* Stat Strip */}
             <Controller name="statStrip" control={control} render={({ field }) => (
               <RepeatableList<StatStripItem>
-                label="Stat Strip (up to 4)"
+                label="Stat Strip (up to 7)"
                 items={field.value as StatStripItem[]}
                 onChange={field.onChange}
                 createEmpty={() => ({ label: '', value: '' })}
-                maxItems={4}
+                maxItems={7}
                 renderItem={(item, _, onChg) => (
                   <div className="grid grid-cols-2 gap-2">
                     <input value={item.label} onChange={e => onChg({ ...item, label: e.target.value })} placeholder="Label (e.g. Success Rate)" className={inputCls()} />
@@ -219,67 +248,90 @@ export function ServiceForm({ initialData, serviceId }: ServiceFormProps) {
                 <textarea {...field} rows={6} className={inputCls() + ' resize-y'} />
               )} />
             </Field>
+          </div>
+        )}
 
-            {/* Key Benefits */}
-            <Controller name="keyBenefits" control={control} render={({ field }) => (
-              <RepeatableList<KeyBenefit>
-                label="Key Benefits"
-                items={field.value as KeyBenefit[]}
+        {/* SECTIONED conditional fields */}
+        {layout === 'sectioned' && (
+          <div className="mt-6 space-y-6">
+            {/* Stat Strip */}
+            <Controller name="statStrip" control={control} render={({ field }) => (
+              <RepeatableList<StatStripItem>
+                label="Stat Strip (up to 7 — shown under the hero)"
+                items={field.value as StatStripItem[]}
                 onChange={field.onChange}
-                createEmpty={() => ({ title: '', description: '' })}
+                createEmpty={() => ({ label: '', value: '' })}
+                maxItems={7}
                 renderItem={(item, _, onChg) => (
-                  <div className="space-y-2">
-                    <input value={item.title} onChange={e => onChg({ ...item, title: e.target.value })} placeholder="Benefit title" className={inputCls()} />
-                    <input value={item.description} onChange={e => onChg({ ...item, description: e.target.value })} placeholder="Short description" className={inputCls()} />
+                  <div className="grid grid-cols-2 gap-2">
+                    <input value={item.label} onChange={e => onChg({ ...item, label: e.target.value })} placeholder="Label (e.g. 98%)" className={inputCls()} />
+                    <input value={item.value} onChange={e => onChg({ ...item, value: e.target.value })} placeholder="Caption (e.g. Success Rate)" className={inputCls()} />
                   </div>
                 )}
               />
             )} />
 
-            {/* Procedure */}
-            <Controller name="procedure" control={control} render={({ field }) => (
-              <RepeatableList<ProcedureStep>
-                label="Procedure Steps"
-                items={field.value as ProcedureStep[]}
-                onChange={(items) => field.onChange(items.map((s, i) => ({ ...s, step: i + 1 })))}
-                createEmpty={() => ({ step: 1, title: '', description: '' })}
+            <Field label="Overview (shown as the first block, above the sections — optional)">
+              <Controller name="overview" control={control} render={({ field }) => (
+                <RichTextEditor
+                  value={field.value ?? ''}
+                  onChange={field.onChange}
+                  placeholder="Intro / overview shown at the top of the page…"
+                />
+              )} />
+            </Field>
+
+            <Controller name="sections" control={control} render={({ field }) => (
+              <RepeatableList<ServiceSection>
+                label="Page Sections"
+                items={(field.value ?? []) as ServiceSection[]}
+                onChange={field.onChange}
+                createEmpty={() => ({ id: '', title: '', body: '' })}
                 renderItem={(item, _, onChg) => (
                   <div className="space-y-2">
-                    <input value={item.title} onChange={e => onChg({ ...item, title: e.target.value })} placeholder="Step title" className={inputCls()} />
-                    <input value={item.description} onChange={e => onChg({ ...item, description: e.target.value })} placeholder="Step description" className={inputCls()} />
+                    <input
+                      value={item.title}
+                      onChange={e => onChg({ ...item, title: e.target.value })}
+                      placeholder="Section title (e.g. Overview)"
+                      className={inputCls()}
+                    />
+                    <p className="text-[11px] font-sans text-cream/35">
+                      Anchor: <span className="text-gold-brushed/70">#{slugify(item.title) || 'section'}</span>
+                    </p>
+                    <RichTextEditor
+                      value={item.body}
+                      onChange={html => onChg({ ...item, body: html })}
+                      placeholder="Write this section's content…"
+                    />
+                    <div className="pt-2">
+                      <RepeatableList<StatStripItem>
+                        label="Section Stats (optional, up to 4)"
+                        items={item.stats ?? []}
+                        onChange={stats => onChg({ ...item, stats })}
+                        createEmpty={() => ({ label: '', value: '' })}
+                        maxItems={4}
+                        renderItem={(st, _j, onStat) => (
+                          <div className="grid grid-cols-2 gap-2">
+                            <input value={st.label} onChange={e => onStat({ ...st, label: e.target.value })} placeholder="Figure (e.g. 98%)" className={inputCls()} />
+                            <input value={st.value} onChange={e => onStat({ ...st, value: e.target.value })} placeholder="Caption (e.g. Success Rate)" className={inputCls()} />
+                          </div>
+                        )}
+                      />
+                    </div>
                   </div>
                 )}
               />
             )} />
 
-            {/* Who Is This For */}
-            <Controller name="whoIsThisFor" control={control} render={({ field }) => (
-              <RepeatableList
-                label="Who Is This For"
-                items={field.value as string[]}
-                onChange={field.onChange}
-                createEmpty={() => ''}
-                renderItem={(item, _, onChg) => (
-                  <input value={item as string} onChange={e => onChg(e.target.value)} placeholder="Target audience…" className={inputCls()} />
-                )}
-              />
-            )} />
-
-            {/* FAQs */}
-            <Controller name="faqs" control={control} render={({ field }) => (
-              <RepeatableList<FAQ>
-                label="FAQs"
-                items={field.value as FAQ[]}
-                onChange={field.onChange}
-                createEmpty={() => ({ question: '', answer: '' })}
-                renderItem={(item, _, onChg) => (
-                  <div className="space-y-2">
-                    <input value={item.question} onChange={e => onChg({ ...item, question: e.target.value })} placeholder="Question" className={inputCls()} />
-                    <textarea value={item.answer} onChange={e => onChg({ ...item, answer: e.target.value })} rows={2} placeholder="Answer" className={inputCls() + ' resize-none'} />
-                  </div>
-                )}
-              />
-            )} />
+            <div className="flex items-center gap-3">
+              <Controller name="showContactNav" control={control} render={({ field }) => (
+                <button type="button" onClick={() => field.onChange(field.value === false ? true : false)}
+                  className={`relative w-10 h-5 rounded-full transition-colors ${field.value !== false ? 'bg-gold' : 'bg-navy/60 border border-gold-brushed/20'}`}>
+                  <span className="absolute top-0.5 w-4 h-4 bg-white rounded-full transition-transform" style={{ left: field.value !== false ? '22px' : '2px' }} />
+                </button>
+              )} />
+              <span className="text-[13px] font-sans text-cream/60">Show &ldquo;Contact an adviser&rdquo; in side nav</span>
+            </div>
           </div>
         )}
       </section>

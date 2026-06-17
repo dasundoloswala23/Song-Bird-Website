@@ -45,7 +45,7 @@ export default function AdminLoginPage() {
         </div>
 
         <div className="bg-navy-card border border-gold-brushed/20 rounded-2xl p-8 shadow-[0_24px_48px_rgba(10,23,56,.5)]">
-          <h1 className="font-serif font-semibold text-[26px] text-white mb-1">Admin Login</h1>
+          <h1 className="font-serif font-medium text-[26px] text-white mb-1">Admin Login</h1>
           <p className="text-[13px] font-sans text-cream/50 mb-6">Sign in to manage your site content.</p>
 
           <form onSubmit={handleSubmit} className="space-y-4">

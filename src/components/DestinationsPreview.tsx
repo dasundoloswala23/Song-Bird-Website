@@ -30,7 +30,7 @@ export function DestinationsPreview({ fallback = [] }: Props) {
           <EyebrowTag>{t('dest.eyebrow')}</EyebrowTag>
           <h2
             id="destinations-preview-heading"
-            className="font-serif font-semibold text-[36px] md:text-[44px] leading-tight text-ink"
+            className="font-serif font-medium text-[36px] md:text-[44px] leading-tight text-ink"
           >
             {t('dest.heading')}
           </h2>

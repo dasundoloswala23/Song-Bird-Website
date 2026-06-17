@@ -39,16 +39,30 @@ export function ServicesGrid({ fallback }: { fallback: ServiceDoc[] }) {
         const Icon = getIcon(service.icon)
         return (
           <Link key={service.slug} href={`/services/${service.slug.toLowerCase()}`}
-            className="group flex flex-col p-6 rounded-2xl border border-cloud bg-white hover:border-teal/30 hover:-translate-y-1 hover:shadow-[0_12px_32px_rgba(10,23,56,.09)] transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal"
+            className={[
+              'group relative flex flex-col p-6 rounded-2xl overflow-hidden min-h-[260px] border border-cloud hover:border-teal/30 hover:-translate-y-1 hover:shadow-[0_12px_32px_rgba(10,23,56,.09)] transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal',
+              service.cardImage ? 'text-white' : 'bg-white',
+            ].join(' ')}
           >
-            <div className="w-11 h-11 rounded-xl bg-cream border border-cloud flex items-center justify-center mb-4 group-hover:bg-navy group-hover:text-teal-end transition-colors text-ink">
-              <Icon className="w-5 h-5" />
+            {service.cardImage && (
+              <>
+                <span aria-hidden="true" className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style={{ backgroundImage: `url(${service.cardImage})` }} />
+                <span aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-navy-deep/90 via-navy-deep/65 to-navy-deep/35" />
+              </>
+            )}
+            <div className="relative flex flex-col flex-1">
+              <div className={[
+                'w-11 h-11 rounded-xl flex items-center justify-center mb-4 transition-colors',
+                service.cardImage ? 'bg-white/10 border border-white/25 text-white' : 'bg-cream border border-cloud text-ink group-hover:bg-navy group-hover:text-teal-end',
+              ].join(' ')}>
+                <Icon className="w-5 h-5" />
+              </div>
+              <h3 className={`font-serif font-medium text-[18px] mb-2 ${service.cardImage ? 'text-white' : 'text-ink'}`}>{service.frontTitle}</h3>
+              <p className={`font-sans text-[13px] leading-relaxed flex-1 ${service.cardImage ? 'text-white/80' : 'text-slate'}`}>{service.frontSubtitle}</p>
+              <span className={`mt-4 inline-flex items-center gap-1 text-[12px] font-sans font-semibold uppercase tracking-[0.1em] group-hover:gap-2 transition-all ${service.cardImage ? 'text-teal-end' : 'text-teal group-hover:text-teal-end'}`}>
+                Explore <ArrowRight className="w-3 h-3" />
+              </span>
             </div>
-            <h3 className="font-serif font-semibold text-[18px] text-ink mb-2">{service.frontTitle}</h3>
-            <p className="font-sans text-[13px] text-slate leading-relaxed flex-1">{service.frontSubtitle}</p>
-            <span className="mt-4 inline-flex items-center gap-1 text-[12px] font-sans font-semibold uppercase tracking-[0.1em] text-teal group-hover:gap-2 group-hover:text-teal-end transition-all">
-              Explore <ArrowRight className="w-3 h-3" />
-            </span>
           </Link>
         )
       })}

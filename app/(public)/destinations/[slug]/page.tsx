@@ -45,7 +45,7 @@ export default async function DestinationDetailPage({ params }: { params: { slug
             <MapPin className="w-4 h-4" />
             Destination Guide
           </div>
-          <h1 className="font-serif font-semibold text-[52px] md:text-[68px] leading-tight text-white mb-4">{dest.name}</h1>
+          <h1 className="font-serif font-medium text-[52px] md:text-[68px] leading-tight text-white mb-4">{dest.name}</h1>
           {dest.blurb && <p className="text-[18px] font-sans text-cream/70 leading-relaxed max-w-2xl">{dest.blurb}</p>}
         </div>
       </section>
@@ -54,7 +54,7 @@ export default async function DestinationDetailPage({ params }: { params: { slug
       {dest.routes?.length > 0 && (
         <section className="py-20 bg-cream">
           <div className="mx-auto px-6 md:px-12 max-w-4xl">
-            <h2 className="font-serif font-semibold text-[32px] text-ink mb-8">Available Pathways</h2>
+            <h2 className="font-serif font-medium text-[32px] text-ink mb-8">Available Pathways</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {dest.routes.map(route => (
                 <div
@@ -74,7 +74,7 @@ export default async function DestinationDetailPage({ params }: { params: { slug
       {/* CTA */}
       <section className="py-20 bg-navy">
         <div className="mx-auto px-6 md:px-12 max-w-3xl text-center">
-          <h2 className="font-serif font-semibold text-[36px] text-white mb-4">
+          <h2 className="font-serif font-medium text-[36px] text-white mb-4">
             Ready to explore {dest.name}?
           </h2>
           <p className="text-[16px] font-sans text-cream/60 mb-8">

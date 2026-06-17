@@ -29,6 +29,8 @@ export function ContactForm({ className }: { className?: string }) {
     try {
       await saveLead({ ...data, type: 'inquiry', createdAt: Date.now() })
     } catch { /* best-effort */ }
+    const { sendLeadEmail } = await import('@/lib/email')
+    await sendLeadEmail({ type: 'inquiry', name: data.name, email: data.email, phone: data.phone, destination: data.destination, subject: data.subject, message: data.message })
     const msg = `Hello Songbird, I submitted an enquiry via your website.\nName: ${data.name}\nPhone: ${data.phone}\nDestination: ${data.destination ?? ''}\nMessage: ${data.message ?? ''}`
     reset()
     setSent(true)
@@ -39,7 +41,7 @@ export function ContactForm({ className }: { className?: string }) {
     return (
       <div className={`flex flex-col items-center justify-center py-16 text-center ${className}`}>
         <CheckCircle className="w-12 h-12 text-gold mb-4" />
-        <h3 className="font-serif font-semibold text-[24px] text-ink mb-2">Message Sent</h3>
+        <h3 className="font-serif font-medium text-[24px] text-ink mb-2">Message Sent</h3>
         <p className="text-[14px] font-sans text-slate">
           We&apos;ll be in touch shortly. Your WhatsApp should open — feel free to continue the conversation there.
         </p>
@@ -49,7 +51,7 @@ export function ContactForm({ className }: { className?: string }) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} noValidate className={className}>
-      <h3 className="font-serif font-semibold text-[22px] text-ink mb-1">Send Us a Message</h3>
+      <h3 className="font-serif font-medium text-[22px] text-ink mb-1">Send Us a Message</h3>
       <p className="text-[13px] font-sans text-slate mb-6">We respond within one business day.</p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
