@@ -45,7 +45,7 @@ export function Testimonials({ content }: Props) {
       <div className="mx-auto px-6 md:px-12 max-w-7xl">
         <div className="text-center mb-14">
           <EyebrowTag>Client Stories</EyebrowTag>
-          <h2 id="testimonials-heading" className="font-serif font-medium text-[34px] md:text-[44px] leading-tight text-ink">
+          <h2 id="testimonials-heading" className="font-serif font-normal text-[34px] md:text-[44px] leading-tight text-ink">
             We are proud to pronounce your compliments
           </h2>
           <div className="mx-auto mt-4 w-16 h-px bg-gold-brushed" />
@@ -65,7 +65,7 @@ export function Testimonials({ content }: Props) {
               <figcaption className="flex items-center gap-3 pt-5 border-t border-cloud">
                 <Avatar name={t.name} avatarUrl={t.avatarUrl} />
                 <div>
-                  <p className="font-serif font-medium text-[16px] text-ink">{t.name}</p>
+                  <p className="font-serif font-normal text-[16px] text-ink">{t.name}</p>
                   <p className="text-[12px] font-sans text-slate mt-0.5">{t.role}</p>
                 </div>
               </figcaption>

@@ -30,7 +30,7 @@ export function WelcomeSection({ fallback }: { fallback?: WelcomeDoc | null }) {
     <section className="py-24 bg-cream" aria-labelledby="welcome-heading">
       <div className="mx-auto px-6 md:px-12 max-w-3xl text-center">
         <EyebrowTag>{content.eyebrow}</EyebrowTag>
-        <h2 id="welcome-heading" className="font-serif font-medium text-[36px] md:text-[48px] leading-tight text-ink mb-2">
+        <h2 id="welcome-heading" className="font-serif font-normal text-[36px] md:text-[48px] leading-tight text-ink mb-2">
           {content.title}
         </h2>
         {content.slogan && (

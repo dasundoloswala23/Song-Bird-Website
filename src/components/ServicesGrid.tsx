@@ -57,7 +57,7 @@ export function ServicesGrid({ fallback }: { fallback: ServiceDoc[] }) {
               ].join(' ')}>
                 <Icon className="w-5 h-5" />
               </div>
-              <h3 className={`font-serif font-medium text-[18px] mb-2 ${service.cardImage ? 'text-white' : 'text-ink'}`}>{service.frontTitle}</h3>
+              <h3 className={`font-serif font-normal text-[18px] mb-2 ${service.cardImage ? 'text-white' : 'text-ink'}`}>{service.frontTitle}</h3>
               <p className={`font-sans text-[13px] leading-relaxed flex-1 ${service.cardImage ? 'text-white/80' : 'text-slate'}`}>{service.frontSubtitle}</p>
               <span className={`mt-4 inline-flex items-center gap-1 text-[12px] font-sans font-semibold uppercase tracking-[0.1em] group-hover:gap-2 transition-all ${service.cardImage ? 'text-teal-end' : 'text-teal group-hover:text-teal-end'}`}>
                 Explore <ArrowRight className="w-3 h-3" />

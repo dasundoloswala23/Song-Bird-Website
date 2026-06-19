@@ -46,7 +46,7 @@ export default async function AboutPage() {
       <section className="pt-[160px] pb-20 bg-navy">
         <div className="mx-auto px-6 md:px-12 max-w-4xl text-center">
           <EyebrowTag>Our Story</EyebrowTag>
-          <h1 className="font-serif font-medium text-[48px] md:text-[64px] leading-tight text-white mb-5">
+          <h1 className="font-serif font-normal text-[48px] md:text-[64px] leading-tight text-white mb-5">
             About Songbird Consultancy
           </h1>
           <div className="mx-auto w-16 h-px bg-gold-brushed mb-6" />
@@ -74,7 +74,7 @@ export default async function AboutPage() {
               {badge?.value && (
                 <div className="absolute -bottom-5 -right-5 md:bottom-8 md:-right-8 bg-white border-2 border-teal/40 rounded-2xl px-6 py-4 shadow-lg">
                   <p
-                    className="font-serif font-medium text-[36px] leading-none"
+                    className="font-serif font-normal text-[36px] leading-none"
                     style={{ background: 'linear-gradient(135deg,#1FA968 0%,#5EEA8A 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}
                   >
                     {badge.value}
@@ -87,7 +87,7 @@ export default async function AboutPage() {
             {/* Story text */}
             <div>
               <EyebrowTag>Who We Are</EyebrowTag>
-              <h2 className="font-serif font-medium text-[36px] md:text-[44px] leading-tight text-ink mb-4">
+              <h2 className="font-serif font-normal text-[36px] md:text-[44px] leading-tight text-ink mb-4">
                 Built on trust, powered by expertise
               </h2>
               {welcome?.slogan && (
@@ -129,7 +129,7 @@ export default async function AboutPage() {
         <div className="mx-auto px-6 md:px-12 max-w-7xl">
           <div className="text-center mb-14">
             <EyebrowTag>What We Stand For</EyebrowTag>
-            <h2 className="font-serif font-medium text-[38px] md:text-[48px] leading-tight text-white">Our Core Values</h2>
+            <h2 className="font-serif font-normal text-[38px] md:text-[48px] leading-tight text-white">Our Core Values</h2>
             <div className="mx-auto mt-4 w-16 h-px bg-gold-brushed" />
             <p className="mt-5 text-[15px] font-sans text-cream/60 max-w-2xl mx-auto">
               Providing customized consultations with a deep understanding of UAE and international laws.
@@ -141,7 +141,7 @@ export default async function AboutPage() {
                 <div className="w-10 h-10 rounded-full flex items-center justify-center mb-4 bg-teal/15">
                   <CheckCircle2 className="w-5 h-5 text-teal" />
                 </div>
-                <h3 className="font-serif font-medium text-[18px] text-white mb-2">{v.title}</h3>
+                <h3 className="font-serif font-normal text-[18px] text-white mb-2">{v.title}</h3>
                 <p className="text-[13px] font-sans text-cream/55 leading-relaxed">{v.desc}</p>
               </div>
             ))}
@@ -155,7 +155,7 @@ export default async function AboutPage() {
           <div className="mx-auto px-6 md:px-12 max-w-4xl">
             <div className="text-center mb-12">
               <EyebrowTag>The Songbird Difference</EyebrowTag>
-              <h2 className="font-serif font-medium text-[38px] text-ink">Why clients choose us</h2>
+              <h2 className="font-serif font-normal text-[38px] text-ink">Why clients choose us</h2>
               <div className="mx-auto mt-4 w-16 h-px bg-gold-brushed" />
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
@@ -178,7 +178,7 @@ export default async function AboutPage() {
         <div className="mx-auto px-6 md:px-12 max-w-5xl">
           <div className="text-center mb-12">
             <EyebrowTag>Our Practice Areas</EyebrowTag>
-            <h2 className="font-serif font-medium text-[34px] md:text-[44px] leading-tight text-ink">Related Expertise</h2>
+            <h2 className="font-serif font-normal text-[34px] md:text-[44px] leading-tight text-ink">Related Expertise</h2>
             <div className="mx-auto mt-4 w-16 h-px bg-gold" />
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

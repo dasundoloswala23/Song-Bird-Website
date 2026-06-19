@@ -23,7 +23,7 @@ export default function BookConsultationPage() {
       <section className="pt-[140px] pb-10 bg-navy">
         <div className="mx-auto px-6 md:px-12 max-w-4xl text-center">
           <EyebrowTag>Schedule a Call</EyebrowTag>
-          <h1 className="font-serif font-medium text-[44px] md:text-[58px] leading-tight text-white mb-4">
+          <h1 className="font-serif font-normal text-[44px] md:text-[58px] leading-tight text-white mb-4">
             Book a Consultation
           </h1>
           <p className="text-[16px] font-sans text-cream/60 max-w-xl mx-auto">
@@ -43,7 +43,7 @@ export default function BookConsultationPage() {
             {/* Sidebar */}
             <aside className="space-y-6">
               <div className="bg-navy-card border border-gold-brushed/15 rounded-xl p-6">
-                <h3 className="font-serif font-medium text-[18px] text-white mb-4">What to expect</h3>
+                <h3 className="font-serif font-normal text-[18px] text-white mb-4">What to expect</h3>
                 <ul className="space-y-3">
                   {BENEFITS.map(b => (
                     <li key={b} className="flex items-start gap-3">
@@ -55,7 +55,7 @@ export default function BookConsultationPage() {
               </div>
 
               <div className="bg-navy-card border border-gold-brushed/15 rounded-xl p-6">
-                <h3 className="font-serif font-medium text-[16px] text-white mb-2">Prefer another channel?</h3>
+                <h3 className="font-serif font-normal text-[16px] text-white mb-2">Prefer another channel?</h3>
                 <p className="text-[12px] font-sans text-cream/50 mb-4">Reach us directly:</p>
                 <a
                   href="tel:+97140000000"

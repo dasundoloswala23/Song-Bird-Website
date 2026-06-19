@@ -35,7 +35,7 @@ export default function AdminServicesPageIntroPage() {
 
   return (
     <div className="p-8 max-w-2xl">
-      <h1 className="font-serif font-medium text-[28px] text-white mb-2">Services Page Intro</h1>
+      <h1 className="font-serif font-normal text-[28px] text-white mb-2">Services Page Intro</h1>
       <p className="text-[13px] font-sans text-cream/50 mb-8">
         The intro block shown at the top of the <strong>Services</strong> page (separate from the home
         page “What We Offer” intro). Separate paragraphs with a blank line.

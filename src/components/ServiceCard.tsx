@@ -30,7 +30,7 @@ export function ServiceCard({ icon: Icon, title, description, href, isPrimary, c
       )}>
         <Icon className="w-5 h-5" />
       </div>
-      <h4 className="font-serif font-medium text-[17px] text-ink mb-2 leading-snug">
+      <h4 className="font-serif font-normal text-[17px] text-ink mb-2 leading-snug">
         {title}
       </h4>
       <p className="font-sans text-[13px] text-slate leading-relaxed flex-1">

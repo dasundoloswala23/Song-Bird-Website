@@ -98,7 +98,7 @@ export function EligibilityFlow() {
         <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6" style={{ background: BRAND_GRADIENT }}>
           <CheckCircle2 className="w-8 h-8 text-white" />
         </div>
-        <h3 className="font-serif font-medium text-[26px] text-white mb-3">Thank you — you’re all set</h3>
+        <h3 className="font-serif font-normal text-[26px] text-white mb-3">Thank you — you’re all set</h3>
         <p className="text-[14px] font-sans text-cream/60 mb-2 max-w-md mx-auto">
           We’ve received your request for a {duration}-minute session on {selectedDate}.
         </p>
@@ -126,7 +126,7 @@ export function EligibilityFlow() {
       {/* Phase 1 — Goal */}
       {phase === 'goal' && (
         <div>
-          <h3 className="font-serif font-medium text-[26px] text-white mb-2">What are you looking to achieve?</h3>
+          <h3 className="font-serif font-normal text-[26px] text-white mb-2">What are you looking to achieve?</h3>
           <p className="text-[14px] font-sans text-cream/55 mb-6">Select your primary goal.</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {GOALS.map(g => (
@@ -146,7 +146,7 @@ export function EligibilityFlow() {
       {/* Phase 2 — Single form */}
       {phase === 'form' && (
         <div>
-          <h3 className="font-serif font-medium text-[26px] text-white mb-2">Tell us about yourself</h3>
+          <h3 className="font-serif font-normal text-[26px] text-white mb-2">Tell us about yourself</h3>
           <p className="text-[14px] font-sans text-cream/55 mb-6">A few details so we can prepare for your consultation.</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
@@ -198,7 +198,7 @@ export function EligibilityFlow() {
       {/* Phase 3 — Calendar + slot */}
       {phase === 'schedule' && (
         <div>
-          <h3 className="font-serif font-medium text-[26px] text-white mb-2">Pick a date &amp; session</h3>
+          <h3 className="font-serif font-normal text-[26px] text-white mb-2">Pick a date &amp; session</h3>
           <p className="text-[14px] font-sans text-cream/55 mb-6">Choose a day and the consultation length that suits you.</p>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

@@ -12,7 +12,7 @@ export function PowerBand() {
   return (
     <section className="py-20 bg-navy" aria-labelledby="power-heading">
       <div className="mx-auto px-6 md:px-12 max-w-4xl text-center">
-        <h2 id="power-heading" className="font-serif font-medium text-[34px] md:text-[48px] leading-tight text-white mb-6">
+        <h2 id="power-heading" className="font-serif font-normal text-[34px] md:text-[48px] leading-tight text-white mb-6">
           {t('power.heading')}
           <span className="block text-gold-brushed text-[24px] md:text-[30px] mt-2">{t('power.sub')}</span>
         </h2>

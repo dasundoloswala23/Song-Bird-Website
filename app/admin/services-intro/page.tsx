@@ -35,7 +35,7 @@ export default function AdminServicesIntroPage() {
 
   return (
     <div className="p-8 max-w-2xl">
-      <h1 className="font-serif font-medium text-[28px] text-white mb-2">Services Intro</h1>
+      <h1 className="font-serif font-normal text-[28px] text-white mb-2">Services Intro</h1>
       <p className="text-[13px] font-sans text-cream/50 mb-8">
         The “One Firm. Every Path.” block shown on the home page (after the service cards) and at the
         top of the Services page. Separate paragraphs with a blank line.

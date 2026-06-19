@@ -62,7 +62,7 @@ export function ExitIntentModal() {
                 <span className="inline-block w-5 h-px bg-gold-brushed align-middle mr-2" />
                 Before You Go…
               </p>
-              <h2 id="exit-modal-title" className="font-serif font-medium text-[28px] leading-tight text-white mb-3">
+              <h2 id="exit-modal-title" className="font-serif font-normal text-[28px] leading-tight text-white mb-3">
                 Get Your Free<br />Immigration Assessment
               </h2>
               <p className="text-[14px] font-sans text-cream/60 mb-7 leading-relaxed">

@@ -55,7 +55,7 @@ export function Insights({ fallback }: { fallback?: InsightsDoc | null }) {
       <div className="mx-auto px-6 md:px-12 max-w-7xl">
         <div className="text-center mb-14">
           <EyebrowTag>From Our Desk</EyebrowTag>
-          <h2 id="insights-heading" className="font-serif font-medium text-[38px] md:text-[48px] leading-tight text-ink">
+          <h2 id="insights-heading" className="font-serif font-normal text-[38px] md:text-[48px] leading-tight text-ink">
             Insights
           </h2>
           <div className="mx-auto mt-4 w-16 h-px bg-gold-brushed" />
@@ -76,7 +76,7 @@ export function Insights({ fallback }: { fallback?: InsightsDoc | null }) {
                   )}
                 </div>
                 <div className="flex flex-col min-w-0">
-                  <h3 className="font-serif font-medium text-[15px] text-ink leading-snug mb-1 group-hover:text-emerald transition-colors line-clamp-3">
+                  <h3 className="font-serif font-normal text-[15px] text-ink leading-snug mb-1 group-hover:text-emerald transition-colors line-clamp-3">
                     {item.title}
                   </h3>
                   {item.date && <span className="text-[11px] font-sans text-slate/60 mt-auto">{item.date}</span>}
@@ -97,7 +97,7 @@ export function Insights({ fallback }: { fallback?: InsightsDoc | null }) {
             </div>
             <div className="flex flex-col flex-1 p-7">
               <CategoryDate item={featured} />
-              <h3 className="font-serif font-medium text-[26px] md:text-[30px] text-ink leading-tight mb-3">
+              <h3 className="font-serif font-normal text-[26px] md:text-[30px] text-ink leading-tight mb-3">
                 {featured.title}
               </h3>
               <p className="text-[14px] font-sans text-slate leading-relaxed mb-5 line-clamp-3">

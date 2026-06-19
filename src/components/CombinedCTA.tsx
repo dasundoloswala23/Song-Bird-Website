@@ -20,7 +20,7 @@ export function CombinedCTA() {
       <div className="mx-auto px-6 md:px-12 max-w-6xl">
         <div className="text-center mb-12">
           <p className="text-[11px] font-sans font-semibold uppercase tracking-[0.25em] text-gold-brushed mb-3">{t('combined.eyebrow')}</p>
-          <h2 id="combined-cta-heading" className="font-serif font-medium text-[34px] md:text-[46px] leading-tight text-white mb-4">
+          <h2 id="combined-cta-heading" className="font-serif font-normal text-[34px] md:text-[46px] leading-tight text-white mb-4">
             {t('combined.heading')}
           </h2>
           <p className="text-[16px] font-sans text-cream/55 max-w-xl mx-auto">
@@ -36,7 +36,7 @@ export function CombinedCTA() {
 
           {/* Connect options */}
           <div className="bg-navy-card border border-gold-brushed/20 rounded-2xl p-7">
-            <h3 className="font-serif font-medium text-[22px] text-white mb-2">{t('combined.prefer')}</h3>
+            <h3 className="font-serif font-normal text-[22px] text-white mb-2">{t('combined.prefer')}</h3>
             <p className="text-[14px] font-sans text-cream/55 mb-6">{t('combined.preferSub')}</p>
             <div className="flex flex-col gap-3">
               <a

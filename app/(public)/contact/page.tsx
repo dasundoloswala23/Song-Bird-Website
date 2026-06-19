@@ -25,7 +25,7 @@ export default function ContactPage() {
       <section className="pt-[160px] pb-20 bg-navy">
         <div className="mx-auto px-6 md:px-12 max-w-4xl text-center">
           <EyebrowTag>Reach Out</EyebrowTag>
-          <h1 className="font-serif font-medium text-[42px] md:text-[56px] leading-tight text-white mb-4">
+          <h1 className="font-serif font-normal text-[42px] md:text-[56px] leading-tight text-white mb-4">
             Get in Touch
           </h1>
           <div className="mx-auto w-16 h-px bg-gold-brushed mb-5" />
@@ -42,7 +42,7 @@ export default function ContactPage() {
 
             {/* Left (60%) — Message form */}
             <div className="bg-white rounded-2xl border border-cloud p-8 shadow-[0_4px_24px_rgba(4,38,28,.07)]">
-              <h2 className="font-serif font-medium text-[24px] text-ink mb-1">Send us a message</h2>
+              <h2 className="font-serif font-normal text-[24px] text-ink mb-1">Send us a message</h2>
               <p className="text-[13px] font-sans text-slate mb-7">We reply within one business day.</p>
               <ContactForm />
             </div>
@@ -50,7 +50,7 @@ export default function ContactPage() {
             {/* Right (40%) — Speak to an advisor */}
             <div className="space-y-4">
               <div className="bg-navy rounded-2xl p-8">
-                <h2 className="font-serif font-medium text-[22px] text-white mb-2">Speak to an advisor now</h2>
+                <h2 className="font-serif font-normal text-[22px] text-white mb-2">Speak to an advisor now</h2>
                 <p className="text-[13px] font-sans text-cream/55 mb-7">Connect instantly — no forms, no waiting.</p>
 
                 {/* Call CTA */}
@@ -152,7 +152,7 @@ export default function ContactPage() {
         <div className="mx-auto px-6 md:px-12 max-w-5xl">
           <div className="text-center mb-10">
             <EyebrowTag light>Book an Appointment</EyebrowTag>
-            <h2 id="booking-heading" className="font-serif font-medium text-[32px] md:text-[42px] leading-tight text-white">
+            <h2 id="booking-heading" className="font-serif font-normal text-[32px] md:text-[42px] leading-tight text-white">
               Pick a date that works for you
             </h2>
             <p className="mt-4 text-[15px] font-sans text-cream/55 max-w-xl mx-auto">

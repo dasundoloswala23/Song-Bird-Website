@@ -36,7 +36,7 @@ export default function AdminHeroPage() {
 
   return (
     <div className="p-8 max-w-2xl">
-      <h1 className="font-serif font-medium text-[28px] text-white mb-2">Hero / Video Settings</h1>
+      <h1 className="font-serif font-normal text-[28px] text-white mb-2">Hero / Video Settings</h1>
       <p className="text-[13px] font-sans text-cream/50 mb-8">
         Set the looping background video, full-quality modal video, and the Ken-Burns fallback image for the homepage hero.
       </p>
@@ -44,7 +44,7 @@ export default function AdminHeroPage() {
       <form onSubmit={onSubmit}>
         {/* Hero slider (4 images + rotating taglines) */}
         <div className="bg-navy-card border border-gold-brushed/15 rounded-xl p-6 mb-6">
-          <h2 className="font-serif font-medium text-[18px] text-white mb-1">Hero Slider</h2>
+          <h2 className="font-serif font-normal text-[18px] text-white mb-1">Hero Slider</h2>
           <p className="text-[12px] font-sans text-cream/40 mb-5">
             Add up to 6 slides. Each slide has a background image and a rotating tagline. Leave empty to use the built-in defaults.
           </p>

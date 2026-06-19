@@ -27,7 +27,7 @@ export function CollaborationJoinSection({ fallback }: { fallback: Collaboration
         {/* Header */}
         <div className="text-center mb-16">
           {content.joinEyebrow && <EyebrowTag light>{content.joinEyebrow}</EyebrowTag>}
-          <h2 className="font-serif font-medium text-[38px] md:text-[50px] leading-tight text-white mb-3">
+          <h2 className="font-serif font-normal text-[38px] md:text-[50px] leading-tight text-white mb-3">
             {content.joinTitle}
           </h2>
           {content.tagline && (
@@ -50,7 +50,7 @@ export function CollaborationJoinSection({ fallback }: { fallback: Collaboration
 
             {categories.length > 0 && (
               <div>
-                <h3 className="font-serif font-medium text-[22px] text-white mb-6">Who Can Join?</h3>
+                <h3 className="font-serif font-normal text-[22px] text-white mb-6">Who Can Join?</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {categories.map((cat, i) => (
                     <div key={i} className="rounded-xl border border-gold-brushed/20 bg-navy-card p-5">
@@ -73,7 +73,7 @@ export function CollaborationJoinSection({ fallback }: { fallback: Collaboration
 
             {benefits.length > 0 && (
               <div>
-                <h3 className="font-serif font-medium text-[22px] text-white mb-6">Business Benefits</h3>
+                <h3 className="font-serif font-normal text-[22px] text-white mb-6">Business Benefits</h3>
                 <ul className="space-y-3">
                   {benefits.map((b, i) => (
                     <li key={i} className="flex items-start gap-3">
@@ -88,7 +88,7 @@ export function CollaborationJoinSection({ fallback }: { fallback: Collaboration
 
           {/* Right: Inquiry Form */}
           <div>
-            <h3 className="font-serif font-medium text-[22px] text-white mb-6">Join With Us</h3>
+            <h3 className="font-serif font-normal text-[22px] text-white mb-6">Join With Us</h3>
             <CollaborationJoinForm />
           </div>
         </div>

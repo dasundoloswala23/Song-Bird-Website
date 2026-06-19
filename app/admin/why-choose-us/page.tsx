@@ -42,7 +42,7 @@ export default function WhyChooseUsPage() {
 
   return (
     <div className="p-8 max-w-3xl">
-      <h1 className="font-serif font-medium text-[28px] text-white mb-8">Why Choose Us</h1>
+      <h1 className="font-serif font-normal text-[28px] text-white mb-8">Why Choose Us</h1>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         {/* Basic fields */}
@@ -81,7 +81,7 @@ export default function WhyChooseUsPage() {
         {/* Features */}
         <div className="bg-navy-card border border-gold-brushed/15 rounded-xl p-6">
           <div className="flex items-center justify-between mb-5">
-            <p className="font-serif font-medium text-[18px] text-white">Feature Cards</p>
+            <p className="font-serif font-normal text-[18px] text-white">Feature Cards</p>
             <button type="button" onClick={() => {
               const current = (features || []) as WhyChooseUsFeature[]
               // eslint-disable-next-line @typescript-eslint/no-explicit-any

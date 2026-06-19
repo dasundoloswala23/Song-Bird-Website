@@ -35,7 +35,7 @@ export default function AdminWelcomePage() {
 
   return (
     <div className="p-8 max-w-2xl">
-      <h1 className="font-serif font-medium text-[28px] text-white mb-2">Welcome / Who We Are</h1>
+      <h1 className="font-serif font-normal text-[28px] text-white mb-2">Welcome / Who We Are</h1>
       <p className="text-[13px] font-sans text-cream/50 mb-8">The introductory section on the homepage. Separate paragraphs with a blank line.</p>
 
       <form onSubmit={onSubmit}>

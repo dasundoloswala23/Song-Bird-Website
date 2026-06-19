@@ -35,7 +35,7 @@ export default function AdminServicesPage() {
     <div className="p-8">
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="font-serif font-medium text-[28px] text-white mb-0.5">Services</h1>
+          <h1 className="font-serif font-normal text-[28px] text-white mb-0.5">Services</h1>
           <p className="text-[13px] font-sans text-cream/50">{services.length} total</p>
         </div>
         <Link

@@ -2,6 +2,7 @@ import Image from 'next/image'
 import { CheckCircle } from 'lucide-react'
 import { EyebrowTag } from '@/components/EyebrowTag'
 import { ServiceCTABand } from '@/components/ServiceCTABand'
+import { UaeLicensedBadge } from '@/components/UaeLicensedBadge'
 import type { ServiceDoc } from '@/types/firestore'
 
 export function MinimalServiceDetail({ service }: { service: ServiceDoc }) {
@@ -11,7 +12,7 @@ export function MinimalServiceDetail({ service }: { service: ServiceDoc }) {
       <section className="pt-[160px] pb-16 bg-navy">
         <div className="mx-auto px-6 md:px-12 max-w-4xl">
           <EyebrowTag>{service.heroEyebrow || 'Advisory Services'}</EyebrowTag>
-          <h1 className="font-serif font-medium text-[42px] md:text-[56px] leading-tight text-white mb-4">
+          <h1 className="font-serif font-normal text-[42px] md:text-[56px] leading-tight text-white mb-4">
             {service.detailTitle || service.frontTitle}
           </h1>
           <div className="w-16 h-px bg-gold-brushed mb-5" />
@@ -20,6 +21,8 @@ export function MinimalServiceDetail({ service }: { service: ServiceDoc }) {
           </p>
         </div>
       </section>
+
+      {service.showUaeBar && <UaeLicensedBadge text={service.uaeBarText} detail={service.uaeBarDetail} />}
 
       {/* Detail block */}
       <section className="py-20 bg-cream">

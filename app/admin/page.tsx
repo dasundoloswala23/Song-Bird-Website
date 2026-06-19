@@ -29,7 +29,7 @@ export default async function AdminDashboard() {
 
   return (
     <div className="p-8">
-      <h1 className="font-serif font-medium text-[28px] text-white mb-1">Dashboard</h1>
+      <h1 className="font-serif font-normal text-[28px] text-white mb-1">Dashboard</h1>
       <p className="text-[13px] font-sans text-cream/50 mb-8">Welcome to the Songbird content manager.</p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
@@ -45,7 +45,7 @@ export default async function AdminDashboard() {
               </div>
               <ArrowRight className="w-4 h-4 text-cream/25 group-hover:text-gold-brushed transition-colors" />
             </div>
-            <p className="font-serif font-medium text-[28px] text-white leading-none mb-1">{value}</p>
+            <p className="font-serif font-normal text-[28px] text-white leading-none mb-1">{value}</p>
             <p className="text-[12px] font-sans text-cream/50 uppercase tracking-[0.12em]">{label}</p>
           </Link>
         ))}

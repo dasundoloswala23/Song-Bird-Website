@@ -85,7 +85,7 @@ function Step1({
 
   return (
     <div>
-      <h2 className="font-serif font-medium text-[28px] text-white mb-8">Pick a time</h2>
+      <h2 className="font-serif font-normal text-[28px] text-white mb-8">Pick a time</h2>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Calendar */}
@@ -163,7 +163,7 @@ function Step2({
 
   return (
     <div>
-      <h2 className="font-serif font-medium text-[28px] text-white mb-8">Your details</h2>
+      <h2 className="font-serif font-normal text-[28px] text-white mb-8">Your details</h2>
       <form onSubmit={handleSubmit(onNext)} className="space-y-5 max-w-lg">
         <div>
           <label className="block text-[11px] font-sans font-semibold uppercase tracking-[0.15em] text-gold-brushed mb-1.5">Full Name</label>
@@ -216,7 +216,7 @@ function Step3({
 }) {
   return (
     <div>
-      <h2 className="font-serif font-medium text-[28px] text-white mb-8">Confirm your booking</h2>
+      <h2 className="font-serif font-normal text-[28px] text-white mb-8">Confirm your booking</h2>
       <div className="max-w-lg bg-navy-card border border-gold-brushed/15 rounded-xl p-6 mb-8 space-y-4">
         <Row label="Date"      value={slot.date} />
         <Row label="Time"      value={`${slot.startTime} (${details.timezone})`} />
@@ -262,7 +262,7 @@ function SuccessScreen({ bookingId }: { bookingId: string }) {
       >
         <CheckCircle2 className="w-10 h-10 text-white" />
       </div>
-      <h2 className="font-serif font-medium text-[32px] text-white mb-3">Booking confirmed!</h2>
+      <h2 className="font-serif font-normal text-[32px] text-white mb-3">Booking confirmed!</h2>
       <p className="text-[15px] font-sans text-cream/65 max-w-md mx-auto mb-2">
         Thank you. We'll reach out shortly to confirm your session details.
       </p>

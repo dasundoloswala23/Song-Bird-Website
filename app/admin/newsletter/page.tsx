@@ -22,7 +22,7 @@ export default function AdminNewsletterPage() {
 
   return (
     <div className="p-8 max-w-3xl">
-      <h1 className="font-serif font-medium text-[28px] text-white mb-2">Newsletter</h1>
+      <h1 className="font-serif font-normal text-[28px] text-white mb-2">Newsletter</h1>
       <p className="text-[13px] font-sans text-cream/50 mb-8">
         {items.length} subscriber{items.length === 1 ? '' : 's'} from the footer signup form.
       </p>

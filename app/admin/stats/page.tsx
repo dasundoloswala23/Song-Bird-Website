@@ -51,7 +51,7 @@ export default function StatsPage() {
 
   return (
     <div className="p-8 max-w-2xl">
-      <h1 className="font-serif font-medium text-[28px] text-white mb-2">Stats Band</h1>
+      <h1 className="font-serif font-normal text-[28px] text-white mb-2">Stats Band</h1>
       <p className="text-[13px] font-sans text-cream/50 mb-8">
         Leave a value field blank to hide that stat. If all four are blank, the entire stats band will be hidden from the homepage.
       </p>

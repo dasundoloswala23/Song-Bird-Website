@@ -25,33 +25,9 @@ const TOP_LINKS = [
   { key: 'nav.contact',        href: '/contact' },
 ] as const
 
-function DestinationsMegaPanel({ onClose }: { onClose: () => void }) {
-  return (
-    <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-80 bg-white border border-hairline rounded-2xl shadow-[0_24px_64px_rgba(4,38,28,.18)] p-4 z-50">
-      <p className="text-[10px] font-sans font-semibold uppercase tracking-[0.2em] text-gold-deep mb-3 px-2">Our Locations</p>
-      <div className="space-y-1">
-        {DESTINATION_LINKS.map(d => (
-          <Link
-            key={d.href}
-            href={d.href}
-            onClick={onClose}
-            className="flex items-start gap-3 px-3 py-2.5 rounded-lg hover:bg-surface-muted transition-colors group"
-          >
-            <div>
-              <p className="text-[13px] font-sans font-medium text-ink group-hover:text-emerald">{d.label}</p>
-              <p className="text-[11px] font-sans text-slate mt-0.5">{d.desc}</p>
-            </div>
-          </Link>
-        ))}
-      </div>
-    </div>
-  )
-}
-
 export function Header() {
   const [scrolled, setScrolled]           = useState(false)
   const [mobileOpen, setMobileOpen]       = useState(false)
-  const [activePanel, setActivePanel]     = useState<'services' | 'destinations' | null>(null)
   const [mobileExpanded, setMobileExpanded] = useState<string | null>(null)
   const headerRef = useRef<HTMLElement>(null)
   const { open: openConsultation } = useConsultationModal()
@@ -68,28 +44,7 @@ export function Header() {
     return () => { document.body.style.overflow = '' }
   }, [mobileOpen])
 
-  // Close mega panel on outside click
-  useEffect(() => {
-    const handler = (e: MouseEvent) => {
-      if (headerRef.current && !headerRef.current.contains(e.target as Node)) {
-        setActivePanel(null)
-      }
-    }
-    document.addEventListener('mousedown', handler)
-    return () => document.removeEventListener('mousedown', handler)
-  }, [])
-
-  // Close on Escape
-  useEffect(() => {
-    const handler = (e: KeyboardEvent) => { if (e.key === 'Escape') setActivePanel(null) }
-    window.addEventListener('keydown', handler)
-    return () => window.removeEventListener('keydown', handler)
-  }, [])
-
-  const togglePanel = (panel: 'services' | 'destinations') =>
-    setActivePanel(prev => prev === panel ? null : panel)
-
-  const navLinkCls = 'px-3 py-2 text-[13px] font-sans font-medium uppercase tracking-[0.06em] text-ink/80 hover:text-emerald transition-colors rounded focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-emerald inline-flex items-center gap-1'
+  const navLinkCls ='px-3 py-2 text-[13px] font-sans font-medium uppercase tracking-[0.06em] text-ink/80 hover:text-emerald transition-colors rounded focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-emerald inline-flex items-center gap-1'
 
   return (
     <header
@@ -106,7 +61,7 @@ export function Header() {
         <Link href="/" className="flex items-center gap-3 shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald rounded">
           <Image src="/logo.png" alt="Songbird Consultancy" width={56} height={56} className="h-12 w-auto" priority />
           <span className="hidden sm:flex flex-col leading-none">
-            <span className="font-serif font-medium text-[18px] text-ink">Songbird Consultancy</span>
+            <span className="font-serif font-normal text-[18px] text-ink">Songbird Consultancy</span>
             <span className="font-sans text-[11px] uppercase tracking-[0.22em] text-gold-deep mt-1">{t('brand.slogan')}</span>
           </span>
         </Link>
@@ -120,19 +75,10 @@ export function Header() {
             {t('nav.services')}
           </Link>
 
-          {/* Destinations mega */}
-          <div className="relative">
-            <button
-              onClick={() => togglePanel('destinations')}
-              aria-expanded={activePanel === 'destinations'}
-              aria-haspopup="true"
-              className={cn(navLinkCls, activePanel === 'destinations' && 'text-emerald')}
-            >
-              {t('nav.destinations')}
-              <ChevronDown className={cn('w-3.5 h-3.5 transition-transform duration-200', activePanel === 'destinations' && 'rotate-180')} />
-            </button>
-            {activePanel === 'destinations' && <DestinationsMegaPanel onClose={() => setActivePanel(null)} />}
-          </div>
+          {/* Destinations — navigates straight to the destinations page (no dropdown) */}
+          <Link href="/destinations" className={navLinkCls}>
+            {t('nav.destinations')}
+          </Link>
 
           {TOP_LINKS.map(link => (
             <Link key={link.key} href={link.href} className={navLinkCls}>
@@ -170,7 +116,7 @@ export function Header() {
             <Link
               href="/"
               onClick={() => setMobileOpen(false)}
-              className="py-4 border-b border-hairline text-[18px] font-serif font-medium text-ink hover:text-emerald transition-colors block"
+              className="py-4 border-b border-hairline text-[18px] font-serif font-normal text-ink hover:text-emerald transition-colors block"
             >
               {t('nav.home')}
             </Link>
@@ -180,7 +126,7 @@ export function Header() {
               <Link
                 href="/services"
                 onClick={() => setMobileOpen(false)}
-                className="flex-1 py-4 text-[18px] font-serif font-medium text-ink hover:text-emerald transition-colors"
+                className="flex-1 py-4 text-[18px] font-serif font-normal text-ink hover:text-emerald transition-colors"
               >
                 {t('nav.services')}
               </Link>
@@ -214,7 +160,7 @@ export function Header() {
             {/* Destinations accordion */}
             <button
               onClick={() => setMobileExpanded(p => p === 'destinations' ? null : 'destinations')}
-              className="flex items-center justify-between py-4 border-b border-hairline text-[18px] font-serif font-medium text-ink hover:text-emerald transition-colors"
+              className="flex items-center justify-between py-4 border-b border-hairline text-[18px] font-serif font-normal text-ink hover:text-emerald transition-colors"
             >
               {t('nav.destinations')}
               <ChevronDown className={cn('w-5 h-5 transition-transform', mobileExpanded === 'destinations' && 'rotate-180')} />
@@ -239,7 +185,7 @@ export function Header() {
                 key={link.key}
                 href={link.href}
                 onClick={() => setMobileOpen(false)}
-                className="py-4 border-b border-hairline text-[18px] font-serif font-medium text-ink hover:text-emerald transition-colors block"
+                className="py-4 border-b border-hairline text-[18px] font-serif font-normal text-ink hover:text-emerald transition-colors block"
               >
                 {t(link.key)}
               </Link>

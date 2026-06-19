@@ -21,11 +21,25 @@ export interface FAQ {
   answer: string
 }
 
+export interface SectionTab {
+  label: string   // tab title, e.g. "Overview", "Benefits", "Service"
+  body: string    // rich HTML from Quill (may contain inline <img>)
+}
+
+export interface FeatureCard {
+  icon?: string   // uploaded icon image URL (optional)
+  title: string
+  subtitle: string
+}
+
 export interface ServiceSection {
   id: string      // stable anchor slug, e.g. "overview"
   title: string   // nav label + H2 of the block
-  body: string    // rich HTML from Quill (may contain inline <img>)
+  tabs?: SectionTab[]       // flexible named tabs (preferred). Falls back to body/serviceBody below.
+  body: string    // legacy: first/"Overview" tab content (kept for back-compat)
+  serviceBody?: string      // legacy: second/"Our Service" tab content
   stats?: StatStripItem[]   // optional row of figures shown within this section
+  cards?: FeatureCard[]     // optional feature-cards grid (icon + title + subtitle)
 }
 
 export interface ServiceDoc {
@@ -63,6 +77,11 @@ export interface ServiceDoc {
   // Sectioned layout
   sections?: ServiceSection[]
   showContactNav?: boolean   // show "Contact an adviser" in side nav (defaults true)
+
+  // Detail-page extras
+  showUaeBar?: boolean       // show the UAE Licensed bar under the hero on this service's detail page
+  uaeBarText?: string        // main label of the UAE bar (falls back to the site default)
+  uaeBarDetail?: string      // detail line of the UAE bar (falls back to the site default)
 }
 
 // ── Services Intro ("One Firm. Every Path") (siteContent/servicesIntro) ─────────
@@ -101,6 +120,13 @@ export interface StatsDoc {
   successRate:  StatEntry
   destinations: StatEntry
   serviceLines: StatEntry
+}
+
+// ── Reserve Consultation CTA (siteContent/reserveCta) ──────────────────────────
+
+export interface ReserveCtaDoc {
+  whatsappEnabled: boolean
+  emailEnabled: boolean
 }
 
 // ── Newsletter ────────────────────────────────────────────────────────────────
@@ -171,6 +197,10 @@ export interface DestinationDoc {
   image: string
   routes: string[]
   published: boolean
+
+  // Sectioned detail content (mirrors the sectioned service layout)
+  overview?: string             // rich HTML intro block shown above the sections
+  sections?: ServiceSection[]   // collapsible content sections (Overview / Our Service tabs + stats)
 }
 
 // ── Bookings & Slots ──────────────────────────────────────────────────────────

@@ -4,9 +4,12 @@ import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { EyebrowTag } from '@/components/EyebrowTag'
 import { ServiceCTABand } from '@/components/ServiceCTABand'
-import type { ServiceDoc, ServiceSection } from '@/types/firestore'
+import { UaeLicensedBadge } from '@/components/UaeLicensedBadge'
+import { SectionBlock } from '@/components/services/SectionBlock'
+import type { ServiceDoc, ServiceSection, ReserveCtaDoc } from '@/types/firestore'
 
 const CONTACT_ID = 'contact-adviser'
+const DEFAULT_RESERVE_CTA: ReserveCtaDoc = { whatsappEnabled: true, emailEnabled: false }
 
 export function SectionedServiceDetail({ service }: { service: ServiceDoc }) {
   // An optional rich-text Overview renders as the first block, above the authored sections.
@@ -17,6 +20,14 @@ export function SectionedServiceDetail({ service }: { service: ServiceDoc }) {
   const hasStats = service.statStrip?.some(s => s.value)
   const showContact = service.showContactNav !== false
   const [activeId, setActiveId] = useState<string>(sections[0]?.id ?? '')
+  const [reserveCta, setReserveCta] = useState<ReserveCtaDoc>(DEFAULT_RESERVE_CTA)
+
+  // Reserve-button channels (WhatsApp / Email) are toggled globally in the admin panel.
+  useEffect(() => {
+    import('@/lib/firestorePublic').then(({ getReserveCta }) =>
+      getReserveCta().then(d => { if (d) setReserveCta(d) }),
+    )
+  }, [])
 
   // Scroll-spy: highlight the section currently in the reading zone.
   useEffect(() => {
@@ -49,16 +60,16 @@ export function SectionedServiceDetail({ service }: { service: ServiceDoc }) {
   return (
     <>
       {/* 1. Hero */}
-      <section className="relative pt-[120px] min-h-[60vh] flex items-end">
+      <section className="relative pt-[120px] min-h-screen flex items-start">
         {service.heroImage ? (
           <Image src={service.heroImage} alt={service.frontTitle} fill className="object-cover" priority sizes="100vw" />
         ) : (
           <div className="absolute inset-0 bg-gradient-to-br from-navy via-navy-card to-navy-deep" />
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-navy/95 via-navy/45 to-navy/10" />
-        <div className="relative z-10 mx-auto px-6 md:px-12 max-w-4xl pb-16 w-full">
+        <div className="absolute inset-0 bg-gradient-to-b from-navy/85 via-navy/35 to-navy/10" />
+        <div className="relative z-10 mx-auto px-6 md:px-12 max-w-4xl pt-10 w-full">
           <EyebrowTag>{service.heroEyebrow || 'Advisory Services'}</EyebrowTag>
-          <h1 className="font-serif font-medium text-[42px] md:text-[58px] leading-tight text-white mb-4">
+          <h1 className="font-serif font-normal text-[54px] md:text-[80px] leading-tight text-white mb-4">
             {service.detailTitle || service.frontTitle}
           </h1>
           <p className="text-[16px] font-sans text-cream/75 max-w-2xl leading-relaxed">
@@ -67,6 +78,8 @@ export function SectionedServiceDetail({ service }: { service: ServiceDoc }) {
         </div>
       </section>
 
+      {service.showUaeBar && <UaeLicensedBadge text={service.uaeBarText} detail={service.uaeBarDetail} />}
+
       {/* 2. Stat Strip */}
       {hasStats && (
         <section className="bg-surface-muted border-y border-hairline py-10">
@@ -74,7 +87,7 @@ export function SectionedServiceDetail({ service }: { service: ServiceDoc }) {
             <div className="flex flex-wrap justify-center gap-y-6">
               {service.statStrip.filter(s => s.value).map(s => (
                 <div key={s.label} className="flex flex-col items-center gap-2 px-6 sm:px-8 border-r border-hairline last:border-r-0">
-                  <span className="font-serif font-medium text-gold leading-none text-[30px] sm:text-[40px] md:text-[44px]">{s.label}</span>
+                  <span className="font-serif font-normal text-gold leading-none text-[30px] sm:text-[40px] md:text-[44px]">{s.label}</span>
                   <span className="text-[10px] sm:text-[11px] font-sans font-semibold uppercase tracking-[0.18em] text-slate text-center">{s.value}</span>
                 </div>
               ))}
@@ -104,30 +117,21 @@ export function SectionedServiceDetail({ service }: { service: ServiceDoc }) {
             </div>
           </div>
 
-          <div className="mx-auto px-6 md:px-12 max-w-6xl flex flex-col lg:flex-row gap-12">
+          <div className="mx-auto px-6 md:px-12 max-w-6xl lg:grid lg:grid-cols-[minmax(0,1fr)_16rem] lg:gap-12">
             {/* Left: content */}
-            <div className="flex-1 min-w-0">
+            <div className="min-w-0">
               {sections.map(s => (
-                <section key={s.id} id={s.id} className="scroll-mt-32 py-12 border-b border-cloud last:border-b-0 first:pt-0">
-                  <h2 className="font-serif font-medium text-[30px] md:text-[34px] text-ink mb-5">{s.title}</h2>
-                  <div className="sb-prose" dangerouslySetInnerHTML={{ __html: s.body }} />
-                  {s.stats?.some(st => st.label || st.value) && (
-                    <div className="mt-8 flex flex-wrap gap-x-10 gap-y-5">
-                      {s.stats.filter(st => st.label || st.value).map((st, i) => (
-                        <div key={`${st.label}-${i}`} className="flex flex-col">
-                          <span className="font-serif font-medium text-gold leading-none text-[30px] md:text-[36px] whitespace-nowrap">{st.label}</span>
-                          <span className="mt-1.5 text-[10px] font-sans font-semibold uppercase tracking-[0.18em] text-slate">{st.value}</span>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </section>
+                <SectionBlock
+                  key={s.id}
+                  section={s}
+                  reserve={s.id === 'overview' ? undefined : { subject: s.title, settings: reserveCta }}
+                />
               ))}
             </div>
 
             {/* Right: sticky scroll-spy nav */}
-            <nav className="hidden lg:block w-64 shrink-0">
-              <div className="sticky top-32 border-l border-hairline">
+            <nav className="hidden lg:block">
+              <div className="sticky top-32 bg-cream border-l border-hairline">
                 <p className="text-[11px] font-sans font-semibold uppercase tracking-[0.18em] text-gold-deep pl-5 mb-4">On this page</p>
                 <ul className="space-y-1">
                   {navItems.map(item => {

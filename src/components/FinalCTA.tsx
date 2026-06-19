@@ -33,7 +33,7 @@ export function FinalCTA() {
         <EyebrowTag>{t('final.eyebrow')}</EyebrowTag>
         <h2
           id="final-cta-heading"
-          className="font-serif font-medium text-[40px] md:text-[54px] leading-tight text-white mb-5"
+          className="font-serif font-normal text-[40px] md:text-[54px] leading-tight text-white mb-5"
         >
           {t('final.heading')}
         </h2>

@@ -41,14 +41,14 @@ html {
 }
 
 /* ── Sectioned service page — rich-text body (no typography plugin) ── */
-.sb-prose { color: var(--slate); font-size: 15px; line-height: 1.7; }
+.sb-prose { color: var(--slate); font-size: 15px; line-height: 1.7; min-width: 0; overflow-wrap: anywhere; }
 .sb-prose > * + * { margin-top: 1rem; }
 .sb-prose p { font-size: 15px; color: var(--slate); line-height: 1.7; }
 .sb-prose strong { color: var(--ink); font-weight: 600; }
 .sb-prose a { color: var(--gold-deep); text-decoration: none; }
 .sb-prose a:hover { text-decoration: underline; }
-.sb-prose h2 { font-family: var(--font-serif, serif); color: var(--ink); font-weight: 600; font-size: 24px; margin-top: 1.75rem; }
-.sb-prose h3 { font-family: var(--font-serif, serif); color: var(--ink); font-weight: 600; font-size: 20px; margin-top: 1.5rem; }
+.sb-prose h2 { font-family: var(--font-serif, serif); color: var(--ink); font-weight: 400; font-size: 24px; margin-top: 1.75rem; }
+.sb-prose h3 { font-family: var(--font-serif, serif); color: var(--ink); font-weight: 400; font-size: 20px; margin-top: 1.5rem; }
 .sb-prose ul, .sb-prose ol { padding-left: 1.5rem; }
 .sb-prose ul { list-style: none; }
 .sb-prose ul > li { position: relative; padding-left: 1.25rem; }
@@ -63,6 +63,80 @@ html {
   color: var(--slate); font-style: italic;
 }
 .sb-prose img { border-radius: 0.75rem; margin: 1.5rem 0; max-width: 100%; height: auto; }
+
+/* Floated images (via [[img-left]] / [[img-right]] markers) — text wraps beside them on desktop */
+.sb-prose img.sb-img-left,
+.sb-prose img.sb-img-right { display: block; margin: 0.5rem 0; }
+@media (min-width: 768px) {
+  .sb-prose img.sb-img-left  { float: left;  width: 45%; margin: 0.25rem 1.75rem 1rem 0; }
+  .sb-prose img.sb-img-right { float: right; width: 45%; margin: 0.25rem 0 1rem 1.75rem; }
+}
+/* Contain the floats so they don't spill past the prose block */
+.sb-prose::after { content: ''; display: block; clear: both; }
+
+/* Bullet lists flow into two columns on desktop (two points per row) */
+@media (min-width: 768px) {
+  .sb-prose ul { columns: 2; column-gap: 2.5rem; }
+  .sb-prose ul > li { break-inside: avoid; -webkit-column-break-inside: avoid; }
+}
+
+/* Service-section bullet lists render as a 2-column grid of cards (green dot, no arrow) */
+.sb-cards ul {
+  columns: initial;
+  list-style: none;
+  padding-left: 0;
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+@media (min-width: 768px) {
+  .sb-cards ul { grid-template-columns: 1fr 1fr; }
+  .sb-cards ul.sb-cols-1 { grid-template-columns: 1fr; }       /* row-by-row */
+  .sb-cards ul.sb-cols-2 { grid-template-columns: 1fr 1fr; }   /* two per row (explicit) */
+}
+.sb-cards ul > li {
+  position: relative;
+  margin: 0;
+  padding: 0.85rem 1rem 0.85rem 2.1rem;
+  background: #fff;
+  border: 1px solid var(--hairline);
+  border-radius: 0.75rem;
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 1.4;
+}
+.sb-cards ul > li::before {
+  content: '';
+  position: absolute;
+  left: 1rem;
+  top: 1.15rem;
+  width: 7px;
+  height: 7px;
+  border-radius: 9999px;
+  background: var(--emerald);
+}
+
+/* "Check Your Eligibility" button inserted inside rich text via the [[eligibility]] token */
+.sb-prose .sb-eligibility-btn {
+  display: inline-block;
+  margin: 0.5rem 0;
+  padding: 0.7rem 1.4rem;
+  border-radius: 9999px;
+  background: linear-gradient(95deg, #22B877 0%, #0E7C5A 100%);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.sb-prose .sb-eligibility-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(31, 169, 104, 0.35);
+  text-decoration: none;
+}
 
 /* Hide horizontal scrollbar on mobile section tab bar */
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }

@@ -28,7 +28,7 @@ export function Pillars() {
       <div className="mx-auto px-6 md:px-12 max-w-6xl">
         <div className="text-center mb-14">
           <EyebrowTag>What We Do</EyebrowTag>
-          <h2 id="pillars-heading" className="font-serif font-medium text-[34px] md:text-[44px] leading-tight text-ink">
+          <h2 id="pillars-heading" className="font-serif font-normal text-[34px] md:text-[44px] leading-tight text-ink">
             Two pillars, one accountable team
           </h2>
         </div>
@@ -36,7 +36,7 @@ export function Pillars() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {PILLARS.map(p => (
             <div key={p.title} className="rounded-2xl border border-hairline bg-surface-soft p-8 flex flex-col">
-              <h3 className="font-serif font-medium text-[24px] text-ink mb-2">{p.title}</h3>
+              <h3 className="font-serif font-normal text-[24px] text-ink mb-2">{p.title}</h3>
               <p className="text-[14px] font-sans text-slate leading-relaxed mb-5">{p.desc}</p>
               <div className="flex flex-wrap gap-2 mb-7">
                 {p.chips.map(c => (

@@ -7,7 +7,7 @@ import { Loader2, Save } from 'lucide-react'
 import { ImageUpload } from './ImageUpload'
 import { RepeatableList } from './RepeatableList'
 import { RichTextEditor } from './RichTextEditor'
-import { slugify } from '@/lib/utils'
+import { SectionEditor, normalizeSections } from './SectionEditor'
 import type { ServiceDoc, StatStripItem, ServiceSection } from '@/types/firestore'
 
 type ServiceFormData = Omit<ServiceDoc, 'id'>
@@ -61,12 +61,14 @@ export function ServiceForm({ initialData, serviceId }: ServiceFormProps) {
     statStrip: [], overview: '', keyBenefits: [], procedure: [], whoIsThisFor: [], faqs: [],
     whatWeProvide: [], requirements: [],
     sections: [], showContactNav: true,
+    showUaeBar: false, uaeBarText: '', uaeBarDetail: '',
     ...initialData,
   }
 
   const { control, handleSubmit, watch, setValue, formState: { errors } } = useForm<ServiceFormData>({ defaultValues: defaults })
   const layout   = watch('layout')
   const heroImage = watch('heroImage')
+  const showUaeBar = watch('showUaeBar')
 
   const onSubmit = async (data: ServiceFormData) => {
     setSaving(true)
@@ -74,19 +76,9 @@ export function ServiceForm({ initialData, serviceId }: ServiceFormProps) {
     // Always store slugs lowercase to avoid case-sensitive 404s on Firebase Hosting
     data.slug = data.slug.trim().toLowerCase()
 
-    // Normalize sectioned-layout anchors: trim titles, (re)generate stable slug ids,
-    // dedupe collisions, and drop fully-empty sections.
-    if (data.layout === 'sectioned' && data.sections) {
-      const seen = new Map<string, number>()
-      data.sections = data.sections
-        .map(s => ({ ...s, title: s.title.trim() }))
-        .filter(s => s.title || s.body.trim())
-        .map(s => {
-          const base = s.id && s.id === slugify(s.title) ? s.id : slugify(s.title) || 'section'
-          const count = seen.get(base) ?? 0
-          seen.set(base, count + 1)
-          return { ...s, id: count === 0 ? base : `${base}-${count + 1}` }
-        })
+    // Normalize sectioned-layout content (trim titles + tab labels, stable anchor ids, dedupe).
+    if (data.layout === 'sectioned') {
+      data.sections = normalizeSections(data.sections)
     }
     try {
       const { saveService } = await import('@/lib/firestorePublic')
@@ -105,7 +97,7 @@ export function ServiceForm({ initialData, serviceId }: ServiceFormProps) {
 
       {/* ── FRONT VIEW ─────────────────────────────────── */}
       <section className="bg-navy-card border border-gold-brushed/15 rounded-xl p-6">
-        <h2 className="font-serif font-medium text-[18px] text-white mb-5">Front View (Card)</h2>
+        <h2 className="font-serif font-normal text-[18px] text-white mb-5">Front View (Card)</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           <Field label="Service Title *" error={errors.frontTitle?.message}>
             <TextInput name="frontTitle" control={control} placeholder="Immigration Advisory" rules={{ required: 'Required' }} />
@@ -155,7 +147,7 @@ export function ServiceForm({ initialData, serviceId }: ServiceFormProps) {
 
       {/* ── BACK VIEW ─────────────────────────────────── */}
       <section className="bg-navy-card border border-gold-brushed/15 rounded-xl p-6">
-        <h2 className="font-serif font-medium text-[18px] text-white mb-5">Back View (Detail Page)</h2>
+        <h2 className="font-serif font-normal text-[18px] text-white mb-5">Back View (Detail Page)</h2>
 
         <Field label="Template" className="mb-5">
           <Controller name="layout" control={control} render={({ field }) => (
@@ -193,6 +185,27 @@ export function ServiceForm({ initialData, serviceId }: ServiceFormProps) {
         <Controller name="heroImage" control={control} render={({ field }) => (
           <ImageUpload value={field.value} onChange={field.onChange} label="Hero Image" />
         )} />
+
+        <div className="mt-4 flex items-center gap-3">
+          <Controller name="showUaeBar" control={control} render={({ field }) => (
+            <button type="button" onClick={() => field.onChange(!field.value)}
+              className={`relative w-10 h-5 rounded-full transition-colors ${field.value ? 'bg-gold' : 'bg-navy/60 border border-gold-brushed/20'}`}>
+              <span className="absolute top-0.5 w-4 h-4 bg-white rounded-full transition-transform" style={{ left: field.value ? '22px' : '2px' }} />
+            </button>
+          )} />
+          <span className="text-[13px] font-sans text-cream/60">Show the UAE Licensed bar under the hero</span>
+        </div>
+
+        {showUaeBar && (
+          <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <Field label="UAE bar — main text (optional)">
+              <TextInput name="uaeBarText" control={control} placeholder="UAE Licensed" />
+            </Field>
+            <Field label="UAE bar — detail text (optional)">
+              <TextInput name="uaeBarDetail" control={control} placeholder="— Consultancy · Immigration · Business Management · HR" />
+            </Field>
+          </div>
+        )}
 
         {/* MINIMAL conditional fields */}
         {layout === 'minimal' && (
@@ -286,40 +299,8 @@ export function ServiceForm({ initialData, serviceId }: ServiceFormProps) {
                 label="Page Sections"
                 items={(field.value ?? []) as ServiceSection[]}
                 onChange={field.onChange}
-                createEmpty={() => ({ id: '', title: '', body: '' })}
-                renderItem={(item, _, onChg) => (
-                  <div className="space-y-2">
-                    <input
-                      value={item.title}
-                      onChange={e => onChg({ ...item, title: e.target.value })}
-                      placeholder="Section title (e.g. Overview)"
-                      className={inputCls()}
-                    />
-                    <p className="text-[11px] font-sans text-cream/35">
-                      Anchor: <span className="text-gold-brushed/70">#{slugify(item.title) || 'section'}</span>
-                    </p>
-                    <RichTextEditor
-                      value={item.body}
-                      onChange={html => onChg({ ...item, body: html })}
-                      placeholder="Write this section's content…"
-                    />
-                    <div className="pt-2">
-                      <RepeatableList<StatStripItem>
-                        label="Section Stats (optional, up to 4)"
-                        items={item.stats ?? []}
-                        onChange={stats => onChg({ ...item, stats })}
-                        createEmpty={() => ({ label: '', value: '' })}
-                        maxItems={4}
-                        renderItem={(st, _j, onStat) => (
-                          <div className="grid grid-cols-2 gap-2">
-                            <input value={st.label} onChange={e => onStat({ ...st, label: e.target.value })} placeholder="Figure (e.g. 98%)" className={inputCls()} />
-                            <input value={st.value} onChange={e => onStat({ ...st, value: e.target.value })} placeholder="Caption (e.g. Success Rate)" className={inputCls()} />
-                          </div>
-                        )}
-                      />
-                    </div>
-                  </div>
-                )}
+                createEmpty={() => ({ id: '', title: '', body: '', serviceBody: '' })}
+                renderItem={(item, _, onChg) => <SectionEditor item={item} onChange={onChg} />}
               />
             )} />
 

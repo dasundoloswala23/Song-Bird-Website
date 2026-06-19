@@ -2,11 +2,13 @@
  * Firebase CLIENT SDK reads — used by both Server Components (build-time) and
  * client components (runtime). No Admin SDK / Cloud Functions required.
  */
-import { getFirestore, collection, query, where, orderBy, getDocs, doc, getDoc, setDoc, addDoc, deleteDoc, updateDoc } from 'firebase/firestore'
+import { initializeFirestore, collection, query, where, orderBy, getDocs, doc, getDoc, setDoc, addDoc, deleteDoc, updateDoc } from 'firebase/firestore'
 import { firebaseApp } from './firebase'
-import type { ServiceDoc, ServicesIntroDoc, WhyChooseUsDoc, StatsDoc, ProcessSectionDoc, TestimonialsSectionDoc, LeadDoc, DestinationDoc, SlotDoc, BookingDoc, GlobalReachDoc, HeroSettingsDoc, WelcomeDoc, AccreditationsDoc, CollaborationsDoc, InsightsDoc, NewsletterSignupDoc } from '@/types/firestore'
+import type { ServiceDoc, ServicesIntroDoc, WhyChooseUsDoc, StatsDoc, ProcessSectionDoc, TestimonialsSectionDoc, LeadDoc, DestinationDoc, SlotDoc, BookingDoc, GlobalReachDoc, HeroSettingsDoc, WelcomeDoc, AccreditationsDoc, CollaborationsDoc, InsightsDoc, NewsletterSignupDoc, ReserveCtaDoc } from '@/types/firestore'
 
-const db = getFirestore(firebaseApp)
+// ignoreUndefinedProperties: optional fields (e.g. a section's unset stats) may be `undefined`;
+// Firestore would otherwise reject the whole write ("invalid nested entity"). This drops them.
+const db = initializeFirestore(firebaseApp, { ignoreUndefinedProperties: true })
 
 // ── Public reads ──────────────────────────────────────────────────────────────
 
@@ -232,6 +234,13 @@ export async function getServicesPageIntro(): Promise<ServicesIntroDoc | null> {
   } catch { return null }
 }
 
+export async function getReserveCta(): Promise<ReserveCtaDoc | null> {
+  try {
+    const snap = await getDoc(doc(db, 'siteContent', 'reserveCta'))
+    return snap.exists() ? (snap.data() as ReserveCtaDoc) : null
+  } catch { return null }
+}
+
 // ── Admin writes ──────────────────────────────────────────────────────────────
 
 export async function saveService(data: Omit<ServiceDoc, 'id'>, id?: string): Promise<string> {
@@ -318,6 +327,10 @@ export async function saveServicesIntro(data: ServicesIntroDoc): Promise<void> {
 
 export async function saveServicesPageIntro(data: ServicesIntroDoc): Promise<void> {
   await setDoc(doc(db, 'siteContent', 'servicesPageIntro'), data)
+}
+
+export async function saveReserveCta(data: ReserveCtaDoc): Promise<void> {
+  await setDoc(doc(db, 'siteContent', 'reserveCta'), data)
 }
 
 export async function saveSlot(data: Omit<SlotDoc, 'id'>, id?: string): Promise<string> {

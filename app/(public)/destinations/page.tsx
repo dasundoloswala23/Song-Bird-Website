@@ -19,7 +19,7 @@ export default async function DestinationsPage() {
       <section className="pt-[160px] pb-20 bg-navy">
         <div className="mx-auto px-6 md:px-12 max-w-4xl text-center">
           <EyebrowTag>Where We Operate</EyebrowTag>
-          <h1 className="font-serif font-medium text-[42px] md:text-[56px] leading-tight text-white mb-4">Destinations</h1>
+          <h1 className="font-serif font-normal text-[42px] md:text-[56px] leading-tight text-white mb-4">Destinations</h1>
           <div className="mx-auto w-16 h-px bg-gold-brushed mb-5" />
           <p className="text-[16px] font-sans text-cream/65 max-w-2xl mx-auto leading-relaxed">
             From UAE residency to investor pathways in top global cities — we provide expert guidance wherever your future takes you.

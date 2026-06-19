@@ -50,7 +50,7 @@ function StatItem({ value, label, isLast }: { value: string; label: string; isLa
       ref={ref}
       className={`flex flex-col items-center gap-2 px-2 sm:px-6 ${!isLast ? 'md:border-r md:border-hairline' : ''}`}
     >
-      <span className="font-serif font-medium text-[28px] sm:text-[40px] md:text-[46px] leading-none text-gold whitespace-nowrap">
+      <span className="font-serif font-normal text-[28px] sm:text-[40px] md:text-[46px] leading-none text-gold whitespace-nowrap">
         {active ? display : value}
       </span>
       <span className="text-[10px] sm:text-[11px] font-sans font-semibold uppercase tracking-[0.18em] text-slate text-center">

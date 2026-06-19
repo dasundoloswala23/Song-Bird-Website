@@ -8,7 +8,7 @@ export default function NewServicePage() {
       <Link href="/admin/services" className="inline-flex items-center gap-1.5 text-[12px] font-sans text-cream/50 hover:text-cream mb-6 transition-colors">
         <ArrowLeft className="w-3.5 h-3.5" /> Back to Services
       </Link>
-      <h1 className="font-serif font-medium text-[28px] text-white mb-8">Add Service</h1>
+      <h1 className="font-serif font-normal text-[28px] text-white mb-8">Add Service</h1>
       <ServiceForm />
     </div>
   )

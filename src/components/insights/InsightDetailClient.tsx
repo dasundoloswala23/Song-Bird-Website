@@ -6,6 +6,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowLeft, CalendarDays, Loader2 } from 'lucide-react'
 import { FinalCTA } from '@/components/FinalCTA'
+import { renderRichHtml } from '@/lib/richText'
 import type { InsightItem } from '@/types/firestore'
 
 const CATEGORY_COLORS: Record<string, string> = {
@@ -43,7 +44,7 @@ export function InsightDetailClient({ initialSlug, initial }: { initialSlug: str
     return (
       <section className="min-h-screen pt-[160px] pb-24 bg-cream">
         <div className="mx-auto px-6 md:px-12 max-w-3xl text-center">
-          <h1 className="font-serif font-medium text-[32px] text-ink mb-4">Article not found</h1>
+          <h1 className="font-serif font-normal text-[32px] text-ink mb-4">Article not found</h1>
           <p className="text-[15px] font-sans text-slate mb-8">This insight doesn&apos;t exist or may have been removed.</p>
           <Link href="/insights" className="inline-flex items-center gap-2 text-[13px] font-sans font-semibold uppercase tracking-[0.08em] text-teal hover:text-emerald transition-colors">
             <ArrowLeft className="w-4 h-4" /> Back to Insights
@@ -75,7 +76,7 @@ export function InsightDetailClient({ initialSlug, initial }: { initialSlug: str
             )}
           </div>
 
-          <h1 className="font-serif font-medium text-[34px] md:text-[46px] leading-tight text-ink mb-6">
+          <h1 className="font-serif font-normal text-[34px] md:text-[46px] leading-tight text-ink mb-6">
             {article.title}
           </h1>
 
@@ -90,7 +91,7 @@ export function InsightDetailClient({ initialSlug, initial }: { initialSlug: str
       <section className="pb-24 bg-cream">
         <div className="mx-auto px-6 md:px-12 max-w-3xl">
           {article.body
-            ? <div className="sb-prose" dangerouslySetInnerHTML={{ __html: article.body }} />
+            ? <div className="sb-prose" dangerouslySetInnerHTML={{ __html: renderRichHtml(article.body) }} />
             : article.excerpt
               ? <p className="text-[15px] font-sans text-slate leading-relaxed">{article.excerpt}</p>
               : null}

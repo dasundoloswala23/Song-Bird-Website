@@ -53,7 +53,7 @@ export function ApplicationCTA({ label = 'Start Your Application' }: { label?: s
               <X className="w-4 h-4" />
             </button>
 
-            <h2 id="app-modal-title" className="font-serif font-medium text-[22px] text-white mb-2">
+            <h2 id="app-modal-title" className="font-serif font-normal text-[22px] text-white mb-2">
               How would you like to apply?
             </h2>
             <p className="text-[13px] font-sans text-cream/55 mb-7 leading-relaxed">

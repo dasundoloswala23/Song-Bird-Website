@@ -24,6 +24,10 @@
       {
         "source": "/insights/**",
         "destination": "/insights/coming-soon/index.html"
+      },
+      {
+        "source": "/destinations/**",
+        "destination": "/destinations/dubai/index.html"
       }
     ],
     "headers": [

@@ -50,7 +50,7 @@ export default function AdminInsightsPage() {
 
   return (
     <div className="p-8 max-w-3xl">
-      <h1 className="font-serif font-medium text-[28px] text-white mb-2">Insights</h1>
+      <h1 className="font-serif font-normal text-[28px] text-white mb-2">Insights</h1>
       <p className="text-[13px] font-sans text-cream/50 mb-8">
         Articles shown in the homepage “From Our Desk” section and on the Insights page. The first
         article is featured. Each article gets its own page at <code>/insights/&lt;slug&gt;</code>.

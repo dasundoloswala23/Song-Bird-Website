@@ -22,7 +22,7 @@ export default async function ServicesPage() {
       <section className="pt-[160px] pb-20 bg-navy">
         <div className="mx-auto px-6 md:px-12 max-w-4xl text-center">
           <EyebrowTag>What We Offer</EyebrowTag>
-          <h1 className="font-serif font-medium text-[42px] md:text-[56px] leading-tight text-white mb-4">Our Services</h1>
+          <h1 className="font-serif font-normal text-[42px] md:text-[56px] leading-tight text-white mb-4">Our Services</h1>
           <div className="mx-auto w-16 h-px bg-gold-brushed mb-5" />
           <p className="text-[16px] font-sans text-cream/65 max-w-2xl mx-auto leading-relaxed">
             Nine specialist verticals. One integrated team. Songbird combines legal expertise, business acumen, and lifestyle mastery to support every dimension of your global journey.

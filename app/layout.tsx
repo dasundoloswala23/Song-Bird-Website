@@ -1,12 +1,12 @@
 import type { Metadata } from 'next'
-import { Playfair_Display, Jost } from 'next/font/google'
+import { Ubuntu, Jost } from 'next/font/google'
 import '../src/styles/index.css'
 import { DirectionProvider } from '@/context/DirectionContext'
 import { LanguageProvider } from '@/context/LanguageContext'
 
-const serif = Playfair_Display({
+const heading = Ubuntu({
   subsets: ['latin'],
-  weight: ['500', '600', '700'],
+  weight: ['400', '500', '700'],
   variable: '--heading-font',
   display: 'swap',
 })
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${serif.variable} ${sans.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`${heading.variable} ${sans.variable}`}>
       <body className="min-h-screen flex flex-col bg-cream font-sans antialiased">
         <DirectionProvider>
           <LanguageProvider>

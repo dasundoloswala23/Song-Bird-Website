@@ -27,6 +27,7 @@ const NAV = [
   { href: '/admin/hero',           label: 'Hero / Video',   Icon: Video },
   { href: '/admin/leads',          label: 'Leads',          Icon: Inbox },
   { href: '/admin/newsletter',     label: 'Newsletter',     Icon: Mail },
+  { href: '/admin/settings',       label: 'Reserve Button', Icon: Settings2 },
 ]
 
 export function AdminSidebar() {

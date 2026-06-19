@@ -78,7 +78,7 @@ export function GlobalReachMap({ fallback }: Props) {
           <p className="text-[11px] font-sans font-semibold uppercase tracking-[0.25em] text-gold-brushed mb-3">{t('reach.eyebrow')}</p>
           <h2
             id="reach-heading"
-            className="font-serif font-medium text-[36px] md:text-[48px] leading-tight text-white mb-4"
+            className="font-serif font-normal text-[36px] md:text-[48px] leading-tight text-white mb-4"
           >
             {content.headline}
           </h2>

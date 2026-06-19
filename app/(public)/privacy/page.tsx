@@ -63,7 +63,7 @@ export default function PrivacyPage() {
       <section className="pt-[160px] pb-20 bg-navy">
         <div className="mx-auto px-6 md:px-12 max-w-4xl text-center">
           <EyebrowTag light>Your Privacy</EyebrowTag>
-          <h1 className="font-serif font-medium text-[42px] md:text-[56px] leading-tight text-white mb-4">
+          <h1 className="font-serif font-normal text-[42px] md:text-[56px] leading-tight text-white mb-4">
             Privacy Policy
           </h1>
           <div className="mx-auto w-16 h-px bg-gold-brushed mb-5" />
@@ -76,7 +76,7 @@ export default function PrivacyPage() {
           <div className="space-y-10">
             {SECTIONS.map(s => (
               <div key={s.heading}>
-                <h2 className="font-serif font-medium text-[22px] md:text-[26px] text-ink mb-3">{s.heading}</h2>
+                <h2 className="font-serif font-normal text-[22px] md:text-[26px] text-ink mb-3">{s.heading}</h2>
                 <div className="space-y-3">
                   {s.body.map((p, i) => (
                     <p key={i} className="text-[15px] font-sans text-slate leading-relaxed">{p}</p>

@@ -144,7 +144,7 @@ export function Hero({ heroSettings }: { heroSettings?: HeroSettingsDoc | null }
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -16 }}
                 transition={{ duration: 0.5, ease: 'easeOut' }}
-                className="font-serif font-medium text-[40px] md:text-[56px] lg:text-[68px] leading-[1.08] text-white max-w-4xl"
+                className="font-serif font-normal text-[40px] md:text-[56px] lg:text-[68px] leading-[1.08] text-white max-w-4xl"
               >
                 {activeTagline}
               </motion.h1>

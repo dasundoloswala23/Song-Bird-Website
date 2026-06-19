@@ -53,7 +53,7 @@ export default async function InsightsPage() {
       <section className="pt-[160px] pb-20 bg-navy">
         <div className="mx-auto px-6 md:px-12 max-w-4xl text-center">
           <EyebrowTag light>From Our Desk</EyebrowTag>
-          <h1 className="font-serif font-medium text-[42px] md:text-[56px] leading-tight text-white mb-4">
+          <h1 className="font-serif font-normal text-[42px] md:text-[56px] leading-tight text-white mb-4">
             Insights
           </h1>
           <div className="mx-auto w-16 h-px bg-gold-brushed mb-5" />
@@ -89,7 +89,7 @@ export default async function InsightsPage() {
                 </div>
                 <div className="flex flex-col justify-center p-8 md:p-10">
                   <CategoryDate item={featured} />
-                  <h2 className="font-serif font-medium text-[28px] md:text-[36px] text-ink leading-tight mb-4">
+                  <h2 className="font-serif font-normal text-[28px] md:text-[36px] text-ink leading-tight mb-4">
                     {featured.title}
                   </h2>
                   <p className="text-[15px] font-sans text-slate leading-relaxed mb-6 line-clamp-4">
@@ -117,7 +117,7 @@ export default async function InsightsPage() {
                       </div>
                       <div className="flex flex-col flex-1 p-6">
                         <CategoryDate item={item} />
-                        <h3 className="font-serif font-medium text-[18px] text-ink leading-snug mb-3 flex-1">
+                        <h3 className="font-serif font-normal text-[18px] text-ink leading-snug mb-3 flex-1">
                           {item.title}
                         </h3>
                         <p className="text-[13px] font-sans text-slate leading-relaxed mb-5 line-clamp-3">

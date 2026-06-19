@@ -47,7 +47,7 @@ export default function ProcessPage() {
 
   return (
     <div className="p-8 max-w-3xl">
-      <h1 className="font-serif font-medium text-[28px] text-white mb-2">How It Works</h1>
+      <h1 className="font-serif font-normal text-[28px] text-white mb-2">How It Works</h1>
       <p className="text-[13px] font-sans text-cream/45 mb-8">
         Edit the process steps shown on the home page. Leave all steps empty to hide this section entirely.
       </p>
@@ -74,7 +74,7 @@ export default function ProcessPage() {
         {/* Steps */}
         <div className="bg-navy-card border border-gold-brushed/15 rounded-xl p-6">
           <div className="flex items-center justify-between mb-5">
-            <p className="font-serif font-medium text-[18px] text-white">Process Steps</p>
+            <p className="font-serif font-normal text-[18px] text-white">Process Steps</p>
             <button
               type="button"
               onClick={() => append({ title: '', description: '' })}

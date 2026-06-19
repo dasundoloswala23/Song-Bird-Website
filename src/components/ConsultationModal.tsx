@@ -92,7 +92,7 @@ export function ConsultationModal() {
                 <span className="inline-block w-5 h-px bg-gold-brushed align-middle mr-2" />
                 Free Consultation
               </p>
-              <h2 id="consultation-title" className="font-serif font-medium text-[28px] leading-tight text-white mb-2">
+              <h2 id="consultation-title" className="font-serif font-normal text-[28px] leading-tight text-white mb-2">
                 Receive Your Free Consultation
               </h2>
               <p className="text-[14px] font-sans text-cream/70 mb-1">Make the best review of your application — let’s assist you.</p>

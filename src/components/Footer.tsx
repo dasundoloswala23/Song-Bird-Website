@@ -44,7 +44,7 @@ function NewsletterRow() {
     <div className="border-b border-gold-brushed/10 pb-10 mb-10">
       <div className="flex flex-col md:flex-row md:items-center gap-5 justify-between">
         <div>
-          <p className="text-[15px] font-serif font-medium text-cream mb-0.5">{t('footer.stayInformed')}</p>
+          <p className="text-[15px] font-serif font-normal text-cream mb-0.5">{t('footer.stayInformed')}</p>
           <p className="text-[12px] font-sans text-cream/45">{t('footer.stayInformedSub')}</p>
         </div>
         {status === 'done' ? (

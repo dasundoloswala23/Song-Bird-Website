@@ -7,7 +7,7 @@ export function SocialConnect() {
     <section className="py-24 bg-cream" aria-labelledby="social-heading">
       <div className="mx-auto px-6 md:px-12 max-w-4xl text-center">
         <EyebrowTag>Stay Connected</EyebrowTag>
-        <h2 id="social-heading" className="font-serif font-medium text-[36px] md:text-[44px] leading-tight text-ink mb-4">
+        <h2 id="social-heading" className="font-serif font-normal text-[36px] md:text-[44px] leading-tight text-ink mb-4">
           Connect With Us
         </h2>
         <div className="mx-auto mb-12 w-16 h-px bg-gold-brushed" />
@@ -48,7 +48,7 @@ function SocialCard({
       <div className={`w-14 h-14 rounded-2xl ${colour} flex items-center justify-center mb-4`}>
         <Icon className="w-6 h-6 text-white" />
       </div>
-      <p className="font-serif font-medium text-[18px] text-ink mb-0.5">{platform}</p>
+      <p className="font-serif font-normal text-[18px] text-ink mb-0.5">{platform}</p>
       <p className="text-[13px] font-sans text-slate mb-4">{handle}</p>
       <span className="inline-flex items-center gap-1 text-[12px] font-sans font-semibold uppercase tracking-[0.1em] text-gold-brushed group-hover:gap-1.5 transition-all">
         Follow Us

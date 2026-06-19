@@ -25,7 +25,7 @@ export function ServicesBand({ services, intro }: ServicesBandProps) {
       <div className="mx-auto px-6 md:px-12 max-w-7xl">
         <div className="text-center mb-14 max-w-3xl mx-auto">
           <EyebrowTag>What We Offer</EyebrowTag>
-          <h2 id="services-heading" className="font-serif font-medium text-[38px] md:text-[48px] leading-tight text-ink">
+          <h2 id="services-heading" className="font-serif font-normal text-[38px] md:text-[48px] leading-tight text-ink">
             {title}
           </h2>
           <div className="mx-auto mt-4 w-16 h-px bg-gold-brushed" />
@@ -77,7 +77,7 @@ export function ServicesBand({ services, intro }: ServicesBandProps) {
                   ].join(' ')}>
                     <Icon className="w-5 h-5" />
                   </div>
-                  <h3 className={`font-serif font-medium text-[18px] mb-2 leading-snug ${service.cardImage ? 'text-white' : 'text-ink'}`}>
+                  <h3 className={`font-serif font-normal text-[18px] mb-2 leading-snug ${service.cardImage ? 'text-white' : 'text-ink'}`}>
                     {service.frontTitle}
                   </h3>
                   <p className={`font-sans text-[13px] leading-relaxed flex-1 ${service.cardImage ? 'text-white/80' : 'text-slate'}`}>

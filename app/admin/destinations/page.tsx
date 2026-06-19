@@ -2,7 +2,11 @@
 
 import React, { useEffect, useState } from 'react'
 import { Plus, Pencil, Trash2, Eye, EyeOff, Loader2 } from 'lucide-react'
-import type { DestinationDoc } from '@/types/firestore'
+import { ImageUpload } from '@/components/admin/ImageUpload'
+import { RichTextEditor } from '@/components/admin/RichTextEditor'
+import { RepeatableList } from '@/components/admin/RepeatableList'
+import { SectionEditor, normalizeSections } from '@/components/admin/SectionEditor'
+import type { DestinationDoc, ServiceSection } from '@/types/firestore'
 
 function DestinationModal({
   initial,
@@ -21,6 +25,8 @@ function DestinationModal({
     image: initial?.image ?? '',
     routes: initial?.routes ?? [],
     published: initial?.published ?? false,
+    overview: initial?.overview ?? '',
+    sections: initial?.sections ?? [],
   })
   const [saving, setSaving] = useState(false)
   const [routesText, setRoutesText] = useState((initial?.routes ?? []).join('\n'))
@@ -31,14 +37,19 @@ function DestinationModal({
     e.preventDefault()
     setSaving(true)
     const { saveDestination } = await import('@/lib/firestorePublic')
-    await saveDestination({ ...form, routes: routesText.split('\n').map(r => r.trim()).filter(Boolean) }, initial?.id)
+    await saveDestination({
+      ...form,
+      slug: form.slug.trim().toLowerCase(),
+      routes: routesText.split('\n').map(r => r.trim()).filter(Boolean),
+      sections: normalizeSections(form.sections),
+    }, initial?.id)
     setSaving(false)
     onSave()
   }
 
   return (
     <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4" onClick={onClose}>
-      <div className="bg-navy-card border border-gold-brushed/20 rounded-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto p-6" onClick={e => e.stopPropagation()}>
+      <div className="bg-navy-card border border-gold-brushed/20 rounded-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto p-6" onClick={e => e.stopPropagation()}>
         <h2 className="font-serif text-[22px] text-white mb-6">{initial ? 'Edit Destination' : 'Add Destination'}</h2>
         <form onSubmit={submit} className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
@@ -55,13 +66,29 @@ function DestinationModal({
             <label className="block text-[11px] font-sans font-semibold uppercase tracking-[0.15em] text-gold-brushed mb-1.5">Blurb</label>
             <input value={form.blurb} onChange={e => setForm(f => ({ ...f, blurb: e.target.value }))} className={inp} placeholder="Short positioning line" />
           </div>
+          <ImageUpload
+            value={form.image}
+            onChange={url => setForm(f => ({ ...f, image: url }))}
+            label="Hero / Card Image"
+          />
           <div>
-            <label className="block text-[11px] font-sans font-semibold uppercase tracking-[0.15em] text-gold-brushed mb-1.5">Image URL</label>
-            <input value={form.image} onChange={e => setForm(f => ({ ...f, image: e.target.value }))} className={inp} placeholder="https://..." />
-          </div>
-          <div>
-            <label className="block text-[11px] font-sans font-semibold uppercase tracking-[0.15em] text-gold-brushed mb-1.5">Routes (one per line)</label>
+            <label className="block text-[11px] font-sans font-semibold uppercase tracking-[0.15em] text-gold-brushed mb-1.5">Routes (sub-topics, one per line)</label>
             <textarea value={routesText} onChange={e => setRoutesText(e.target.value)} rows={4} className={inp + ' resize-none'} placeholder={'Golden Visa\nWork Permit\nBusiness Setup'} />
+          </div>
+
+          <div>
+            <label className="block text-[11px] font-sans font-semibold uppercase tracking-[0.15em] text-gold-brushed mb-1.5">Overview (shown as the first block on the detail page — optional)</label>
+            <RichTextEditor value={form.overview ?? ''} onChange={html => setForm(f => ({ ...f, overview: html }))} placeholder="Intro / overview for this destination…" />
+          </div>
+
+          <div>
+            <RepeatableList<ServiceSection>
+              label="Page Sections"
+              items={form.sections ?? []}
+              onChange={sections => setForm(f => ({ ...f, sections }))}
+              createEmpty={() => ({ id: '', title: '', body: '', serviceBody: '' })}
+              renderItem={(item, _i, onChg) => <SectionEditor item={item} onChange={onChg} />}
+            />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
@@ -120,7 +147,7 @@ export default function AdminDestinationsPage() {
     <div className="p-8">
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="font-serif font-medium text-[28px] text-white mb-0.5">Destinations</h1>
+          <h1 className="font-serif font-normal text-[28px] text-white mb-0.5">Destinations</h1>
           <p className="text-[13px] font-sans text-cream/50">{destinations.length} total</p>
         </div>
         <button onClick={() => setEditing('new')}

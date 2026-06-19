@@ -85,14 +85,14 @@ export default function AdminCollaborationsPage() {
 
   return (
     <div className="p-8 max-w-2xl">
-      <h1 className="font-serif font-medium text-[28px] text-white mb-2">Collaborations & Partnerships</h1>
+      <h1 className="font-serif font-normal text-[28px] text-white mb-2">Collaborations & Partnerships</h1>
       <p className="text-[13px] font-sans text-cream/50 mb-8">Partner network and Join With Us section content.</p>
 
       <form onSubmit={onSubmit} className="space-y-8">
 
         {/* ── Partner Network Section ── */}
         <div className="bg-navy-card border border-gold-brushed/15 rounded-xl p-6 space-y-5">
-          <h2 className="font-serif font-medium text-[18px] text-white">Partner Network Section</h2>
+          <h2 className="font-serif font-normal text-[18px] text-white">Partner Network Section</h2>
           <div>
             <label className={lbl}>Eyebrow</label>
             <input value={form.eyebrow} onChange={e => setForm(f => ({ ...f, eyebrow: e.target.value }))} className={inp} placeholder="Our Network" />
@@ -125,7 +125,7 @@ export default function AdminCollaborationsPage() {
 
         {/* ── Join With Us Section ── */}
         <div className="bg-navy-card border border-gold-brushed/15 rounded-xl p-6 space-y-5">
-          <h2 className="font-serif font-medium text-[18px] text-white">Join With Us Section</h2>
+          <h2 className="font-serif font-normal text-[18px] text-white">Join With Us Section</h2>
           <div>
             <label className={lbl}>Eyebrow</label>
             <input value={form.joinEyebrow ?? ''} onChange={e => setForm(f => ({ ...f, joinEyebrow: e.target.value }))} className={inp} placeholder="COLLABORATION" />

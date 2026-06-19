@@ -20,7 +20,7 @@ export function QuickSupport() {
       <div className="mx-auto px-6 md:px-12 max-w-6xl">
         <div className="text-center mb-14">
           <EyebrowTag>How We Can Help</EyebrowTag>
-          <h2 id="quick-support-heading" className="font-serif font-medium text-[34px] md:text-[44px] leading-tight text-ink">
+          <h2 id="quick-support-heading" className="font-serif font-normal text-[34px] md:text-[44px] leading-tight text-ink">
             Quick Support Services
           </h2>
         </div>

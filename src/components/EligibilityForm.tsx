@@ -68,7 +68,7 @@ export function EligibilityForm() {
         <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style={{ background: BRAND_GRADIENT }}>
           <CheckCircle2 className="w-8 h-8 text-white" />
         </div>
-        <h3 className="font-serif font-medium text-[24px] text-white mb-2">Thank you!</h3>
+        <h3 className="font-serif font-normal text-[24px] text-white mb-2">Thank you!</h3>
         <p className="text-[14px] font-sans text-cream/60">A Songbird advisor will reach out within 24 hours to discuss your eligibility.</p>
       </div>
     )
