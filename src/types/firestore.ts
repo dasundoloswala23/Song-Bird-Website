@@ -24,6 +24,7 @@ export interface FAQ {
 export interface SectionTab {
   label: string   // tab title, e.g. "Overview", "Benefits", "Service"
   body: string    // rich HTML from Quill (may contain inline <img>)
+  cards?: FeatureCard[]   // optional per-tab feature-cards grid (icon + title + subtitle)
 }
 
 export interface FeatureCard {
@@ -40,6 +41,7 @@ export interface ServiceSection {
   serviceBody?: string      // legacy: second/"Our Service" tab content
   stats?: StatStripItem[]   // optional row of figures shown within this section
   cards?: FeatureCard[]     // optional feature-cards grid (icon + title + subtitle)
+  showTitle?: boolean        // whether to render the h2 heading (defaults true)
 }
 
 export interface ServiceDoc {
@@ -82,6 +84,8 @@ export interface ServiceDoc {
   showUaeBar?: boolean       // show the UAE Licensed bar under the hero on this service's detail page
   uaeBarText?: string        // main label of the UAE bar (falls back to the site default)
   uaeBarDetail?: string      // detail line of the UAE bar (falls back to the site default)
+  overviewTitle?: string     // custom heading for the overview block (falls back to "Overview")
+  showOverviewTitle?: boolean // whether to render the overview heading (defaults true)
 }
 
 // ── Services Intro ("One Firm. Every Path") (siteContent/servicesIntro) ─────────
@@ -195,6 +199,8 @@ export interface DestinationDoc {
   name: string
   blurb: string
   image: string
+  ctaImage?: string             // optional background image for the "Ready to explore X?" CTA
+  bottomImage?: string          // optional full image shown between the CTA and the final CTA
   routes: string[]
   published: boolean
 
@@ -257,6 +263,7 @@ export interface HeroSettingsDoc {
   heroVideoFullUrl: string  // full-quality video for modal player
   heroImage: string         // Ken-Burns fallback still image
   slides?: HeroSlide[]      // 4-image slider with rotating taglines
+  finalCtaImage?: string    // background image for the global "Ready to Begin Your Journey?" CTA
 }
 
 // ── Testimonials (extended) ───────────────────────────────────────────────────

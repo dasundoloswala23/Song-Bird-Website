@@ -53,7 +53,7 @@ export default function AdminAccreditationsPage() {
 
           <RepeatableList<AccreditationItem>
             label="Accreditations"
-            maxItems={12}
+            maxItems={50}
             items={form.items ?? []}
             onChange={items => setForm(f => ({ ...f, items }))}
             createEmpty={() => ({ name: '', logo: '' })}

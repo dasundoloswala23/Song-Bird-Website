@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import Image from 'next/image'
 import { CheckCircle2 } from 'lucide-react'
 import { EyebrowTag } from '@/components/EyebrowTag'
 import { CollaborationJoinForm } from '@/components/CollaborationJoinForm'
@@ -21,11 +22,25 @@ export function CollaborationJoinSection({ fallback }: { fallback: Collaboration
   const benefits   = content.benefits   ?? []
 
   return (
-    <section className="pt-[160px] pb-24 bg-navy">
-      <div className="mx-auto px-6 md:px-12 max-w-6xl">
+    <>
+      {/* Hero title bar — Collaborating.png background with emerald overlay (mirrors home hero) */}
+      <section className="relative pt-[160px] pb-20 bg-navy overflow-hidden">
+        <Image
+          src="/images/collaborating.png"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover"
+          aria-hidden="true"
+        />
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{ background: 'linear-gradient(105deg, rgba(14,92,84,0.92) 0%, rgba(15,124,90,0.66) 45%, rgba(31,169,104,0.32) 100%)' }}
+        />
+        <div className="absolute inset-x-0 bottom-0 h-32 pointer-events-none" style={{ background: 'linear-gradient(to top, rgba(11,61,46,0.85), transparent)' }} />
 
-        {/* Header */}
-        <div className="text-center mb-16">
+        <div className="relative z-10 mx-auto px-6 md:px-12 max-w-6xl text-center">
           {content.joinEyebrow && <EyebrowTag light>{content.joinEyebrow}</EyebrowTag>}
           <h2 className="font-serif font-normal text-[38px] md:text-[50px] leading-tight text-white mb-3">
             {content.joinTitle}
@@ -35,13 +50,19 @@ export function CollaborationJoinSection({ fallback }: { fallback: Collaboration
               {content.tagline}
             </p>
           )}
-          <div className="mx-auto w-16 h-px bg-gold-brushed mb-6" />
-          {content.joinIntro && (
-            <p className="text-[15px] font-sans text-cream/65 max-w-2xl mx-auto leading-relaxed">
-              {content.joinIntro}
-            </p>
-          )}
+          <div className="mx-auto w-16 h-px bg-gold-brushed" />
         </div>
+      </section>
+
+      {/* Join section */}
+      <section className="pb-24 pt-16 bg-navy">
+      <div className="mx-auto px-6 md:px-12 max-w-6xl">
+
+        {content.joinIntro && (
+          <p className="text-[15px] md:text-[16px] font-sans text-cream/75 max-w-2xl mx-auto text-center leading-relaxed mb-14">
+            {content.joinIntro}
+          </p>
+        )}
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
 
@@ -60,7 +81,7 @@ export function CollaborationJoinSection({ fallback }: { fallback: Collaboration
                       <ul className="space-y-1.5">
                         {cat.items.map((item, j) => (
                           <li key={j} className="flex items-start gap-2">
-                            <span className="w-1.5 h-1.5 rounded-full bg-teal shrink-0 mt-1.5" />
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald shrink-0 mt-1.5" />
                             <span className="text-[13px] font-sans text-cream/70">{item}</span>
                           </li>
                         ))}
@@ -94,6 +115,7 @@ export function CollaborationJoinSection({ fallback }: { fallback: Collaboration
         </div>
 
       </div>
-    </section>
+      </section>
+    </>
   )
 }

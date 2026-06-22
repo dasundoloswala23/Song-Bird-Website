@@ -6,6 +6,7 @@ import { ArrowRight, Loader2 } from 'lucide-react'
 import * as LucideIcons from 'lucide-react'
 import type { ComponentType } from 'react'
 import { getPublishedServices } from '@/lib/firestorePublic'
+import { slugify } from '@/lib/utils'
 import type { ServiceDoc } from '@/types/firestore'
 
 function getIcon(name: string): ComponentType<{ className?: string }> {
@@ -38,7 +39,7 @@ export function ServicesGrid({ fallback }: { fallback: ServiceDoc[] }) {
       {services.map(service => {
         const Icon = getIcon(service.icon)
         return (
-          <Link key={service.slug} href={`/services/${service.slug.toLowerCase()}`}
+          <Link key={service.slug} href={`/services/${slugify(service.slug)}`}
             className={[
               'group relative flex flex-col p-6 rounded-2xl overflow-hidden min-h-[260px] border border-cloud hover:border-teal/30 hover:-translate-y-1 hover:shadow-[0_12px_32px_rgba(10,23,56,.09)] transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal',
               service.cardImage ? 'text-white' : 'bg-white',

@@ -63,6 +63,22 @@ export function SectionEditor({ item, onChange }: { item: ServiceSection; onChan
                   className={inputCls}
                 />
                 <RichTextEditor value={tab.body} onChange={html => onTab({ ...tab, body: html })} placeholder="Tab content…" />
+                <div className="pt-1">
+                  <RepeatableList<FeatureCard>
+                    label="Feature Cards (optional — icon + title + subtitle grid)"
+                    items={tab.cards ?? []}
+                    onChange={cards => onTab({ ...tab, cards })}
+                    createEmpty={() => ({ icon: '', title: '', subtitle: '' })}
+                    maxItems={8}
+                    renderItem={(card, _k, onCard) => (
+                      <div className="space-y-2">
+                        <ImageUpload value={card.icon ?? ''} onChange={url => onCard({ ...card, icon: url })} label="Icon (optional)" />
+                        <input value={card.title} onChange={e => onCard({ ...card, title: e.target.value })} placeholder="Card title (e.g. Global Recognition)" className={inputCls} />
+                        <textarea value={card.subtitle} onChange={e => onCard({ ...card, subtitle: e.target.value })} rows={2} placeholder="Card subtitle…" className={inputCls + ' resize-none'} />
+                      </div>
+                    )}
+                  />
+                </div>
               </div>
             )}
           />
@@ -116,15 +132,26 @@ export function normalizeSections(sections: ServiceSection[] | undefined): Servi
       const cards = (s.cards ?? [])
         .map(c => ({ icon: c.icon ?? '', title: c.title.trim(), subtitle: c.subtitle.trim() }))
         .filter(c => c.title || c.subtitle || c.icon)
-      return {
-        ...s,
-        title: s.title.trim(),
-        tabs: (s.tabs ?? []).map(t => ({ label: t.label.trim(), body: t.body })).filter(t => t.label || t.body?.trim()),
-        stats: stats.length ? stats : [],
-        cards: cards.length ? cards : [],
-      }
+      const tabs = (s.tabs ?? [])
+        .map(t => {
+          const tabCards = (t.cards ?? [])
+            .map(c => ({ icon: c.icon ?? '', title: c.title.trim(), subtitle: c.subtitle.trim() }))
+            .filter(c => c.title || c.subtitle || c.icon)
+          // Only attach `cards` when non-empty — never write empty arrays to Firestore.
+          const tab: SectionTab = { label: t.label.trim(), body: t.body }
+          if (tabCards.length) tab.cards = tabCards
+          return tab
+        })
+        .filter(t => t.label || t.body?.trim() || (t.cards?.length ?? 0) > 0)
+      // Attach `stats`/`cards` only when non-empty — never write empty arrays to Firestore.
+      const out: ServiceSection = { ...s, title: s.title.trim(), tabs }
+      delete out.stats
+      delete out.cards
+      if (stats.length) out.stats = stats
+      if (cards.length) out.cards = cards
+      return out
     })
-    .filter(s => s.title || s.body?.trim() || s.serviceBody?.trim() || s.tabs.length > 0 || s.cards.length > 0)
+    .filter(s => s.title || s.body?.trim() || s.serviceBody?.trim() || s.tabs!.length > 0 || (s.cards?.length ?? 0) > 0)
     .map(s => {
       const base = s.id && s.id === slugify(s.title) ? s.id : slugify(s.title) || 'section'
       const count = seen.get(base) ?? 0

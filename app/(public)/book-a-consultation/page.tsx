@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import { EyebrowTag } from '@/components/EyebrowTag'
 import { BookingFlow } from '@/components/BookingFlow'
 import { CheckCircle2 } from 'lucide-react'
+import { OFFICE_PHONE, WHATSAPP_NUMBER } from '@/lib/constants'
+import { buildWhatsAppUrl } from '@/lib/utils'
 
 export const dynamic = 'force-static'
 
@@ -58,13 +60,13 @@ export default function BookConsultationPage() {
                 <h3 className="font-serif font-normal text-[16px] text-white mb-2">Prefer another channel?</h3>
                 <p className="text-[12px] font-sans text-cream/50 mb-4">Reach us directly:</p>
                 <a
-                  href="tel:+97140000000"
+                  href={`tel:${OFFICE_PHONE.replace(/\s/g, '')}`}
                   className="flex items-center gap-2 text-[13px] font-sans font-medium text-gold-brushed hover:text-gold transition-colors mb-2"
                 >
-                  📞 +971 4 000 0000
+                  📞 {OFFICE_PHONE}
                 </a>
                 <a
-                  href={`https://wa.me/971500000000?text=${encodeURIComponent('Hi, I\'d like to book a consultation.')}`}
+                  href={buildWhatsAppUrl(WHATSAPP_NUMBER, "Hi, I'd like to book a consultation.")}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 text-[13px] font-sans font-medium text-whatsapp hover:opacity-80 transition-opacity"

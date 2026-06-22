@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { getServiceBySlug, getAllServices } from '@/lib/firestorePublic'
 import { SERVICES } from '@/lib/services'
 import { ServiceDetailClient } from '@/components/services/ServiceDetailClient'
+import { slugify } from '@/lib/utils'
 
 interface Props { params: { slug: string } }
 
@@ -12,7 +13,8 @@ export async function generateStaticParams() {
   const stored = await getAllServices().catch(() => [])
   const firestoreSlugs = stored.map(s => s.slug).filter(Boolean)
   const hardcodedSlugs = SERVICES.map(s => s.slug)
-  const allSlugs = Array.from(new Set([...hardcodedSlugs, ...firestoreSlugs]))
+  // Slugify so every generated path is clean/hyphenated (no spaced folders).
+  const allSlugs = Array.from(new Set([...hardcodedSlugs, ...firestoreSlugs].map(s => slugify(s)).filter(Boolean)))
   return allSlugs.map(slug => ({ slug }))
 }
 

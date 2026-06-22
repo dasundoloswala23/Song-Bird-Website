@@ -46,10 +46,7 @@ export function ReserveButtons({ subject, settings }: { subject: string; setting
   }
 
   return (
-    <div className="mt-8 rounded-xl border border-cloud bg-white p-5">
-      <p className="text-[13px] font-sans text-slate mb-3">
-        Reserve your free consultation for <span className="font-semibold text-ink">{subject}</span>
-      </p>
+    <div className="mt-8">
       <div className="flex flex-wrap gap-3">
         {settings.whatsappEnabled && (
           <a
@@ -59,7 +56,7 @@ export function ReserveButtons({ subject, settings }: { subject: string; setting
             className="inline-flex items-center gap-2 px-5 py-2.5 text-white text-[12px] font-sans font-semibold uppercase tracking-[0.08em] rounded-full transition-all hover:-translate-y-px focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal"
             style={{ background: 'linear-gradient(95deg, #22B877 0%, #0E7C5A 100%)' }}
           >
-            <MessageCircle className="w-4 h-4" /> Reserve via WhatsApp
+            <MessageCircle className="w-4 h-4" /> Reserve Your Free Consultation
           </a>
         )}
         {settings.emailEnabled && (
@@ -100,11 +97,14 @@ export function SectionStats({ stats }: { stats?: ServiceSection['stats'] }) {
 export function SectionBlock({ section, reserve }: { section: ServiceSection; reserve?: { subject: string; settings: ReserveCtaDoc } }) {
   const tabs = resolveTabs(section)
   const [active, setActive] = useState(0)
-  const activeBody = (tabs[active] ?? tabs[0]).body
+  const activeTab = tabs[active] ?? tabs[0]
+  const activeBody = activeTab.body
 
   return (
     <section id={section.id} className="scroll-mt-32 py-12 border-b border-cloud last:border-b-0 first:pt-0">
-      <h2 className="font-serif font-normal text-[30px] md:text-[34px] text-ink mb-5">{section.title}</h2>
+      {section.showTitle !== false && (
+        <h2 className="font-serif font-normal text-[30px] md:text-[34px] text-ink mb-5">{section.title}</h2>
+      )}
 
       {tabs.length > 1 && (
         <div className="flex flex-wrap gap-6 border-b border-cloud mb-6">
@@ -124,8 +124,9 @@ export function SectionBlock({ section, reserve }: { section: ServiceSection; re
         </div>
       )}
 
-      <div className="sb-prose sb-cards" dangerouslySetInnerHTML={{ __html: renderRichHtml(activeBody) }} />
+      <div className="sb-prose sb-cards" suppressHydrationWarning dangerouslySetInnerHTML={{ __html: renderRichHtml(activeBody) }} />
       <SectionStats stats={section.stats} />
+      <FeatureCards cards={activeTab.cards} />
       <FeatureCards cards={section.cards} />
       {reserve && <ReserveButtons subject={reserve.subject} settings={reserve.settings} />}
     </section>

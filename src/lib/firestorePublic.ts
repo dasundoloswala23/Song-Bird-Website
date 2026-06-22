@@ -2,13 +2,31 @@
  * Firebase CLIENT SDK reads — used by both Server Components (build-time) and
  * client components (runtime). No Admin SDK / Cloud Functions required.
  */
-import { initializeFirestore, collection, query, where, orderBy, getDocs, doc, getDoc, setDoc, addDoc, deleteDoc, updateDoc } from 'firebase/firestore'
+import { initializeFirestore, collection, query, where, orderBy, getDocs, doc, getDoc, setDoc, addDoc, deleteDoc, updateDoc, deleteField } from 'firebase/firestore'
 import { firebaseApp } from './firebase'
+import { slugify } from './utils'
 import type { ServiceDoc, ServicesIntroDoc, WhyChooseUsDoc, StatsDoc, ProcessSectionDoc, TestimonialsSectionDoc, LeadDoc, DestinationDoc, SlotDoc, BookingDoc, GlobalReachDoc, HeroSettingsDoc, WelcomeDoc, AccreditationsDoc, CollaborationsDoc, InsightsDoc, NewsletterSignupDoc, ReserveCtaDoc } from '@/types/firestore'
 
 // ignoreUndefinedProperties: optional fields (e.g. a section's unset stats) may be `undefined`;
 // Firestore would otherwise reject the whole write ("invalid nested entity"). This drops them.
 const db = initializeFirestore(firebaseApp, { ignoreUndefinedProperties: true })
+
+// Sections are persisted as a JSON string (`sectionsJson`) to sidestep Firestore's nested-array
+// limit (services/destinations nest sections → tabs → cards). Rehydrate to a `sections` array
+// on read so all consumers are unchanged. Back-compat: legacy docs store an array `sections`.
+function hydrateSections(data: Record<string, any>): Record<string, any> {
+  if (typeof data.sectionsJson === 'string') {
+    try { data.sections = JSON.parse(data.sectionsJson) } catch { data.sections = [] }
+    delete data.sectionsJson
+  }
+  return data
+}
+
+// Strip the nested `sections` array and store it as a JSON string for writing.
+function dehydrateSections(data: Record<string, any>): Record<string, any> {
+  const { sections, ...rest } = data
+  return { ...rest, sectionsJson: JSON.stringify(sections ?? []) }
+}
 
 // ── Public reads ──────────────────────────────────────────────────────────────
 
@@ -17,7 +35,7 @@ export async function getPublishedServices(): Promise<ServiceDoc[]> {
     const q = query(collection(db, 'services'), where('published', '==', true))
     const snap = await getDocs(q)
     return snap.docs
-      .map(d => ({ id: d.id, ...d.data() } as ServiceDoc))
+      .map(d => hydrateSections({ id: d.id, ...d.data() }) as ServiceDoc)
       .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
   } catch { return [] }
 }
@@ -26,18 +44,23 @@ export async function getAllServices(): Promise<ServiceDoc[]> {
   try {
     const snap = await getDocs(collection(db, 'services'))
     return snap.docs
-      .map(d => ({ id: d.id, ...d.data() } as ServiceDoc))
+      .map(d => hydrateSections({ id: d.id, ...d.data() }) as ServiceDoc)
       .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
   } catch { return [] }
 }
 
 export async function getServiceBySlug(slug: string): Promise<ServiceDoc | null> {
   try {
+    // Exact match first (fast path), then a slug-agnostic fallback so a clean hyphenated URL
+    // (e.g. "commercial-brokering") still resolves legacy docs stored with spaces/casing
+    // (e.g. "commercial brokering").
     const q = query(collection(db, 'services'), where('slug', '==', slug))
     const snap = await getDocs(q)
-    if (snap.empty) return null
-    const d = snap.docs[0]
-    return { id: d.id, ...d.data() } as ServiceDoc
+    if (!snap.empty) return hydrateSections({ id: snap.docs[0].id, ...snap.docs[0].data() }) as ServiceDoc
+    const target = slugify(slug)
+    const all = await getDocs(collection(db, 'services'))
+    const match = all.docs.find(d => slugify((d.data() as ServiceDoc).slug ?? '') === target)
+    return match ? (hydrateSections({ id: match.id, ...match.data() }) as ServiceDoc) : null
   } catch { return null }
 }
 
@@ -45,7 +68,7 @@ export async function getServiceById(id: string): Promise<ServiceDoc | null> {
   try {
     const snap = await getDoc(doc(db, 'services', id))
     if (!snap.exists()) return null
-    return { id: snap.id, ...snap.data() } as ServiceDoc
+    return hydrateSections({ id: snap.id, ...snap.data() }) as ServiceDoc
   } catch { return null }
 }
 
@@ -111,7 +134,7 @@ export async function getDestinations(): Promise<DestinationDoc[]> {
     const q = query(collection(db, 'destinations'), where('published', '==', true))
     const snap = await getDocs(q)
     return snap.docs
-      .map(d => ({ id: d.id, ...d.data() } as DestinationDoc))
+      .map(d => hydrateSections({ id: d.id, ...d.data() }) as DestinationDoc)
       .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
   } catch { return [] }
 }
@@ -120,7 +143,7 @@ export async function getAllDestinations(): Promise<DestinationDoc[]> {
   try {
     const snap = await getDocs(collection(db, 'destinations'))
     return snap.docs
-      .map(d => ({ id: d.id, ...d.data() } as DestinationDoc))
+      .map(d => hydrateSections({ id: d.id, ...d.data() }) as DestinationDoc)
       .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
   } catch { return [] }
 }
@@ -129,9 +152,11 @@ export async function getDestinationBySlug(slug: string): Promise<DestinationDoc
   try {
     const q = query(collection(db, 'destinations'), where('slug', '==', slug))
     const snap = await getDocs(q)
-    if (snap.empty) return null
-    const d = snap.docs[0]
-    return { id: d.id, ...d.data() } as DestinationDoc
+    if (!snap.empty) return hydrateSections({ id: snap.docs[0].id, ...snap.docs[0].data() }) as DestinationDoc
+    const target = slugify(slug)
+    const all = await getDocs(collection(db, 'destinations'))
+    const match = all.docs.find(d => slugify((d.data() as DestinationDoc).slug ?? '') === target)
+    return match ? (hydrateSections({ id: match.id, ...match.data() }) as DestinationDoc) : null
   } catch { return null }
 }
 
@@ -244,11 +269,13 @@ export async function getReserveCta(): Promise<ReserveCtaDoc | null> {
 // ── Admin writes ──────────────────────────────────────────────────────────────
 
 export async function saveService(data: Omit<ServiceDoc, 'id'>, id?: string): Promise<string> {
+  const payload = dehydrateSections(data)
   if (id) {
-    await setDoc(doc(db, 'services', id), data, { merge: true })
+    // deleteField removes any stale nested `sections` array left on legacy docs under merge.
+    await setDoc(doc(db, 'services', id), { ...payload, sections: deleteField() }, { merge: true })
     return id
   }
-  const ref = await addDoc(collection(db, 'services'), data)
+  const ref = await addDoc(collection(db, 'services'), payload)
   return ref.id
 }
 
@@ -281,11 +308,12 @@ export async function saveLead(data: Omit<LeadDoc, 'id'>): Promise<void> {
 }
 
 export async function saveDestination(data: Omit<DestinationDoc, 'id'>, id?: string): Promise<string> {
+  const payload = dehydrateSections(data)
   if (id) {
-    await setDoc(doc(db, 'destinations', id), data, { merge: true })
+    await setDoc(doc(db, 'destinations', id), { ...payload, sections: deleteField() }, { merge: true })
     return id
   }
-  const ref = await addDoc(collection(db, 'destinations'), data)
+  const ref = await addDoc(collection(db, 'destinations'), payload)
   return ref.id
 }
 

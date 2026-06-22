@@ -38,7 +38,7 @@ function project(lat: number, lng: number) {
 }
 
 const DEFAULT_CONTENT: GlobalReachDoc = {
-  headline: 'We serve clients across the UAE and beyond',
+  headline: 'We Serve Clients Across The UAE And Beyond',
   subline: 'From the GCC to Europe, North America and Australia — local expertise with international reach.',
   pins: DEFAULT_PINS,
 }
@@ -132,7 +132,7 @@ export function GlobalReachMap({ fallback }: Props) {
 
         {/* Licensed-assurance line */}
         <p className="max-w-2xl mx-auto mt-8 text-center text-[14px] font-sans text-cream/70 leading-relaxed">
-          Dubai-Based &amp; Fully licensed Advisory firm operating under UAE regulatory frameworks,
+          Dubai-Based &amp; Fully-licensed Advisory Firm operating under UAE regulatory frameworks,
           offering you the assurance of professional accountability.
         </p>
       </div>

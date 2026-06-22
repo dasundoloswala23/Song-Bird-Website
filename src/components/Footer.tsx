@@ -58,7 +58,7 @@ function NewsletterRow() {
               placeholder={t('footer.emailPlaceholder')}
               required
               disabled={status === 'saving'}
-              className="flex-1 md:w-60 px-3.5 py-2.5 bg-navy/50 border border-gold-brushed/20 rounded-[6px] text-[13px] font-sans text-cream placeholder:text-cream/25 focus:outline-none focus:ring-2 focus:ring-gold-brushed/40 disabled:opacity-60"
+              className="flex-1 md:w-72 px-4 py-2.5 bg-white/[0.07] border border-gold-brushed/40 rounded-[6px] text-[13px] font-sans text-cream placeholder:text-cream/45 focus:outline-none focus:ring-2 focus:ring-gold-brushed/60 focus:border-gold-brushed/60 disabled:opacity-60"
             />
             <button
               type="submit"

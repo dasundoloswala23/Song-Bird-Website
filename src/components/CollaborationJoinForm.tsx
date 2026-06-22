@@ -88,7 +88,7 @@ export function CollaborationJoinForm() {
   if (submitted) {
     return (
       <div className="flex flex-col items-center justify-center gap-4 py-16 text-center">
-        <CheckCircle2 className="w-12 h-12 text-teal" />
+        <CheckCircle2 className="w-12 h-12 text-emerald" />
         <h4 className="font-serif font-normal text-[22px] text-white">Thank you!</h4>
         <p className="text-[14px] font-sans text-cream/65 max-w-sm">
           Your collaboration inquiry has been received. A Songbird advisor will be in touch within 24 hours.
@@ -208,8 +208,8 @@ export function CollaborationJoinForm() {
       <button
         type="submit"
         disabled={submitting}
-        className="w-full flex items-center justify-center gap-2 py-3 px-6 text-navy text-[13px] font-sans font-semibold uppercase tracking-[0.08em] rounded-[6px] disabled:opacity-60 transition-all hover:-translate-y-px"
-        style={{ background: 'linear-gradient(135deg, #009688, #3FB68A, #5EEA8A)' }}
+        className="w-full flex items-center justify-center gap-2 py-3 px-6 text-white text-[13px] font-sans font-semibold uppercase tracking-[0.08em] rounded-[6px] disabled:opacity-60 transition-all hover:-translate-y-px"
+        style={{ background: 'linear-gradient(135deg, #22B877 0%, #0E9C6E 55%, #0E7C5A 100%)' }}
       >
         {submitting ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
         {submitting ? 'Submitting…' : 'Submit Inquiry'}

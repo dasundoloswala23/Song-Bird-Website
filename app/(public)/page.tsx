@@ -39,12 +39,12 @@ export default async function HomePage() {
       <SongbirdDifferenceClient fallback={whyChooseUs} />
       <GlobalReachMap fallback={globalReach} />
       <ServicesBandClient fallback={services} intro={servicesIntro} />
-      <Insights fallback={insights} />
       <PowerBand />
       <Accreditations fallback={accreditations} />
       <ProcessSectionClient fallback={processSection} />
       <CombinedCTA />
       <DestinationsPreview fallback={destinations} />
+      <Insights fallback={insights} />
       <TestimonialsClient fallback={testimonials} />
       <FinalCTA />
     </>

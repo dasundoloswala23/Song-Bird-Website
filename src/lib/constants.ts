@@ -1,5 +1,5 @@
 export const WHATSAPP_NUMBER =
-  process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? '971500000000'
+  process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? '971558397703'
 
 export const CONTACT_EMAIL = 'info@songbird.ae'
 
@@ -16,7 +16,7 @@ export const OFFICES = [
 // Primary address (main office) — kept for back-compat with single-address usages.
 export const OFFICE_ADDRESS = OFFICES[0].address
 
-export const OFFICE_PHONE = '+971 4 000 0000'
+export const OFFICE_PHONE = '+971 55 839 7703'
 
 export const OFFICE_HOURS = {
   weekdays: 'Mon – Fri  10:00 am – 7:00 pm',

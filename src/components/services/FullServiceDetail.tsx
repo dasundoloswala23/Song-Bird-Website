@@ -10,7 +10,7 @@ export function FullServiceDetail({ service }: { service: ServiceDoc }) {
   return (
     <>
       {/* 1. Hero */}
-      <section className="relative pt-[120px] min-h-screen flex items-start">
+      <section className="relative pt-[120px] min-h-[70vh] flex items-start">
         {service.heroImage ? (
           <Image src={service.heroImage} alt={service.frontTitle} fill className="object-cover" priority sizes="100vw" />
         ) : (
@@ -19,10 +19,10 @@ export function FullServiceDetail({ service }: { service: ServiceDoc }) {
         <div className="absolute inset-0 bg-gradient-to-b from-navy/85 via-navy/35 to-navy/10" />
         <div className="relative z-10 mx-auto px-6 md:px-12 max-w-4xl pt-10 w-full">
           <EyebrowTag>{service.heroEyebrow || 'Advisory Services'}</EyebrowTag>
-          <h1 className="font-serif font-normal text-[54px] md:text-[80px] leading-tight text-white mb-4">
+          <h1 className="font-sans font-normal text-[40px] md:text-[56px] lg:text-[68px] leading-[1.08] text-white mb-4">
             {service.detailTitle || service.frontTitle}
           </h1>
-          <p className="text-[16px] font-sans text-cream/75 max-w-2xl leading-relaxed">
+          <p className="text-[18px] md:text-[20px] font-sans text-cream/75 max-w-2xl leading-relaxed">
             {service.detailIntro || service.frontSubtitle}
           </p>
         </div>
@@ -34,10 +34,10 @@ export function FullServiceDetail({ service }: { service: ServiceDoc }) {
       {hasStats && (
         <section className="bg-surface-muted border-y border-hairline py-10">
           <div className="mx-auto px-6 md:px-12 max-w-5xl">
-            <div className="flex flex-wrap justify-center gap-y-6">
+            <div className="flex flex-nowrap justify-center">
               {service.statStrip.filter(s => s.value).map(s => (
-                <div key={s.label} className="flex flex-col items-center gap-2 px-6 sm:px-8 border-r border-hairline last:border-r-0">
-                  <span className="font-serif font-normal text-gold leading-none text-[30px] sm:text-[40px] md:text-[44px]">{s.label}</span>
+                <div key={s.label} className="flex flex-col items-center gap-2 px-5 sm:px-7 border-r border-hairline last:border-r-0">
+                  <span className="font-serif font-normal text-gold leading-none text-[28px] sm:text-[36px] md:text-[42px]">{s.label}</span>
                   <span className="text-[10px] sm:text-[11px] font-sans font-semibold uppercase tracking-[0.18em] text-slate text-center">{s.value}</span>
                 </div>
               ))}
@@ -50,7 +50,11 @@ export function FullServiceDetail({ service }: { service: ServiceDoc }) {
       {service.overview && (
         <section className="py-16 bg-cream">
           <div className="mx-auto px-6 md:px-12 max-w-4xl">
-            <h2 className="font-serif font-normal text-[32px] text-ink mb-6">Overview</h2>
+            {service.showOverviewTitle !== false && (
+              <h2 className="font-serif font-normal text-[32px] text-ink mb-6">
+                {service.overviewTitle?.trim() || 'Overview'}
+              </h2>
+            )}
             <div className="prose prose-slate max-w-none">
               {service.overview.split('\n\n').map((para, i) => (
                 <p key={i} className="text-[15px] font-sans text-slate leading-relaxed mb-4">{para}</p>

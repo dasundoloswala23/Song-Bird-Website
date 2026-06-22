@@ -8,6 +8,7 @@ import { ImageUpload } from './ImageUpload'
 import { RepeatableList } from './RepeatableList'
 import { RichTextEditor } from './RichTextEditor'
 import { SectionEditor, normalizeSections } from './SectionEditor'
+import { slugify } from '@/lib/utils'
 import type { ServiceDoc, StatStripItem, ServiceSection } from '@/types/firestore'
 
 type ServiceFormData = Omit<ServiceDoc, 'id'>
@@ -62,6 +63,7 @@ export function ServiceForm({ initialData, serviceId }: ServiceFormProps) {
     whatWeProvide: [], requirements: [],
     sections: [], showContactNav: true,
     showUaeBar: false, uaeBarText: '', uaeBarDetail: '',
+    overviewTitle: '', showOverviewTitle: true,
     ...initialData,
   }
 
@@ -69,18 +71,24 @@ export function ServiceForm({ initialData, serviceId }: ServiceFormProps) {
   const layout   = watch('layout')
   const heroImage = watch('heroImage')
   const showUaeBar = watch('showUaeBar')
+  const showOverviewTitle = watch('showOverviewTitle')
 
   const onSubmit = async (data: ServiceFormData) => {
     setSaving(true)
     setToast('')
-    // Always store slugs lowercase to avoid case-sensitive 404s on Firebase Hosting
-    data.slug = data.slug.trim().toLowerCase()
+    // Slugify the slug (spaces/specials → hyphens, lowercase) so each service gets a clean,
+    // URL-safe path and its own static page — avoids spaced folders + 404 fallbacks.
+    data.slug = slugify(data.slug) || slugify(data.frontTitle)
 
     // Normalize sectioned-layout content (trim titles + tab labels, stable anchor ids, dedupe).
     if (data.layout === 'sectioned') {
       data.sections = normalizeSections(data.sections)
     }
     try {
+      // Upload any pasted base64 images to Storage so the stored content stays under
+      // Firestore's 1 MB document limit.
+      const { uploadInlineSectionImages } = await import('@/lib/uploadFile')
+      data.sections = await uploadInlineSectionImages(data.sections)
       const { saveService } = await import('@/lib/firestorePublic')
       await saveService(data, serviceId)
       setToast('Saved successfully!')
@@ -283,6 +291,24 @@ export function ServiceForm({ initialData, serviceId }: ServiceFormProps) {
                 )}
               />
             )} />
+
+            {/* Overview title controls */}
+            <div className="flex flex-col gap-3 p-4 border border-gold-brushed/15 rounded-xl bg-navy/30">
+              <div className="flex items-center gap-3">
+                <Controller name="showOverviewTitle" control={control} render={({ field }) => (
+                  <button type="button" onClick={() => field.onChange(!field.value)}
+                    className={`relative w-10 h-5 rounded-full transition-colors ${field.value !== false ? 'bg-gold' : 'bg-navy/60 border border-gold-brushed/20'}`}>
+                    <span className="absolute top-0.5 w-4 h-4 bg-white rounded-full transition-transform" style={{ left: field.value !== false ? '22px' : '2px' }} />
+                  </button>
+                )} />
+                <span className="text-[13px] font-sans text-cream/60">Show overview section title</span>
+              </div>
+              {showOverviewTitle !== false && (
+                <Field label="Overview title (leave blank to show &ldquo;Overview&rdquo;)">
+                  <TextInput name="overviewTitle" control={control} placeholder="Overview" />
+                </Field>
+              )}
+            </div>
 
             <Field label="Overview (shown as the first block, above the sections — optional)">
               <Controller name="overview" control={control} render={({ field }) => (

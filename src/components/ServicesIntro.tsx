@@ -47,7 +47,7 @@ export function ServicesIntro({ fallback, tone = 'dark', className = '', source 
   return (
     <div className={`mx-auto max-w-3xl text-center ${className}`}>
       {content.title && (
-        <h3 className={`font-serif font-normal text-[26px] md:text-[32px] leading-tight ${titleColor}`}>
+        <h3 className={`font-serif font-normal text-[34px] md:text-[44px] leading-tight ${titleColor}`}>
           {content.title}
         </h3>
       )}

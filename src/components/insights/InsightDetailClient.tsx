@@ -91,7 +91,7 @@ export function InsightDetailClient({ initialSlug, initial }: { initialSlug: str
       <section className="pb-24 bg-cream">
         <div className="mx-auto px-6 md:px-12 max-w-3xl">
           {article.body
-            ? <div className="sb-prose" dangerouslySetInnerHTML={{ __html: renderRichHtml(article.body) }} />
+            ? <div className="sb-prose" suppressHydrationWarning dangerouslySetInnerHTML={{ __html: renderRichHtml(article.body) }} />
             : article.excerpt
               ? <p className="text-[15px] font-sans text-slate leading-relaxed">{article.excerpt}</p>
               : null}

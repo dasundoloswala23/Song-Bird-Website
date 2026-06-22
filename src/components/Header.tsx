@@ -109,10 +109,23 @@ export function Header() {
         </button>
       </div>
 
-      {/* Mobile overlay */}
+      {/* Mobile overlay — full-screen panel above the utility bar (z-50) with its own close */}
       {mobileOpen && (
-        <div className="lg:hidden fixed inset-0 top-0 bg-white z-30 flex flex-col pt-28 overflow-y-auto">
-          <nav className="flex flex-col px-6 mb-6">
+        <div className="lg:hidden fixed inset-0 z-[60] bg-white flex flex-col overflow-y-auto">
+          <div className="flex items-center justify-between px-4 h-20 border-b border-hairline shrink-0">
+            <Link href="/" onClick={() => setMobileOpen(false)} className="flex items-center gap-2">
+              <Image src="/logo.png" alt="Songbird Consultancy" width={48} height={48} className="h-10 w-auto" />
+              <span className="font-serif font-normal text-[16px] text-ink">Songbird Consultancy</span>
+            </Link>
+            <button
+              onClick={() => setMobileOpen(false)}
+              aria-label="Close menu"
+              className="p-2 text-ink hover:text-emerald focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-emerald rounded"
+            >
+              <X className="w-6 h-6" />
+            </button>
+          </div>
+          <nav className="flex flex-col px-6 py-2">
             <Link
               href="/"
               onClick={() => setMobileOpen(false)}
@@ -172,7 +185,7 @@ export function Header() {
                     key={d.href}
                     href={d.href}
                     onClick={() => setMobileOpen(false)}
-                    className="block py-2 text-[15px] font-sans text-cream/80 hover:text-gold-brushed"
+                    className="block py-2 text-[15px] font-sans text-ink/80 hover:text-emerald"
                   >
                     {d.label}
                   </Link>

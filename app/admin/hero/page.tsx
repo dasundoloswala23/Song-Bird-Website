@@ -107,6 +107,15 @@ export default function AdminHeroPage() {
             />
             <p className="mt-1 text-[11px] font-sans text-cream/30">Used as the Ken-Burns animated still image when no video is configured.</p>
           </div>
+
+          <div className="pt-2 border-t border-gold-brushed/10">
+            <ImageUpload
+              value={form.finalCtaImage ?? ''}
+              onChange={url => setForm(f => ({ ...f, finalCtaImage: url }))}
+              label={'Final CTA Background ("Ready to Begin Your Journey?")'}
+            />
+            <p className="mt-1 text-[11px] font-sans text-cream/30">Background image for the closing "Take the First Step" call-to-action shown across the site. Leave empty for the default.</p>
+          </div>
         </div>
 
         <div className="flex items-center gap-4 mt-6">

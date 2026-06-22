@@ -41,7 +41,19 @@ html {
 }
 
 /* ── Sectioned service page — rich-text body (no typography plugin) ── */
-.sb-prose { color: var(--slate); font-size: 15px; line-height: 1.7; min-width: 0; overflow-wrap: anywhere; }
+.sb-prose { color: var(--slate); font-size: 15px; line-height: 1.7; min-width: 0; }
+/* Never split a word across lines — always wrap the whole word to the next line instead.
+   `overflow-wrap: normal` + `word-break: normal` means breaks only happen at spaces, so a
+   long word moves down whole rather than being cut in two. Applies to every Quill-authored
+   body (services + destinations) and all its descendants. */
+.sb-prose, .sb-prose * {
+  overflow-wrap: normal;
+  word-wrap: normal;
+  word-break: normal;
+  -webkit-hyphens: none;
+  hyphens: none;
+}
+.sb-prose, .sb-prose p, .sb-prose li, .sb-prose td { text-align: left; }
 .sb-prose > * + * { margin-top: 1rem; }
 .sb-prose p { font-size: 15px; color: var(--slate); line-height: 1.7; }
 .sb-prose strong { color: var(--ink); font-weight: 600; }
@@ -87,13 +99,13 @@ html {
   padding-left: 0;
   margin-top: 1rem;
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   gap: 0.75rem;
 }
 @media (min-width: 768px) {
-  .sb-cards ul { grid-template-columns: 1fr 1fr; }
-  .sb-cards ul.sb-cols-1 { grid-template-columns: 1fr; }       /* row-by-row */
-  .sb-cards ul.sb-cols-2 { grid-template-columns: 1fr 1fr; }   /* two per row (explicit) */
+  .sb-cards ul { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .sb-cards ul.sb-cols-1 { grid-template-columns: minmax(0, 1fr); }                  /* row-by-row */
+  .sb-cards ul.sb-cols-2 { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }   /* two per row (explicit) */
 }
 .sb-cards ul > li {
   position: relative;

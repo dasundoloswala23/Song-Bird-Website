@@ -1,11 +1,15 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
+import { decodeEntities, slugify } from '@/lib/utils'
 import type { DestinationDoc } from '@/types/firestore'
 
 interface Props {
   destination: DestinationDoc
 }
+
+// How many topics to show in the hover overlay before collapsing the rest into "+N more".
+const MAX_TOPICS = 3
 
 export function DestinationCard({ destination }: Props) {
   const { name, image, slug, routes, sections, overview } = destination
@@ -18,10 +22,12 @@ export function DestinationCard({ destination }: Props) {
   ]
   const topics = sectionTitles.length > 0 ? sectionTitles : (routes ?? [])
   const hasTopics = topics.length > 0
+  const shown = topics.slice(0, MAX_TOPICS)
+  const extra = topics.length - shown.length
 
   return (
     <Link
-      href={`/destinations/${slug}`}
+      href={`/destinations/${slugify(slug)}`}
       className="group relative block aspect-[4/3] overflow-hidden rounded-2xl bg-navy-card border border-gold-brushed/10"
     >
       {/* Image */}
@@ -48,12 +54,17 @@ export function DestinationCard({ destination }: Props) {
         <h3 className="font-serif font-normal text-[22px] text-white">{name}</h3>
         {hasTopics && (
           <ul className="space-y-1.5">
-            {topics.map((t, i) => (
+            {shown.map((t, i) => (
               <li key={`${t}-${i}`} className="flex items-center gap-2 text-[13px] font-sans text-cream/85">
                 <ArrowRight className="w-3.5 h-3.5 text-gold-brushed shrink-0" />
-                {t}
+                {decodeEntities(t)}
               </li>
             ))}
+            {extra > 0 && (
+              <li className="pl-[1.375rem] text-[12px] font-sans text-cream/55">
+                +{extra} more
+              </li>
+            )}
           </ul>
         )}
       </div>

@@ -6,6 +6,7 @@ import { ImageUpload } from '@/components/admin/ImageUpload'
 import { RichTextEditor } from '@/components/admin/RichTextEditor'
 import { RepeatableList } from '@/components/admin/RepeatableList'
 import { SectionEditor, normalizeSections } from '@/components/admin/SectionEditor'
+import { slugify } from '@/lib/utils'
 import type { DestinationDoc, ServiceSection } from '@/types/firestore'
 
 function DestinationModal({
@@ -23,6 +24,8 @@ function DestinationModal({
     name: initial?.name ?? '',
     blurb: initial?.blurb ?? '',
     image: initial?.image ?? '',
+    ctaImage: initial?.ctaImage ?? '',
+    bottomImage: initial?.bottomImage ?? '',
     routes: initial?.routes ?? [],
     published: initial?.published ?? false,
     overview: initial?.overview ?? '',
@@ -36,12 +39,17 @@ function DestinationModal({
   const submit = async (e: React.FormEvent) => {
     e.preventDefault()
     setSaving(true)
+    // Upload any pasted base64 images (overview + sections) to keep the doc under 1 MB.
+    const { uploadInlineSectionImages, inlineImagesToUrls } = await import('@/lib/uploadFile')
+    const overview = await inlineImagesToUrls(form.overview ?? '')
+    const sections = (await uploadInlineSectionImages(normalizeSections(form.sections))) ?? []
     const { saveDestination } = await import('@/lib/firestorePublic')
     await saveDestination({
       ...form,
-      slug: form.slug.trim().toLowerCase(),
+      overview,
+      slug: slugify(form.slug) || slugify(form.name),
       routes: routesText.split('\n').map(r => r.trim()).filter(Boolean),
-      sections: normalizeSections(form.sections),
+      sections,
     }, initial?.id)
     setSaving(false)
     onSave()
@@ -70,6 +78,16 @@ function DestinationModal({
             value={form.image}
             onChange={url => setForm(f => ({ ...f, image: url }))}
             label="Hero / Card Image"
+          />
+          <ImageUpload
+            value={form.ctaImage ?? ''}
+            onChange={url => setForm(f => ({ ...f, ctaImage: url }))}
+            label={'CTA Background ("Ready to explore …?") — optional'}
+          />
+          <ImageUpload
+            value={form.bottomImage ?? ''}
+            onChange={url => setForm(f => ({ ...f, bottomImage: url }))}
+            label={'Bottom Image (shown before the final CTA) — optional'}
           />
           <div>
             <label className="block text-[11px] font-sans font-semibold uppercase tracking-[0.15em] text-gold-brushed mb-1.5">Routes (sub-topics, one per line)</label>

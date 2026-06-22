@@ -46,7 +46,7 @@ export function Testimonials({ content }: Props) {
         <div className="text-center mb-14">
           <EyebrowTag>Client Stories</EyebrowTag>
           <h2 id="testimonials-heading" className="font-serif font-normal text-[34px] md:text-[44px] leading-tight text-ink">
-            We are proud to pronounce your compliments
+            "We Are Proud to Pronounce Your Compliments"
           </h2>
           <div className="mx-auto mt-4 w-16 h-px bg-gold-brushed" />
         </div>

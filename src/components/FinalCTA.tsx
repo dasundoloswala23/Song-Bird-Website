@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { MessageCircle, MapPin } from 'lucide-react'
 import Link from 'next/link'
@@ -8,21 +9,30 @@ import { buildWhatsAppUrl } from '@/lib/utils'
 import { useT } from '@/context/LanguageContext'
 import { WHATSAPP_NUMBER, OFFICE_ADDRESS } from '@/lib/constants'
 
+const DEFAULT_FINAL_CTA_IMAGE = '/images/city1.png'
+
 export function FinalCTA() {
   const { t } = useT()
   const waUrl = buildWhatsAppUrl(WHATSAPP_NUMBER, 'Hello Songbird, I am ready to begin my application.')
+  const [bgImage, setBgImage] = useState(DEFAULT_FINAL_CTA_IMAGE)
+
+  useEffect(() => {
+    import('@/lib/firestorePublic').then(({ getHeroSettings }) =>
+      getHeroSettings().then(s => { if (s?.finalCtaImage) setBgImage(s.finalCtaImage) })
+    )
+  }, [])
 
   return (
     <section
       className="relative py-28 overflow-hidden bg-navy"
       aria-labelledby="final-cta-heading"
     >
-      {/* Full-bleed city image */}
+      {/* Full-bleed background image */}
       <Image
-        src="/images/city1.png"
+        src={bgImage}
         alt=""
         fill
-        className="object-cover opacity-[0.12]"
+        className="object-cover opacity-[0.18]"
         sizes="100vw"
         aria-hidden="true"
       />

@@ -93,7 +93,7 @@ export function ConsultationModal() {
                 Free Consultation
               </p>
               <h2 id="consultation-title" className="font-serif font-normal text-[28px] leading-tight text-white mb-2">
-                Receive Your Free Consultation
+                Reserve Your Free Consultation
               </h2>
               <p className="text-[14px] font-sans text-cream/70 mb-1">Make the best review of your application — let’s assist you.</p>
               <p className="text-[12px] font-sans text-gold-brushed mb-6">We will respond to you within 24 hours.</p>

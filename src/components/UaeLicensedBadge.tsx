@@ -13,9 +13,9 @@ export function UaeLicensedBadge({ text, detail }: { text?: string; detail?: str
     <section className="bg-navy py-4" aria-label="UAE Licensed">
       <div className="mx-auto px-6 md:px-12 max-w-7xl flex items-center justify-center gap-3 text-center">
         <BadgeCheck className="w-5 h-5 text-gold-brushed shrink-0" />
-        <p className="text-[12px] md:text-[13px] font-sans font-semibold uppercase tracking-[0.18em] text-cream">
+        <p className="text-[12px] md:text-[13px] font-sans font-semibold uppercase tracking-[0.18em] text-gold">
           {main}
-          {sub && <span className="text-cream/55 font-medium tracking-[0.12em]"> {sub}</span>}
+          {sub && <span className="text-gold-brushed font-medium tracking-[0.12em]"> {sub}</span>}
         </p>
       </div>
     </section>

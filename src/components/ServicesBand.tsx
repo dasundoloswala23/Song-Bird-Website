@@ -3,6 +3,7 @@ import { ArrowRight } from 'lucide-react'
 import * as LucideIcons from 'lucide-react'
 import type { ComponentType } from 'react'
 import { EyebrowTag } from './EyebrowTag'
+import { slugify } from '@/lib/utils'
 import type { ServiceDoc, ServicesIntroDoc } from '@/types/firestore'
 
 function getIcon(name: string): ComponentType<{ className?: string }> {
@@ -45,7 +46,7 @@ export function ServicesBand({ services, intro }: ServicesBandProps) {
             return (
               <Link
                 key={service.slug}
-                href={`/services/${service.slug.toLowerCase()}`}
+                href={`/services/${slugify(service.slug)}`}
                 className={[
                   'group relative flex flex-col p-6 rounded-2xl overflow-hidden transition-all duration-300 min-h-[260px]',
                   service.cardImage ? 'text-white' : 'bg-white',
