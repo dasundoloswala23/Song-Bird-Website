@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useEffect, useRef } from 'react'
+import { createPortal } from 'react-dom'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Menu, X, ChevronDown } from 'lucide-react'
@@ -110,7 +111,7 @@ export function Header() {
       </div>
 
       {/* Mobile overlay — full-screen panel above the utility bar (z-50) with its own close */}
-      {mobileOpen && (
+      {mobileOpen && typeof document !== 'undefined' && createPortal(
         <div className="lg:hidden fixed inset-0 z-[60] bg-white flex flex-col overflow-y-auto">
           <div className="flex items-center justify-between px-4 h-20 border-b border-hairline shrink-0">
             <Link href="/" onClick={() => setMobileOpen(false)} className="flex items-center gap-2">
@@ -214,7 +215,8 @@ export function Header() {
               Book a Consultation
             </button>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </header>
   )
