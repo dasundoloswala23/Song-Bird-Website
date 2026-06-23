@@ -151,7 +151,7 @@ export interface LeadDoc {
   destination?: string
   subject?: string
   message?: string
-  type: 'inquiry' | 'consultation' | 'collaboration'
+  type: 'inquiry' | 'consultation' | 'collaboration' | 'booking'
   attachments?: string[]
   createdAt: number // unix ms
 }

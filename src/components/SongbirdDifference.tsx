@@ -3,6 +3,7 @@ import Link from 'next/link'
 import * as LucideIcons from 'lucide-react'
 import type { ComponentType } from 'react'
 import { CheckCircle2 } from 'lucide-react'
+import { renderRichHtml } from '@/lib/richText'
 import { EyebrowTag } from './EyebrowTag'
 import type { WhyChooseUsDoc } from '@/types/firestore'
 
@@ -98,7 +99,11 @@ export function SongbirdDifference({ content }: SongbirdDifferenceProps) {
               {title}
             </h2>
             <div className="w-12 h-px bg-gold mb-6" />
-            <p className="text-[15px] font-sans text-slate leading-relaxed mb-10">{intro}</p>
+            {intro.startsWith('<') ? (
+              <div className="sb-prose text-[15px] font-sans text-slate leading-relaxed mb-10" suppressHydrationWarning dangerouslySetInnerHTML={{ __html: renderRichHtml(intro) }} />
+            ) : (
+              <p className="text-[15px] font-sans text-slate leading-relaxed mb-10">{intro}</p>
+            )}
 
             {features.length > 0 && (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3 mb-10">

@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import { Loader2, Save, Plus, Trash2 } from 'lucide-react'
 import { ImageUpload } from '@/components/admin/ImageUpload'
+import { RichTextEditor } from '@/components/admin/RichTextEditor'
 import type { WhyChooseUsDoc, WhyChooseUsFeature } from '@/types/firestore'
 
 const ICON_OPTIONS = ['Shield', 'Eye', 'Globe2', 'UserCheck', 'Award', 'Star', 'Lightbulb', 'Heart', 'BarChart3', 'CheckCircle']
@@ -58,7 +59,9 @@ export default function WhyChooseUsPage() {
             </div>
             <div className="sm:col-span-2">
               <label className="block text-[11px] font-sans font-semibold uppercase tracking-[0.15em] text-gold-brushed mb-1.5">Intro paragraph</label>
-              <Controller name="intro" control={control} render={({ field }) => <textarea {...field} rows={3} className={inputCls() + ' resize-none'} />} />
+              <Controller name="intro" control={control} render={({ field }) => (
+                <RichTextEditor value={field.value ?? ''} onChange={field.onChange} placeholder="Intro paragraph…" />
+              )} />
             </div>
           </div>
 

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { EyebrowTag } from '@/components/EyebrowTag'
 import { getDestinations } from '@/lib/firestorePublic'
-import { DestinationCard } from '@/components/DestinationCard'
+import { DestinationsGrid } from '@/components/DestinationsGrid'
 import { FinalCTA } from '@/components/FinalCTA'
 
 export const dynamic = 'force-static'
@@ -29,17 +29,7 @@ export default async function DestinationsPage() {
 
       <section className="py-20 bg-cream">
         <div className="mx-auto px-6 md:px-12 max-w-7xl">
-          {destinations.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {destinations.map(dest => (
-                <DestinationCard key={dest.id ?? dest.slug} destination={dest} />
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-24">
-              <p className="text-[15px] font-sans text-slate">Destinations coming soon. Check back shortly.</p>
-            </div>
-          )}
+          <DestinationsGrid fallback={destinations} />
         </div>
       </section>
 

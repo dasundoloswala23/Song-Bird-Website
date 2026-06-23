@@ -1,19 +1,26 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { ChevronLeft, ChevronRight, CheckCircle2, Clock, Loader2 } from 'lucide-react'
+import { ChevronLeft, ChevronRight, CheckCircle2, Loader2 } from 'lucide-react'
 import { MonthCalendar } from './MonthCalendar'
-import type { SlotDoc } from '@/types/firestore'
 
 const BRAND_GRADIENT = 'linear-gradient(135deg, #22B877 0%, #0E9C6E 55%, #0E7C5A 100%)'
 
-const DURATIONS = [15, 30, 45, 60]
+// Two session options: 15-min (Free) and 60-min (50 AED).
+// No Firestore slot lookup needed — any date can be selected and a booking request
+// is submitted as a lead, and Songbird confirms the time directly with the client.
+const SESSION_OPTIONS = [
+  { durationMin: 15, label: '15 min', price: 'Free',   tag: '15-min Free Consultation' },
+  { durationMin: 60, label: '60 min', price: '50 AED', tag: '60-min Consultation — 50 AED' },
+] as const
+
+type SessionOption = typeof SESSION_OPTIONS[number]
+
 const TIMEZONES = [
   'Asia/Dubai',
-  'Asia/London',
   'Europe/London',
   'America/New_York',
   'America/Toronto',
@@ -32,7 +39,7 @@ const detailsSchema = z.object({
 type DetailsForm = z.infer<typeof detailsSchema>
 
 function StepIndicator({ step }: { step: number }) {
-  const steps = ['Pick a time', 'Your details', 'Confirm']
+  const steps = ['Pick a date', 'Your details', 'Confirm']
   return (
     <div className="flex items-center gap-2 mb-10">
       {steps.map((label, i) => {
@@ -50,9 +57,7 @@ function StepIndicator({ step }: { step: number }) {
               </div>
               <span className={`text-[12px] font-sans hidden sm:block ${active ? 'text-white font-semibold' : 'text-cream/40'}`}>{label}</span>
             </div>
-            {i < steps.length - 1 && (
-              <div className="flex-1 h-px bg-gold-brushed/15" />
-            )}
+            {i < steps.length - 1 && <div className="flex-1 h-px bg-gold-brushed/15" />}
           </React.Fragment>
         )
       })}
@@ -60,28 +65,10 @@ function StepIndicator({ step }: { step: number }) {
   )
 }
 
-// Step 1: Date + Slot picker
-function Step1({
-  onNext,
-}: {
-  onNext: (slot: SlotDoc, duration: number) => void
-}) {
-  const [selectedDate, setDate]   = useState<string | null>(null)
-  const [duration, setDuration]   = useState(30)
-  const [slots, setSlots]         = useState<SlotDoc[]>([])
-  const [loadingSlots, setLoading] = useState(false)
-  const [selectedSlot, setSlot]   = useState<SlotDoc | null>(null)
-
-  useEffect(() => {
-    if (!selectedDate) { setSlots([]); setSlot(null); return }
-    setLoading(true)
-    setSlot(null)
-    import('@/lib/firestorePublic').then(({ getAvailableSlots }) =>
-      getAvailableSlots(selectedDate).then(s => { setSlots(s); setLoading(false) })
-    )
-  }, [selectedDate])
-
-  const canNext = selectedSlot !== null
+// Step 1: Pick a date + session type — no Firestore slot lookup required.
+function Step1({ onNext }: { onNext: (date: string, session: SessionOption) => void }) {
+  const [selectedDate, setDate] = useState<string | null>(null)
+  const [session, setSession]   = useState<SessionOption>(SESSION_OPTIONS[0])
 
   return (
     <div>
@@ -89,53 +76,50 @@ function Step1({
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Calendar */}
-        <MonthCalendar selectedDate={selectedDate} onSelect={d => { setDate(d); setSlot(null) }} />
+        <MonthCalendar selectedDate={selectedDate} onSelect={d => setDate(d)} />
 
-        {/* Duration + Time slots */}
-        <div className="space-y-5">
+        {/* Session picker */}
+        <div className="space-y-6">
           <div>
-            <p className="text-[11px] font-sans font-semibold uppercase tracking-[0.15em] text-gold-brushed mb-2">Duration</p>
-            <div className="flex gap-2">
-              {DURATIONS.map(d => (
-                <button key={d} onClick={() => setDuration(d)}
-                  className={`flex-1 py-2.5 text-[13px] font-sans font-semibold rounded-[6px] border transition-colors ${duration === d ? 'border-teal text-white' : 'border-gold-brushed/20 text-cream/60 hover:border-gold-brushed/40'}`}
-                  style={duration === d ? { background: BRAND_GRADIENT } : {}}>
-                  {d}m
-                </button>
-              ))}
+            <p className="text-[11px] font-sans font-semibold uppercase tracking-[0.15em] text-gold-brushed mb-3">Session Type</p>
+            <div className="flex flex-col gap-3">
+              {SESSION_OPTIONS.map(opt => {
+                const active = session.durationMin === opt.durationMin
+                return (
+                  <button
+                    key={opt.durationMin}
+                    onClick={() => setSession(opt)}
+                    className={`flex items-center justify-between px-5 py-4 rounded-xl border text-left transition-all ${
+                      active ? 'border-teal text-white' : 'border-gold-brushed/20 text-cream/70 hover:border-gold-brushed/40'
+                    }`}
+                    style={active ? { background: BRAND_GRADIENT } : {}}
+                  >
+                    <span className="font-sans font-semibold text-[15px]">{opt.label}</span>
+                    <span className={`font-sans text-[13px] font-bold ${active ? 'text-white' : 'text-gold-brushed'}`}>{opt.price}</span>
+                  </button>
+                )
+              })}
             </div>
           </div>
 
-          <div>
-            <p className="text-[11px] font-sans font-semibold uppercase tracking-[0.15em] text-gold-brushed mb-2">
-              {selectedDate ? `Available slots — ${selectedDate}` : 'Select a date to see slots'}
-            </p>
-            {loadingSlots ? (
-              <div className="flex justify-center py-8">
-                <Loader2 className="w-5 h-5 text-gold-brushed animate-spin" />
-              </div>
-            ) : slots.length > 0 ? (
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                {slots.map(slot => (
-                  <button key={slot.id} onClick={() => setSlot(slot)}
-                    className={`flex items-center gap-1.5 px-3 py-2.5 rounded-[6px] border text-[13px] font-sans transition-colors ${selectedSlot?.id === slot.id ? 'border-teal text-white' : 'border-gold-brushed/20 text-cream/70 hover:border-gold-brushed/40'}`}
-                    style={selectedSlot?.id === slot.id ? { background: BRAND_GRADIENT } : {}}>
-                    <Clock className="w-3.5 h-3.5 shrink-0" />
-                    {slot.startTime}
-                  </button>
-                ))}
-              </div>
-            ) : selectedDate ? (
-              <p className="text-[13px] font-sans text-cream/40 py-4">No slots available for this date. Please pick another day.</p>
-            ) : null}
-          </div>
+          {selectedDate ? (
+            <div className="bg-white/5 border border-gold-brushed/15 rounded-xl p-4">
+              <p className="text-[12px] font-sans font-semibold uppercase tracking-[0.12em] text-gold-brushed mb-1">Selected date</p>
+              <p className="text-[15px] font-sans text-white">{selectedDate}</p>
+              <p className="text-[12px] font-sans text-cream/50 mt-1">
+                We'll confirm your preferred time by email within 24 hours.
+              </p>
+            </div>
+          ) : (
+            <p className="text-[13px] font-sans text-cream/40">← Select a date on the calendar</p>
+          )}
         </div>
       </div>
 
       <div className="mt-8 flex justify-end">
         <button
-          disabled={!canNext}
-          onClick={() => selectedSlot && onNext(selectedSlot, duration)}
+          disabled={!selectedDate}
+          onClick={() => selectedDate && onNext(selectedDate, session)}
           className="inline-flex items-center gap-2 px-7 py-3.5 text-[14px] font-sans font-semibold uppercase tracking-[0.08em] text-white rounded-[6px] disabled:opacity-40 transition-all hover:-translate-y-px"
           style={{ background: BRAND_GRADIENT }}
         >
@@ -147,19 +131,13 @@ function Step1({
 }
 
 // Step 2: Personal details
-function Step2({
-  onNext, onBack,
-}: {
-  onNext: (data: DetailsForm) => void
-  onBack: () => void
-}) {
+function Step2({ onNext, onBack }: { onNext: (data: DetailsForm) => void; onBack: () => void }) {
   const { register, handleSubmit, formState: { errors } } = useForm<DetailsForm>({
     resolver: zodResolver(detailsSchema),
     defaultValues: { timezone: 'Asia/Dubai' },
   })
-
   const inp = 'w-full px-3.5 py-2.5 bg-navy/40 border border-gold-brushed/20 rounded-[6px] text-[13px] font-sans text-cream placeholder:text-cream/30 focus:outline-none focus:ring-2 focus:ring-gold-brushed/50'
-  const err = 'mt-1 text-[11px] font-sans text-red-400'
+  const errCls = 'mt-1 text-[11px] font-sans text-red-400'
 
   return (
     <div>
@@ -168,17 +146,17 @@ function Step2({
         <div>
           <label className="block text-[11px] font-sans font-semibold uppercase tracking-[0.15em] text-gold-brushed mb-1.5">Full Name</label>
           <input {...register('name')} className={inp} placeholder="Alexandra Chen" />
-          {errors.name && <p className={err}>{errors.name.message}</p>}
+          {errors.name && <p className={errCls}>{errors.name.message}</p>}
         </div>
         <div>
           <label className="block text-[11px] font-sans font-semibold uppercase tracking-[0.15em] text-gold-brushed mb-1.5">Email</label>
           <input {...register('email')} type="email" className={inp} placeholder="alex@company.com" />
-          {errors.email && <p className={err}>{errors.email.message}</p>}
+          {errors.email && <p className={errCls}>{errors.email.message}</p>}
         </div>
         <div>
           <label className="block text-[11px] font-sans font-semibold uppercase tracking-[0.15em] text-gold-brushed mb-1.5">Phone</label>
           <input {...register('phone')} type="tel" className={inp} placeholder="+971 50 000 0000" />
-          {errors.phone && <p className={err}>{errors.phone.message}</p>}
+          {errors.phone && <p className={errCls}>{errors.phone.message}</p>}
         </div>
         <div>
           <label className="block text-[11px] font-sans font-semibold uppercase tracking-[0.15em] text-gold-brushed mb-1.5">Your Timezone</label>
@@ -188,9 +166,8 @@ function Step2({
         </div>
         <div>
           <label className="block text-[11px] font-sans font-semibold uppercase tracking-[0.15em] text-gold-brushed mb-1.5">Notes (optional)</label>
-          <textarea {...register('notes')} rows={3} className={inp + ' resize-none'} placeholder="Anything you'd like us to know before the call…" />
+          <textarea {...register('notes')} rows={3} className={inp + ' resize-none'} placeholder="Preferred time, topic, or anything else…" />
         </div>
-
         <div className="flex gap-3 pt-2">
           <button type="button" onClick={onBack}
             className="inline-flex items-center gap-2 px-5 py-3.5 text-[13px] font-sans text-cream/60 hover:text-white border border-gold-brushed/15 hover:border-gold-brushed/30 rounded-[6px] transition-colors">
@@ -209,22 +186,22 @@ function Step2({
 
 // Step 3: Confirm
 function Step3({
-  slot, duration, details, onBack, onConfirm, submitting,
+  date, session, details, onBack, onConfirm, submitting,
 }: {
-  slot: SlotDoc; duration: number; details: DetailsForm
+  date: string; session: SessionOption; details: DetailsForm
   onBack: () => void; onConfirm: () => void; submitting: boolean
 }) {
   return (
     <div>
       <h2 className="font-serif font-normal text-[28px] text-white mb-8">Confirm your booking</h2>
       <div className="max-w-lg bg-navy-card border border-gold-brushed/15 rounded-xl p-6 mb-8 space-y-4">
-        <Row label="Date"      value={slot.date} />
-        <Row label="Time"      value={`${slot.startTime} (${details.timezone})`} />
-        <Row label="Duration"  value={`${duration} minutes`} />
+        <Row label="Date"     value={date} />
+        <Row label="Session"  value={`${session.label} — ${session.price}`} />
+        <Row label="Timezone" value={details.timezone} />
         <div className="h-px bg-gold-brushed/10" />
-        <Row label="Name"      value={details.name} />
-        <Row label="Email"     value={details.email} />
-        <Row label="Phone"     value={details.phone} />
+        <Row label="Name"     value={details.name} />
+        <Row label="Email"    value={details.email} />
+        <Row label="Phone"    value={details.phone} />
         {details.notes && <Row label="Notes" value={details.notes} />}
       </div>
       <div className="flex gap-3">
@@ -252,83 +229,77 @@ function Row({ label, value }: { label: string; value: string }) {
   )
 }
 
-// Success screen
-function SuccessScreen({ bookingId }: { bookingId: string }) {
+function SuccessScreen({ refId }: { refId: string }) {
   return (
     <div className="text-center py-12">
-      <div
-        className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6"
-        style={{ background: BRAND_GRADIENT }}
-      >
+      <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6" style={{ background: BRAND_GRADIENT }}>
         <CheckCircle2 className="w-10 h-10 text-white" />
       </div>
-      <h2 className="font-serif font-normal text-[32px] text-white mb-3">Booking confirmed!</h2>
+      <h2 className="font-serif font-normal text-[32px] text-white mb-3">Request received!</h2>
       <p className="text-[15px] font-sans text-cream/65 max-w-md mx-auto mb-2">
-        Thank you. We'll reach out shortly to confirm your session details.
+        Thank you. We'll contact you within 24 hours to confirm your appointment time.
       </p>
-      <p className="text-[12px] font-mono text-cream/30">Ref: {bookingId.slice(0, 8).toUpperCase()}</p>
+      <p className="text-[12px] font-mono text-cream/30">Ref: {refId.slice(0, 8).toUpperCase()}</p>
     </div>
   )
 }
 
 export function BookingFlow() {
-  const [step, setStep]         = useState(1)
-  const [slot, setSlot]         = useState<SlotDoc | null>(null)
-  const [duration, setDuration] = useState(30)
-  const [details, setDetails]   = useState<DetailsForm | null>(null)
+  const [step, setStep]     = useState(1)
+  const [date, setDate]     = useState<string | null>(null)
+  const [session, setSession] = useState<SessionOption>(SESSION_OPTIONS[0])
+  const [details, setDetails] = useState<DetailsForm | null>(null)
   const [submitting, setSubmitting] = useState(false)
-  const [bookingId, setBookingId]   = useState<string | null>(null)
+  const [refId, setRefId]   = useState<string | null>(null)
 
-  const handleStep1 = (s: SlotDoc, d: number) => { setSlot(s); setDuration(d); setStep(2) }
-  const handleStep2 = (d: DetailsForm)         => { setDetails(d); setStep(3) }
+  const handleStep1 = (d: string, s: SessionOption) => { setDate(d); setSession(s); setStep(2) }
+  const handleStep2 = (d: DetailsForm) => { setDetails(d); setStep(3) }
 
   const handleConfirm = async () => {
-    if (!slot || !details) return
+    if (!date || !details) return
     setSubmitting(true)
     try {
-      const { createBooking, updateSlotAvailability } = await import('@/lib/firestorePublic')
-      const id = await createBooking({
+      // Save as a lead so it appears in the admin Leads panel.
+      const { saveLead } = await import('@/lib/firestorePublic')
+      const id = `${Date.now()}`
+      await saveLead({
         name: details.name,
         email: details.email,
         phone: details.phone,
-        slotId: slot.id!,
-        date: slot.date,
-        startTime: slot.startTime,
-        durationMin: duration,
-        timezone: details.timezone,
-        notes: details.notes ?? '',
+        type: 'booking',
+        message: `Date: ${date} | Session: ${session.tag} | Timezone: ${details.timezone}${details.notes ? ` | Notes: ${details.notes}` : ''}`,
         createdAt: Date.now(),
-        status: 'pending',
       })
-      await updateSlotAvailability(slot.id!, false, details.email)
+      // Send notification email to info@songbird.ae via the Cloud Function.
       const { sendLeadEmail } = await import('@/lib/email')
       await sendLeadEmail({
         type: 'booking',
         name: details.name,
         email: details.email,
         phone: details.phone,
-        date: slot.date,
-        startTime: slot.startTime,
-        durationMin: duration,
+        date,
+        durationMin: session.durationMin,
         timezone: details.timezone,
+        sessionType: session.tag,
+        charge: session.price === 'Free' ? '' : session.price,
         message: details.notes,
       })
-      setBookingId(id)
-    } catch { /* booking failed silently — could add toast */ }
+      setRefId(id)
+    } catch { /* silent — success screen still shows */ }
     setSubmitting(false)
   }
 
-  if (bookingId) return <SuccessScreen bookingId={bookingId} />
+  if (refId) return <SuccessScreen refId={refId} />
 
   return (
     <div>
       <StepIndicator step={step} />
       {step === 1 && <Step1 onNext={handleStep1} />}
       {step === 2 && <Step2 onNext={handleStep2} onBack={() => setStep(1)} />}
-      {step === 3 && slot && details && (
+      {step === 3 && date && details && (
         <Step3
-          slot={slot}
-          duration={duration}
+          date={date}
+          session={session}
           details={details}
           onBack={() => setStep(2)}
           onConfirm={handleConfirm}
