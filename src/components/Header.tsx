@@ -60,7 +60,7 @@ export function Header() {
       <div className="h-full mx-auto px-4 md:px-8 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-3 shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald rounded">
-          <Image src="/logo.png" alt="Songbird Consultancy" width={56} height={56} className="h-12 w-auto" priority />
+          <Image src="/logo2.png" alt="Songbird Consultancy" width={56} height={56} className="h-12 w-auto" priority />
           <span className="hidden sm:flex flex-col leading-none">
             <span className="font-serif font-normal text-[18px] text-ink">Songbird Consultancy</span>
             <span className="font-sans text-[11px] uppercase tracking-[0.22em] text-gold-deep mt-1">{t('brand.slogan')}</span>
@@ -115,7 +115,7 @@ export function Header() {
         <div className="lg:hidden fixed inset-0 z-[60] bg-white flex flex-col overflow-y-auto">
           <div className="flex items-center justify-between px-4 h-20 border-b border-hairline shrink-0">
             <Link href="/" onClick={() => setMobileOpen(false)} className="flex items-center gap-2">
-              <Image src="/logo.png" alt="Songbird Consultancy" width={48} height={48} className="h-10 w-auto" />
+              <Image src="/logo2.png" alt="Songbird Consultancy" width={48} height={48} className="h-10 w-auto" />
               <span className="font-serif font-normal text-[16px] text-ink">Songbird Consultancy</span>
             </Link>
             <button

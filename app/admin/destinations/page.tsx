@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
-import { Plus, Pencil, Trash2, Eye, EyeOff, Loader2 } from 'lucide-react'
+import { Plus, Pencil, Trash2, Eye, EyeOff, Loader2, ExternalLink } from 'lucide-react'
 import { ImageUpload } from '@/components/admin/ImageUpload'
 import { RichTextEditor } from '@/components/admin/RichTextEditor'
 import { RepeatableList } from '@/components/admin/RepeatableList'
@@ -209,6 +209,10 @@ export default function AdminDestinationsPage() {
                   </td>
                   <td className="px-5 py-3.5">
                     <div className="flex items-center justify-end gap-1">
+                      <a href={`/preview?type=destination&slug=${dest.slug}`} target="_blank" rel="noopener noreferrer"
+                        title="Preview" className="p-1.5 rounded hover:bg-white/5 text-cream/40 hover:text-gold-brushed transition-colors">
+                        <ExternalLink className="w-4 h-4" />
+                      </a>
                       <button onClick={() => toggle(dest)} title={dest.published ? 'Unpublish' : 'Publish'}
                         className="p-1.5 rounded hover:bg-white/5 text-cream/40 hover:text-cream transition-colors">
                         {dest.published ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}

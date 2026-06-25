@@ -92,11 +92,11 @@ export function Footer() {
           <div>
             <Link href="/" className="inline-block mb-4">
               <Image
-                src="/logo.png"
+                src="/logo2.png"
                 alt="Songbird Consultancy"
                 width={140}
-                height={48}
-                className="h-10 w-auto brightness-0 invert"
+                height={140}
+                className="h-16 w-auto"
               />
             </Link>
             <p className="text-[13px] font-sans text-cream/60 leading-relaxed mb-5">

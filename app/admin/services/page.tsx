@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { Plus, Pencil, Trash2, Eye, EyeOff, Loader2 } from 'lucide-react'
+import { Plus, Pencil, Trash2, Eye, EyeOff, Loader2, ExternalLink } from 'lucide-react'
 import type { ServiceDoc } from '@/types/firestore'
 
 export default function AdminServicesPage() {
@@ -85,6 +85,10 @@ export default function AdminServicesPage() {
                   </td>
                   <td className="px-5 py-3">
                     <div className="flex items-center gap-2 justify-end">
+                      <a href={`/preview?type=service&slug=${s.slug}`} target="_blank" rel="noopener noreferrer"
+                        title="Preview" className="p-1.5 text-cream/40 hover:text-gold-brushed transition-colors rounded">
+                        <ExternalLink className="w-4 h-4" />
+                      </a>
                       <Link href={`/admin/services/edit?id=${s.id}`}
                         className="p-1.5 text-cream/40 hover:text-gold-brushed transition-colors rounded">
                         <Pencil className="w-4 h-4" />
