@@ -383,6 +383,17 @@ export async function createBooking(data: Omit<BookingDoc, 'id'>): Promise<strin
   return ref.id
 }
 
+export async function getSiteDown(): Promise<boolean> {
+  try {
+    const snap = await getDoc(doc(db, 'siteDown', 'siteDown'))
+    return snap.data()?.sitedown === true
+  } catch { return false }
+}
+
+export async function saveSiteDown(value: boolean): Promise<void> {
+  await setDoc(doc(db, 'siteDown', 'siteDown'), { sitedown: value })
+}
+
 export async function updateBookingStatus(id: string, status: BookingDoc['status']): Promise<void> {
   await updateDoc(doc(db, 'bookings', id), { status })
 }
