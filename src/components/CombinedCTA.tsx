@@ -3,9 +3,9 @@
 import Link from 'next/link'
 import { MessageCircle, Phone } from 'lucide-react'
 import { EligibilityFlow } from './EligibilityFlow'
-import { buildWhatsAppUrl } from '@/lib/utils'
 import { useT } from '@/context/LanguageContext'
-import { WHATSAPP_NUMBER, OFFICE_PHONE } from '@/lib/constants'
+import { OFFICE_PHONE } from '@/lib/constants'
+import { useWhatsAppPicker } from '@/context/WhatsAppPickerContext'
 
 /**
  * Merged "Are You Eligible?" + "Connect With Us" block — a single combined CTA
@@ -13,7 +13,7 @@ import { WHATSAPP_NUMBER, OFFICE_PHONE } from '@/lib/constants'
  */
 export function CombinedCTA() {
   const { t } = useT()
-  const waUrl = buildWhatsAppUrl(WHATSAPP_NUMBER, 'Hello Songbird, I would like to check my eligibility and connect.')
+  const { openPicker } = useWhatsAppPicker()
 
   return (
     <section id="eligibility" className="scroll-mt-24 py-24 bg-navy-deep" aria-labelledby="combined-cta-heading">
@@ -39,14 +39,12 @@ export function CombinedCTA() {
             <h3 className="font-serif font-normal text-[22px] text-white mb-2">{t('combined.prefer')}</h3>
             <p className="text-[14px] font-sans text-cream/55 mb-6">{t('combined.preferSub')}</p>
             <div className="flex flex-col gap-3">
-              <a
-                href={waUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                onClick={() => openPicker('Hello Songbird, I would like to check my eligibility and connect.')}
                 className="flex items-center justify-center gap-2 w-full py-3.5 rounded-[6px] bg-whatsapp text-white text-[13px] font-sans font-semibold uppercase tracking-[0.08em] transition-all hover:-translate-y-px"
               >
                 <MessageCircle className="w-4 h-4" /> {t('cta.connectWhatsApp')}
-              </a>
+              </button>
               <a
                 href={`tel:${OFFICE_PHONE.replace(/\s/g, '')}`}
                 className="flex items-center justify-center gap-2 w-full py-3.5 rounded-[6px] border border-gold-brushed/40 text-gold-brushed hover:bg-gold-brushed/10 text-[13px] font-sans font-semibold uppercase tracking-[0.08em] transition-colors"

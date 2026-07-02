@@ -6,8 +6,9 @@ import Image from 'next/image'
 import { MapPin, Phone, Mail, Facebook, Instagram, Linkedin, ArrowRight } from 'lucide-react'
 import { buildWhatsAppUrl } from '@/lib/utils'
 import { useT } from '@/context/LanguageContext'
-import { WHATSAPP_NUMBER, OFFICES, OFFICE_PHONE, CONTACT_EMAIL, SOCIAL } from '@/lib/constants'
+import { WHATSAPP_NUMBER_INDIA, WHATSAPP_NUMBER_INDIA_DISPLAY, OFFICES, OFFICE_PHONE, CONTACT_EMAIL, SOCIAL } from '@/lib/constants'
 import { SERVICES } from '@/lib/services'
+import { useWhatsAppPicker } from '@/context/WhatsAppPickerContext'
 
 const QUICK_LINKS = [
   { key: 'footer.link.home',           href: '/' },
@@ -80,7 +81,8 @@ function NewsletterRow() {
 
 export function Footer() {
   const { t } = useT()
-  const waUrl = buildWhatsAppUrl(WHATSAPP_NUMBER, 'Hello Songbird, I would like to enquire about your services.')
+  const { openPicker } = useWhatsAppPicker()
+  const waUrlIndia = buildWhatsAppUrl(WHATSAPP_NUMBER_INDIA, 'Hello Songbird, I would like to enquire about your services.')
 
   return (
     <footer className="bg-navy-deep border-t border-gold-brushed/25">
@@ -154,19 +156,21 @@ export function Footer() {
                 <a href={`tel:${OFFICE_PHONE.replace(/\s/g, '')}`} className="text-[13px] font-sans text-cream/60 hover:text-teal-end transition-colors">{OFFICE_PHONE}</a>
               </li>
               <li className="flex items-center gap-2.5">
+                <Phone className="w-4 h-4 text-gold-brushed shrink-0" />
+                <a href={waUrlIndia} target="_blank" rel="noopener noreferrer" className="text-[13px] font-sans text-cream/60 hover:text-teal-end transition-colors">{WHATSAPP_NUMBER_INDIA_DISPLAY} (WhatsApp)</a>
+              </li>
+              <li className="flex items-center gap-2.5">
                 <Mail className="w-4 h-4 text-gold-brushed shrink-0" />
                 <a href={`mailto:${CONTACT_EMAIL}`} className="text-[13px] font-sans text-cream/60 hover:text-teal-end transition-colors">{CONTACT_EMAIL}</a>
               </li>
             </ul>
-            <a
-              href={waUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              onClick={() => openPicker('Hello Songbird, I would like to enquire about your services.')}
               className="inline-flex items-center gap-2 px-4 py-2.5 text-white text-[12px] font-sans font-semibold uppercase tracking-[0.08em] rounded-[6px] transition-all hover:-translate-y-px hover:shadow-[0_6px_18px_rgba(31,169,104,.35)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal"
               style={{ background: 'linear-gradient(95deg, #22B877 0%, #0E7C5A 100%)' }}
             >
               {t('cta.whatsappNow')}
-            </a>
+            </button>
           </div>
         </div>
 

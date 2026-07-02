@@ -2,8 +2,8 @@ import type { Metadata } from 'next'
 import { EyebrowTag } from '@/components/EyebrowTag'
 import { BookingFlow } from '@/components/BookingFlow'
 import { CheckCircle2 } from 'lucide-react'
-import { OFFICE_PHONE, WHATSAPP_NUMBER } from '@/lib/constants'
-import { buildWhatsAppUrl } from '@/lib/utils'
+import { OFFICE_PHONE } from '@/lib/constants'
+import { WhatsAppTriggerButton } from '@/components/WhatsAppTriggerButton'
 
 export const dynamic = 'force-static'
 
@@ -65,14 +65,12 @@ export default function BookConsultationPage() {
                 >
                   📞 {OFFICE_PHONE}
                 </a>
-                <a
-                  href={buildWhatsAppUrl(WHATSAPP_NUMBER, "Hi, I'd like to book a consultation.")}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <WhatsAppTriggerButton
+                  message="Hi, I'd like to book a consultation."
                   className="flex items-center gap-2 text-[13px] font-sans font-medium text-whatsapp hover:opacity-80 transition-opacity"
                 >
                   💬 WhatsApp us
-                </a>
+                </WhatsAppTriggerButton>
               </div>
             </aside>
           </div>

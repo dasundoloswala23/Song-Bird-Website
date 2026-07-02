@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from 'motion/react'
 import { useForm } from 'react-hook-form'
 import { X, Loader2 } from 'lucide-react'
 import { useConsultationModal } from '@/context/ConsultationModalContext'
-import { WHATSAPP_NUMBER } from '@/lib/constants'
+import { useWhatsAppPicker } from '@/context/WhatsAppPickerContext'
 import { saveLead } from '@/lib/firestorePublic'
 
 const DESTINATIONS = [
@@ -23,6 +23,7 @@ interface FormData {
 
 export function ConsultationModal() {
   const { isOpen, close } = useConsultationModal()
+  const { openPicker } = useWhatsAppPicker()
 
   const { register, handleSubmit, reset, setFocus, formState: { errors, isSubmitting } } = useForm<FormData>()
 
@@ -53,7 +54,7 @@ export function ConsultationModal() {
     const msg = `Hello Songbird, I would like a free consultation. My name is ${data.name}, I can be reached at ${data.phone}.`
     reset()
     close()
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener,noreferrer')
+    openPicker(msg)
   }
 
   return (

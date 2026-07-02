@@ -4,8 +4,7 @@ import React from 'react'
 import { useForm } from 'react-hook-form'
 import { Loader2, CheckCircle2, MessageCircle } from 'lucide-react'
 import { saveLead } from '@/lib/firestorePublic'
-import { WHATSAPP_NUMBER } from '@/lib/constants'
-import { buildWhatsAppUrl } from '@/lib/utils'
+import { useWhatsAppPicker } from '@/context/WhatsAppPickerContext'
 import { EyebrowTag } from './EyebrowTag'
 
 const BRAND_GRADIENT = 'linear-gradient(135deg, #22B877 0%, #0E9C6E 55%, #0E7C5A 100%)'
@@ -25,6 +24,7 @@ interface FormData {
 
 export function BookFreeConsultation() {
   const { register, handleSubmit, reset, formState: { errors, isSubmitting, isSubmitSuccessful } } = useForm<FormData>()
+  const { openPicker } = useWhatsAppPicker()
 
   const onSubmit = async (data: FormData) => {
     try {
@@ -35,7 +35,6 @@ export function BookFreeConsultation() {
     reset()
   }
 
-  const waUrl = buildWhatsAppUrl(WHATSAPP_NUMBER, 'Hello Songbird, I would like to book a free consultation.')
   const inp = 'w-full px-4 py-3 bg-white border border-hairline rounded-[8px] text-[14px] font-sans text-ink placeholder:text-slate/50 focus:outline-none focus:ring-2 focus:ring-emerald/40 transition-colors'
 
   return (
@@ -54,14 +53,12 @@ export function BookFreeConsultation() {
             <p className="text-[14px] font-sans font-semibold text-emerald mb-8">
               We will respond to you within 24 hours.
             </p>
-            <a
-              href={waUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              onClick={() => openPicker('Hello Songbird, I would like to book a free consultation.')}
               className="inline-flex items-center gap-2 px-6 py-3 rounded-[6px] bg-whatsapp text-white text-[13px] font-sans font-semibold uppercase tracking-[0.08em] transition-all hover:-translate-y-px"
             >
               <MessageCircle className="w-4 h-4" /> Connect via WhatsApp
-            </a>
+            </button>
           </div>
 
           {/* Form */}

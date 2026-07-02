@@ -1,16 +1,21 @@
 export const WHATSAPP_NUMBER =
   process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? '971558397703'
 
+// Additional WhatsApp contact number (India). WHATSAPP_NUMBER above remains the default
+// used by all CTA buttons — this one is shown alongside it as an extra contact option.
+export const WHATSAPP_NUMBER_INDIA = '918879251443'
+export const WHATSAPP_NUMBER_INDIA_DISPLAY = '+91 88792 51443'
+
 export const CONTACT_EMAIL = 'info@songbird.ae'
 
 // UAE offices. Ajman is the main (head) office. Street-level details are
 // placeholders pending confirmation — update the `address` strings before deploy.
 export const OFFICES = [
   { city: 'Ajman',     address: 'Ajman, United Arab Emirates',                       isMain: true  },
-  { city: 'Dubai',     address: 'Dubai, United Arab Emirates',                       isMain: false },
-  { city: 'Abu Dhabi', address: 'Abu Dhabi, United Arab Emirates',                   isMain: false },
   { city: 'Sharjah',   address: 'Sharjah, United Arab Emirates',                     isMain: false },
   { city: 'Fujairah',  address: 'Fujairah, United Arab Emirates',                    isMain: false },
+  { city: 'Colombo',   address: 'Colombo, Sri Lanka',                                isMain: false },
+  { city: 'Mumbai',    address: 'Mumbai, India',                                     isMain: false },
 ] as const
 
 // Primary address (main office) — kept for back-compat with single-address usages.

@@ -3,8 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
 import { X, MessageCircle, ArrowRight } from 'lucide-react'
-import { buildWhatsAppUrl } from '@/lib/utils'
-import { WHATSAPP_NUMBER } from '@/lib/constants'
+import { useWhatsAppPicker } from '@/context/WhatsAppPickerContext'
 
 export function ExitIntentModal() {
   const [isOpen, setIsOpen] = useState(false)
@@ -23,8 +22,7 @@ export function ExitIntentModal() {
   }, [])
 
   const close = () => setIsOpen(false)
-
-  const waUrl = buildWhatsAppUrl(WHATSAPP_NUMBER, 'Hello Songbird, I would like a free immigration assessment.')
+  const { openPicker } = useWhatsAppPicker()
 
   return (
     <AnimatePresence>
@@ -70,16 +68,14 @@ export function ExitIntentModal() {
               </p>
 
               <div className="flex flex-col gap-3">
-                <a
-                  href={waUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  onClick={() => { close(); openPicker('Hello Songbird, I would like a free immigration assessment.') }}
                   className="flex items-center justify-center gap-2 w-full py-3 text-white text-[13px] font-sans font-semibold uppercase tracking-[0.08em] rounded-[6px] transition-all hover:-translate-y-px hover:shadow-[0_8px_24px_rgba(31,169,104,.4)]"
                   style={{ background: 'linear-gradient(95deg, #22B877 0%, #0E7C5A 100%)' }}
                 >
                   <MessageCircle className="w-4 h-4" />
                   WhatsApp Free Assessment
-                </a>
+                </button>
                 <button
                   onClick={close}
                   className="flex items-center justify-center gap-2 w-full py-3 border border-gold-brushed/40 text-gold-brushed hover:bg-gold-brushed/10 text-[13px] font-sans font-semibold uppercase tracking-[0.08em] rounded-[6px] transition-colors"

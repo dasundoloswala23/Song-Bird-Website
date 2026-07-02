@@ -3,8 +3,9 @@ import { MapPin, Phone, Mail, Clock, MessageCircle, Facebook, Instagram, Linkedi
 import { ContactForm } from '@/components/ContactForm'
 import { BookingFlow } from '@/components/BookingFlow'
 import { EyebrowTag } from '@/components/EyebrowTag'
+import { WhatsAppTriggerButton } from '@/components/WhatsAppTriggerButton'
 import { buildWhatsAppUrl } from '@/lib/utils'
-import { WHATSAPP_NUMBER, OFFICES, OFFICE_ADDRESS, OFFICE_PHONE, CONTACT_EMAIL, OFFICE_HOURS, MAPS_URL, SOCIAL } from '@/lib/constants'
+import { WHATSAPP_NUMBER_INDIA, WHATSAPP_NUMBER_INDIA_DISPLAY, OFFICES, OFFICE_ADDRESS, OFFICE_PHONE, CONTACT_EMAIL, OFFICE_HOURS, MAPS_URL, SOCIAL } from '@/lib/constants'
 
 export const dynamic = 'force-static'
 
@@ -17,7 +18,7 @@ const BRAND_GRADIENT = 'linear-gradient(135deg, #22B877 0%, #0E9C6E 55%, #0E7C5A
 const WA_GREEN = '#25D366'
 
 export default function ContactPage() {
-  const waUrl = buildWhatsAppUrl(WHATSAPP_NUMBER, 'Hello Songbird, I would like to reach out.')
+  const waUrlIndia = buildWhatsAppUrl(WHATSAPP_NUMBER_INDIA, 'Hello Songbird, I would like to reach out.')
 
   return (
     <>
@@ -64,21 +65,20 @@ export default function ContactPage() {
                 </a>
 
                 {/* WhatsApp CTA */}
-                <a
-                  href={waUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <WhatsAppTriggerButton
+                  message="Hello Songbird, I would like to reach out."
                   className="flex items-center justify-center gap-3 w-full py-4 text-[15px] font-sans font-semibold text-white rounded-[10px] transition-all hover:-translate-y-px hover:shadow-[0_8px_24px_rgba(37,211,102,.3)] mb-6"
                   style={{ background: WA_GREEN }}
                 >
                   <MessageCircle className="w-5 h-5" />
                   WhatsApp Us Now
-                </a>
+                </WhatsAppTriggerButton>
 
                 {/* Contact details */}
                 <div className="space-y-4 pt-4 border-t border-gold-brushed/15">
                   {[
                     { Icon: Phone, label: 'Phone', value: OFFICE_PHONE, href: `tel:${OFFICE_PHONE.replace(/\s/g,'')}` },
+                    { Icon: MessageCircle, label: 'WhatsApp (India)', value: WHATSAPP_NUMBER_INDIA_DISPLAY, href: waUrlIndia },
                     { Icon: Mail, label: 'Email', value: CONTACT_EMAIL, href: `mailto:${CONTACT_EMAIL}` },
                     { Icon: Clock, label: 'Hours', value: `${OFFICE_HOURS.weekdays}\n${OFFICE_HOURS.weekend}`, href: undefined },
                   ].map(({ Icon, label, value, href }) => (

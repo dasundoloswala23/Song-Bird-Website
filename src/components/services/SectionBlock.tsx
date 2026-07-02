@@ -2,9 +2,8 @@
 
 import { useState } from 'react'
 import { MessageCircle, Mail, Check, Loader2 } from 'lucide-react'
-import { buildWhatsAppUrl } from '@/lib/utils'
 import { renderRichHtml } from '@/lib/richText'
-import { WHATSAPP_NUMBER } from '@/lib/constants'
+import { useWhatsAppPicker } from '@/context/WhatsAppPickerContext'
 import type { ServiceSection, SectionTab, ReserveCtaDoc } from '@/types/firestore'
 
 // Prefer the new `tabs` array; fall back to legacy body/serviceBody so old content still works.
@@ -22,13 +21,9 @@ function resolveTabs(section: ServiceSection): SectionTab[] {
 // toggled in the admin panel. WhatsApp opens a wa.me chat; Email auto-sends a notification.
 export function ReserveButtons({ subject, settings }: { subject: string; settings: ReserveCtaDoc }) {
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent'>('idle')
+  const { openPicker } = useWhatsAppPicker()
 
   if (!settings.whatsappEnabled && !settings.emailEnabled) return null
-
-  const waUrl = buildWhatsAppUrl(
-    WHATSAPP_NUMBER,
-    `Hello Songbird, I would like to reserve a free consultation regarding ${subject}.`,
-  )
 
   const sendEmail = async () => {
     if (status !== 'idle') return
@@ -49,15 +44,13 @@ export function ReserveButtons({ subject, settings }: { subject: string; setting
     <div className="mt-8">
       <div className="flex flex-wrap gap-3">
         {settings.whatsappEnabled && (
-          <a
-            href={waUrl}
-            target="_blank"
-            rel="noopener noreferrer"
+          <button
+            onClick={() => openPicker(`Hello Songbird, I would like to reserve a free consultation regarding ${subject}.`)}
             className="inline-flex items-center gap-2 px-5 py-2.5 text-white text-[12px] font-sans font-semibold uppercase tracking-[0.08em] rounded-full transition-all hover:-translate-y-px focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal"
             style={{ background: 'linear-gradient(95deg, #22B877 0%, #0E7C5A 100%)' }}
           >
             <MessageCircle className="w-4 h-4" /> Reserve Your Free Consultation
-          </a>
+          </button>
         )}
         {settings.emailEnabled && (
           <button

@@ -3,9 +3,8 @@
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Loader2, CheckCircle } from 'lucide-react'
-import { WHATSAPP_NUMBER } from '@/lib/constants'
-import { buildWhatsAppUrl } from '@/lib/utils'
 import { saveLead } from '@/lib/firestorePublic'
+import { useWhatsAppPicker } from '@/context/WhatsAppPickerContext'
 
 const DESTINATIONS = [
   'UAE / Dubai', 'United Kingdom', 'Canada', 'Australia',
@@ -24,6 +23,7 @@ interface FormData {
 export function ContactForm({ className }: { className?: string }) {
   const [sent, setSent] = useState(false)
   const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<FormData>()
+  const { openPicker } = useWhatsAppPicker()
 
   const onSubmit = async (data: FormData) => {
     try {
@@ -34,7 +34,7 @@ export function ContactForm({ className }: { className?: string }) {
     const msg = `Hello Songbird, I submitted an enquiry via your website.\nName: ${data.name}\nPhone: ${data.phone}\nDestination: ${data.destination ?? ''}\nMessage: ${data.message ?? ''}`
     reset()
     setSent(true)
-    setTimeout(() => window.open(buildWhatsAppUrl(WHATSAPP_NUMBER, msg), '_blank', 'noopener,noreferrer'), 600)
+    setTimeout(() => openPicker(msg), 600)
   }
 
   if (sent) {

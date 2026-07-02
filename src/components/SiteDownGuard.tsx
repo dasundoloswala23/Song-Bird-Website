@@ -7,6 +7,7 @@ import { Footer } from './Footer'
 import { FloatingActions } from './FloatingActions'
 import { ExitIntentModal } from './ExitIntentModal'
 import { ConsultationModal } from './ConsultationModal'
+import { WhatsAppPickerModal } from './WhatsAppPickerModal'
 import { ComingSoon } from './ComingSoon'
 
 type Status = 'loading' | 'live' | 'down'
@@ -46,6 +47,7 @@ export function SiteDownGuard({ children }: { children: React.ReactNode }) {
       <FloatingActions />
       <ExitIntentModal />
       <ConsultationModal />
+      <WhatsAppPickerModal />
     </>
   )
 }

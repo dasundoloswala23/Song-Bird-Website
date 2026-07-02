@@ -3,17 +3,16 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { MessageCircle, Mail, X } from 'lucide-react'
-import { buildWhatsAppUrl } from '@/lib/utils'
-import { WHATSAPP_NUMBER } from '@/lib/constants'
+import { useWhatsAppPicker } from '@/context/WhatsAppPickerContext'
 
 export function ApplicationCTA({ label = 'Start Your Application' }: { label?: string }) {
   const [open, setOpen] = useState(false)
   const router = useRouter()
+  const { openPicker } = useWhatsAppPicker()
 
   const handleWhatsApp = () => {
-    const url = buildWhatsAppUrl(WHATSAPP_NUMBER, 'Hello Songbird, I would like to start my application.')
-    window.open(url, '_blank', 'noopener,noreferrer')
     setOpen(false)
+    openPicker('Hello Songbird, I would like to start my application.')
   }
 
   const handleEmail = () => {
