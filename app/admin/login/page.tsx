@@ -41,7 +41,7 @@ export default function AdminLoginPage() {
       <div className="w-full max-w-sm">
         {/* Logo */}
         <div className="flex justify-center mb-8">
-          <Image src="/logo2.png" alt="Songbird" width={140} height={140} className="h-20 w-auto" />
+          <Image src="/logo2.webp" alt="Songbird" width={140} height={140} className="h-20 w-auto" />
         </div>
 
         <div className="bg-navy-card border border-gold-brushed/20 rounded-2xl p-8 shadow-[0_24px_48px_rgba(10,23,56,.5)]">

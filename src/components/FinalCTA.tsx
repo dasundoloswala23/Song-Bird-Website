@@ -9,7 +9,7 @@ import { useT } from '@/context/LanguageContext'
 import { OFFICE_ADDRESS } from '@/lib/constants'
 import { useWhatsAppPicker } from '@/context/WhatsAppPickerContext'
 
-const DEFAULT_FINAL_CTA_IMAGE = '/images/city1.png'
+const DEFAULT_FINAL_CTA_IMAGE = '/images/city1.webp'
 
 export function FinalCTA() {
   const { t } = useT()

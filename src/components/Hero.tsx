@@ -12,7 +12,7 @@ const BRAND_GRADIENT = 'linear-gradient(135deg, #22B877 0%, #0E9C6E 55%, #0E7C5A
 
 // Hardcoded looping background video (Dubai skyline). Reliable, no CMS dependency.
 const HERO_VIDEO = '/hero-dubai.mp4'
-const HERO_POSTER = '/images/city1.png'
+const HERO_POSTER = '/images/city1.webp'
 
 const TRUST_KEYS: MessageKey[] = [
   'hero.trust.licensed',
@@ -96,7 +96,7 @@ export function Hero({ heroSettings }: { heroSettings?: HeroSettingsDoc | null }
           muted
           loop
           playsInline
-          preload="auto"
+          preload="metadata"
           poster={HERO_POSTER}
           className="absolute inset-0 w-full h-full object-cover"
           aria-hidden="true"

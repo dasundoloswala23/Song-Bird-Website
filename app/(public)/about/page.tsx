@@ -237,7 +237,7 @@ export default async function AboutPage() {
       <section className="py-20 bg-navy-deep">
         <div className="mx-auto px-6 md:px-12 max-w-5xl">
           <div className="relative rounded-2xl overflow-hidden border border-gold-brushed/15 shadow-[0_24px_64px_rgba(4,38,28,.3)]">
-            <Image src="/images/aboutt.png" alt="Songbird Consultancy — immigration and visa advisory team UAE" width={1600} height={900} className="w-full h-auto" />
+            <Image src="/images/aboutt.webp" alt="Songbird Consultancy — immigration and visa advisory team UAE" width={1600} height={900} className="w-full h-auto" />
           </div>
         </div>
       </section>

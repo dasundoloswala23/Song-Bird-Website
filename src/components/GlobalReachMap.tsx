@@ -29,7 +29,7 @@ const DEFAULT_PINS: GlobalReachPin[] = [
   { label: 'UAE',         lat: 24.0,  lng: 54.0  },
 ]
 
-// Equirectangular projection of a lat/lng onto world-map.png (percentage offsets).
+// Equirectangular projection of a lat/lng onto world-map.webp (percentage offsets).
 function project(lat: number, lng: number) {
   return {
     left: `${((lng + 180) / 360) * 100}%`,
@@ -95,7 +95,7 @@ export function GlobalReachMap({ fallback }: Props) {
           }}
         >
           <img
-            src="/images/world-map.png"
+            src="/images/world-map.webp"
             alt="Map highlighting the regions Songbird Consultancy serves"
             className="block w-full h-auto select-none"
           />

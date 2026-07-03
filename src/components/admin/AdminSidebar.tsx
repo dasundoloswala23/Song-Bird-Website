@@ -46,7 +46,7 @@ export function AdminSidebar() {
       {/* Logo */}
       <div className="px-6 py-5 border-b border-gold-brushed/10">
         <Link href="/admin">
-          <Image src="/logo2.png" alt="Songbird" width={120} height={120} className="h-10 w-auto" />
+          <Image src="/logo2.webp" alt="Songbird" width={120} height={120} className="h-10 w-auto" />
         </Link>
         <p className="text-[10px] font-sans uppercase tracking-[0.2em] text-gold-brushed/60 mt-1">Admin Panel</p>
       </div>

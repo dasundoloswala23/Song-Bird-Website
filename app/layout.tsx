@@ -96,6 +96,13 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning className={`${heading.variable} ${sans.variable}`}>
+      <head>
+        {/* Resource hints — the client re-fetches from Firestore and loads CMS images
+            from Firebase Storage on nearly every page; preconnecting shaves the TLS/DNS
+            handshake off those requests (clears PSI "no origins were preconnected"). */}
+        <link rel="preconnect" href="https://firestore.googleapis.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://firebasestorage.googleapis.com" />
+      </head>
       <body className="min-h-screen flex flex-col bg-cream font-sans antialiased">
         <JsonLd data={organizationSchema} />
         <JsonLd data={webSiteSchema} />

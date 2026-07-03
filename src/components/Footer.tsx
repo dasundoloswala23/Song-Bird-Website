@@ -94,7 +94,7 @@ export function Footer() {
           <div>
             <Link href="/" className="inline-block mb-4">
               <Image
-                src="/logo2.png"
+                src="/logo2.webp"
                 alt="Songbird Immigration Consultants UAE — Songbird Consultancy"
                 width={140}
                 height={140}

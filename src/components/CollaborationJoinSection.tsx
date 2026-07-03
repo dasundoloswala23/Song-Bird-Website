@@ -26,7 +26,7 @@ export function CollaborationJoinSection({ fallback }: { fallback: Collaboration
       {/* Hero title bar — Collaborating.png background with emerald overlay (mirrors home hero) */}
       <section className="relative pt-[160px] pb-20 bg-navy overflow-hidden">
         <Image
-          src="/images/collaborating.png"
+          src="/images/collaborating.webp"
           alt=""
           fill
           priority
