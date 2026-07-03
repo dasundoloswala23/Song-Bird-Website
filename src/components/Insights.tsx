@@ -56,7 +56,7 @@ export function Insights({ fallback }: { fallback?: InsightsDoc | null }) {
         <div className="text-center mb-14">
           <EyebrowTag>From Our Desk</EyebrowTag>
           <h2 id="insights-heading" className="font-serif font-normal text-[38px] md:text-[48px] leading-tight text-ink">
-            Insights
+            Immigration News &amp; Insights
           </h2>
           <div className="mx-auto mt-4 w-16 h-px bg-gold-brushed" />
         </div>

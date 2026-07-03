@@ -26,18 +26,11 @@ firebase deploy --only firestore
 # Deploy Storage rules
 firebase deploy --only storage
 
-# Build + deploy Cloud Functions (transactional email — see functions/)
-npm --prefix functions run build
-firebase deploy --only functions
-
-# Tail Cloud Function logs
-npm --prefix functions run logs
-
 # Seed Firestore with initial data (run once to bootstrap)
 node scripts/seed.mjs
 ```
 
-No test runner is configured. The `functions/` package is a **separate npm project** with its own `package.json`/`node_modules` — run `npm i` inside `functions/` before building it.
+No test runner is configured. The `functions/` package is a **separate npm project** with its own `package.json`/`node_modules`, but it is currently **dormant/unused** — lead email now goes through EmailJS from the client (see below), not this Cloud Function.
 
 ## Environment Variables
 
@@ -50,12 +43,11 @@ Required in `.env.local`:
 | `ADMIN_SESSION_SECRET` | JWT signing secret for admin sessions |
 | `CONTACT_EMAIL` | Admin email for leads (also falls back to `constants.ts`) |
 | `NEXT_PUBLIC_WHATSAPP_NUMBER` | WhatsApp link number (also falls back to `constants.ts`) |
+| `NEXT_PUBLIC_EMAILJS_SERVICE_ID` | EmailJS service ID (Gmail connected via EmailJS OAuth) |
+| `NEXT_PUBLIC_EMAILJS_TEMPLATE_ID` | EmailJS template ID for lead notifications |
+| `NEXT_PUBLIC_EMAILJS_PUBLIC_KEY` | EmailJS public key — safe to expose client-side |
 
-Email is **no longer sent from the Next.js app** — it is delivered by a Firebase Cloud Function (see below). The Gmail credential is a **Cloud Function secret**, not an `.env.local` var:
-
-```bash
-firebase functions:secrets:set GMAIL_APP_PASSWORD
-```
+Lead-notification email is sent **directly from the browser via EmailJS** (see below) — there is no server-side email step and no Gmail password anywhere in the codebase.
 
 ## Architecture
 
@@ -76,16 +68,24 @@ All dynamic content lives in Firestore. Public pages are **async Server Componen
 
 After adding or editing content in the admin panel, run `npm run build && firebase deploy --only hosting` to publish changes to the static site.
 
-### Email via Cloud Function (Lead Notifications)
+### Email via EmailJS (Lead Notifications)
 
-Because the site is a static export with no `app/api/` routes, all transactional email goes through a **single callable Cloud Function** in `functions/src/index.ts`:
+Because the site is a static export with no `app/api/` routes and no server, lead-notification email is sent **directly from the browser** using EmailJS (a service designed for client-side sending via a public key, not a real password):
 
-- **`sendLeadEmail`** — `onCall` (region `us-central1`), sends an HTML lead notification to `info@songbird.ae` via Gmail SMTP (nodemailer + the `GMAIL_APP_PASSWORD` secret). Requires the Firebase **Blaze plan**.
-- Client side: `src/lib/email.ts` exports `sendLeadEmail(payload)` which lazily imports `firebase/functions` and invokes the callable. It is **best-effort** — failures are swallowed so they never block the Firestore write or the form's success UI.
-- `LeadEmailPayload.type` is `'inquiry' | 'consultation' | 'eligibility' | 'booking'` and drives the email subject/layout. The payload can carry scheduling fields (`date`, `startTime`, `durationMin`, `timezone`, `sessionType`, `charge`) and a CV attachment (`cvUrl`/`cvFileName`).
+- Client side: `src/lib/email.ts` exports `sendLeadEmail(payload)`, which lazily imports `@emailjs/browser` and calls `emailjs.send(serviceId, templateId, templateParams, { publicKey })`, sending to `info@songbird.ae`. It is **best-effort** — failures are swallowed so they never block the Firestore write or the form's success UI.
+- `LeadEmailPayload.type` is `'inquiry' | 'consultation' | 'eligibility' | 'booking' | 'collaboration'` and drives the email subject. The payload can carry scheduling fields (`date`, `startTime`, `durationMin`, `timezone`, `sessionType`, `charge`) and a CV attachment (`cvUrl`/`cvFileName`).
 - Callers: `ContactForm`, `ConsultationModal`, `BookFreeConsultation`, `BookingFlow`, `EligibilityFlow`, `EligibilityForm`, `CollaborationJoinForm`.
+- `functions/src/index.ts` still contains a `sendLeadEmail` Cloud Function (Gmail SMTP via nodemailer) from the previous architecture, but it is **no longer called from the app** — it is dormant, kept only in case the Cloud Function path is revived later.
 
 `src/lib/uploadFile.ts` uploads a `File` to Firebase Storage (`<folder>/<timestamp>_<name>`) and returns a download URL — used for CV/document attachments that are then passed to `sendLeadEmail` as `cvUrl`. Storage rules must allow writes to the target folder.
+
+### SEO
+
+Metadata + structured data are centralized: `app/layout.tsx` holds the root `metadata` (title template, keywords, OG/Twitter, robots) with `metadataBase = https://songbird.ae`; `src/lib/structuredData.ts` builds the Organization (`ProfessionalService`) + `WebSite` JSON-LD (rendered once from the root layout via `src/components/JsonLd.tsx`) plus per-page `breadcrumbSchema`/`serviceSchema`/`faqSchema`/`articleSchema` helpers; `src/lib/seoKeywords.ts` holds the keyword lists; `app/sitemap.ts` + `app/robots.ts` are static-generated and cover dynamic Firestore routes.
+
+- **Canonical brand string is "Songbird Immigration Consultants"** (`SITE_NAME` in `structuredData.ts` and every title/OG label in `app/layout.tsx`). "Songbird Consultancy" is kept only as an `alternateName` in the Organization JSON-LD — do not reintroduce it into titles.
+- Child pages that set their own `keywords` **replace** the root list (they don't merge), so any page targeting brand queries must include `BRAND_KEYWORDS` — the homepage (`app/(public)/page.tsx`) does.
+- Google Search Console ownership is proven by `public/google03d61c6b937598ea.html` (HTML-file method); there is no `verification.google` meta tag.
 
 ### Dual Firestore Module Pattern
 
@@ -217,5 +217,5 @@ Custom color palette (CSS variables in `src/styles/theme.css`):
 - `motion` — animations (`src/lib/motionVariants.ts` has shared presets: `fadeUp`, `fadeIn`, `staggerContainer`, `slideInLeft`, `scaleIn`)
 - `embla-carousel-react` — testimonials/hero carousel
 - `@mui/material` + `@mui/icons-material` (+ `@emotion/*`) — MUI is used alongside Tailwind/shadcn in some newer components (e.g. booking/calendar UI); prefer the existing Tailwind tokens + shadcn primitives for new work unless matching an MUI component already in place
-- `firebase/functions` — invokes the `sendLeadEmail` callable (lazy-imported in `src/lib/email.ts`)
-- `nodemailer` — used **only inside `functions/`** for the email Cloud Function (the copy in the root `package.json` is vestigial; the app no longer sends mail directly)
+- `@emailjs/browser` — sends lead-notification email directly from the browser (lazy-imported in `src/lib/email.ts`)
+- `nodemailer` — used **only inside `functions/`** for the now-dormant email Cloud Function (the copy in the root `package.json` is vestigial; the app no longer sends mail directly or via that function)

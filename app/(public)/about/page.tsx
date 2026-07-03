@@ -10,8 +10,9 @@ import { getWhyChooseUs, getAccreditations } from '@/lib/firestorePublic'
 export const dynamic = 'force-static'
 
 export const metadata: Metadata = {
-  title: 'About Us — Songbird Consultancy',
-  description: 'Songbird Consultancy is a UAE-licensed immigration and business advisory firm headquartered in Dubai, serving clients across the GCC, EU and Asia.',
+  title: 'About Us — UAE-Licensed Immigration Consultancy',
+  description: 'Songbird Consultancy is a UAE-licensed immigration and business advisory firm serving clients across the UAE, GCC, EU, and Asia — 15+ years of international recognition and 20,000+ clients served.',
+  alternates: { canonical: '/about/' },
 }
 
 // "Who We Are & Our Focus" story paragraphs.
@@ -108,7 +109,7 @@ export default async function AboutPage() {
             <div className="relative">
               <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-navy-card border border-gold-brushed/15 shadow-[0_24px_64px_rgba(4,38,28,.15)]">
                 {image ? (
-                  <Image src={image} alt="Songbird office" fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
+                  <Image src={image} alt="Songbird immigration consultants office in UAE" fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
                 ) : (
                   <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-navy via-navy-card to-teal/5">
                     <p className="text-cream/30 text-[13px] font-sans text-center px-8">Office desk scene with Songbird logo</p>
@@ -236,7 +237,7 @@ export default async function AboutPage() {
       <section className="py-20 bg-navy-deep">
         <div className="mx-auto px-6 md:px-12 max-w-5xl">
           <div className="relative rounded-2xl overflow-hidden border border-gold-brushed/15 shadow-[0_24px_64px_rgba(4,38,28,.3)]">
-            <Image src="/images/aboutt.png" alt="Songbird Consultancy" width={1600} height={900} className="w-full h-auto" />
+            <Image src="/images/aboutt.png" alt="Songbird Consultancy — immigration and visa advisory team UAE" width={1600} height={900} className="w-full h-auto" />
           </div>
         </div>
       </section>

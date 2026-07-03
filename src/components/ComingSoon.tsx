@@ -17,7 +17,7 @@ export function ComingSoon() {
 
       <div className="relative z-10 flex flex-col items-center px-6 text-center">
         <div className="mb-10">
-          <Image src="/logo2.png" alt="Songbird Consulting" width={200} height={200} className="object-contain" priority />
+          <Image src="/logo2.png" alt="Songbird Consultancy" width={200} height={200} className="object-contain" priority />
         </div>
 
         <p className="uppercase tracking-[0.35em] text-xs mb-4" style={{ color: '#C8911E', fontFamily: 'var(--font-jost, sans-serif)' }}>

@@ -74,7 +74,7 @@ function OnThisPageSidebar({ items }: { items: TocItem[] }) {
           href="/contact"
           className="text-left px-3 py-2 mt-3 text-[12px] font-sans normal-case text-slate hover:text-emerald transition-colors border-l-2 border-transparent"
         >
-          Contact an adviser
+          Contact an advisor
         </Link>
       </nav>
     </aside>
@@ -136,7 +136,7 @@ export function DestinationDetailClient({ initialSlug, initial }: { initialSlug:
       {/* Hero */}
       <section className="relative pt-[160px] pb-24 bg-navy overflow-hidden">
         {dest.image && (
-          <Image src={dest.image} alt={dest.name} fill className="object-cover" sizes="100vw" priority />
+          <Image src={dest.image} alt={`${dest.name} immigration pathways — Songbird Consultancy`} fill className="object-cover" sizes="100vw" priority />
         )}
         <div className="absolute inset-0 bg-gradient-to-r from-navy/92 via-navy/70 to-navy/40 pointer-events-none" />
         <div className="relative z-10 mx-auto px-6 md:px-12 max-w-7xl">

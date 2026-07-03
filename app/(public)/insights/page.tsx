@@ -7,8 +7,10 @@ import { InsightsList } from '@/components/InsightsList'
 export const dynamic = 'force-static'
 
 export const metadata: Metadata = {
-  title: 'Insights',
-  description: 'Immigration updates, advisory guidance and market insights from the Songbird Consultancy team.',
+  title: 'Insights — Immigration News & Advisory Guidance',
+  description: 'Immigration updates, visa news, advisory guidance and market insights from the Songbird Consultancy team in the UAE.',
+  keywords: ['Immigration News UAE', 'Visa updates UAE', 'Canada Express Entry Latest Updates', 'Immigration guides UAE', 'Visa requirements UAE'],
+  alternates: { canonical: '/insights/' },
 }
 
 export default async function InsightsPage() {

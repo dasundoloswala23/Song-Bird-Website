@@ -10,8 +10,10 @@ import { WHATSAPP_NUMBER_INDIA, WHATSAPP_NUMBER_INDIA_DISPLAY, OFFICES, OFFICE_A
 export const dynamic = 'force-static'
 
 export const metadata: Metadata = {
-  title: 'Contact Us',
-  description: 'Get in touch with Songbird Consultancy. Visit our Dubai office or reach us by phone, email, or WhatsApp.',
+  title: 'Contact Us — Immigration Consultants in the UAE',
+  description: 'Get in touch with Songbird Consultancy immigration consultants. Visit our UAE offices in Ajman, Sharjah, and Fujairah, or reach us by phone, email, or WhatsApp.',
+  keywords: ['Immigration Consultant in Ajman', 'Immigration Consultant in Sharjah', 'Immigration Consultant in Dubai', 'Immigration Consultant in Abu Dhabi', 'Visa Consultant Near Me', 'Immigration Consultant Near Me'],
+  alternates: { canonical: '/contact/' },
 }
 
 const BRAND_GRADIENT = 'linear-gradient(135deg, #22B877 0%, #0E9C6E 55%, #0E7C5A 100%)'

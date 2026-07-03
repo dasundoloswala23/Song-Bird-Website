@@ -7,8 +7,10 @@ import { FinalCTA } from '@/components/FinalCTA'
 export const dynamic = 'force-static'
 
 export const metadata: Metadata = {
-  title: 'Destinations',
-  description: 'Explore immigration, residency, and visa pathways across our key destinations including Dubai, Abu Dhabi, and more.',
+  title: 'Immigration Destinations — UAE, UK, Canada, Australia, Europe & USA',
+  description: 'Explore immigration, residency, and visa pathways across Songbird Consultancy\'s key destinations including the UAE, UK, Canada, Australia, Europe, and USA.',
+  keywords: ['Canada Immigration UAE', 'Australia Immigration UAE', 'UK Immigration UAE', 'USA Immigration Consultants UAE', 'New Zealand Immigration UAE', 'Europe Residency Programs', 'Best Country to Migrate From UAE'],
+  alternates: { canonical: '/destinations/' },
 }
 
 export default async function DestinationsPage() {

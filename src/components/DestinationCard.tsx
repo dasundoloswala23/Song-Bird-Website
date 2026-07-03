@@ -34,7 +34,7 @@ export function DestinationCard({ destination }: Props) {
       {image ? (
         <Image
           src={image}
-          alt={name}
+          alt={`${name} immigration and visa services — Songbird Consultancy`}
           fill
           className="object-cover transition-transform duration-500 group-hover:scale-105"
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"

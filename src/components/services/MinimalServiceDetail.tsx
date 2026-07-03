@@ -32,7 +32,7 @@ export function MinimalServiceDetail({ service }: { service: ServiceDoc }) {
             <div className="relative">
               <div className="aspect-[4/3] rounded-2xl bg-navy-card border border-gold-brushed/15 overflow-hidden flex items-center justify-center">
                 {service.heroImage ? (
-                  <Image src={service.heroImage} alt={service.frontTitle} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
+                  <Image src={service.heroImage} alt={`${service.frontTitle} — Songbird Consultancy UAE`} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
                 ) : (
                   <p className="text-cream/20 text-[13px] font-sans text-center px-8">Service image</p>
                 )}

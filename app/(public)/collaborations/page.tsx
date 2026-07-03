@@ -7,8 +7,9 @@ import type { CollaborationsDoc } from '@/types/firestore'
 export const dynamic = 'force-static'
 
 export const metadata: Metadata = {
-  title: 'Collaborations',
-  description: 'Join with Songbird Consultancy — collaboration and partnership opportunities across our global platform.',
+  title: 'Collaborations & Partnerships',
+  description: 'Join with Songbird Consultancy — collaboration and partnership opportunities for immigration lawyers, advisors, and agencies across our global platform.',
+  alternates: { canonical: '/collaborations/' },
 }
 
 const DEFAULT: CollaborationsDoc = {

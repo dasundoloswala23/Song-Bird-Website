@@ -8,6 +8,7 @@ export const dynamic = 'force-static'
 export const metadata: Metadata = {
   title: 'Privacy Policy',
   description: 'How Songbird Consultancy collects, uses, and protects your personal information.',
+  alternates: { canonical: '/privacy/' },
 }
 
 const SECTIONS: { heading: string; body: string[] }[] = [

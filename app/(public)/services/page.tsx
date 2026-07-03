@@ -7,8 +7,10 @@ import { ServicesIntro } from '@/components/ServicesIntro'
 export const dynamic = 'force-static'
 
 export const metadata: Metadata = {
-  title: 'Our Services',
-  description: 'Explore Songbird\'s nine service lines across immigration, legal, business, and lifestyle advisory.',
+  title: 'Our Services — Immigration, Legal, Business & Lifestyle Advisory',
+  description: 'Explore Songbird Consultancy\'s nine service lines: immigration and visa consultancy, patent & IP, maritime, management, HR advisory, commercial brokering, concierge, lifestyle, and hospitality services in the UAE.',
+  keywords: ['Immigration Services UAE', 'Visa Services Dubai', 'Immigration and Visa Services', 'Business Setup UAE', 'Global Mobility Services UAE', 'Professional visa services UAE'],
+  alternates: { canonical: '/services/' },
 }
 
 export default async function ServicesPage() {

@@ -19,14 +19,12 @@ env:
     secret: NEXT_PUBLIC_FIREBASE_APP_ID
   - variable: ADMIN_SESSION_SECRET
     secret: ADMIN_SESSION_SECRET
-  - variable: SMTP_HOST
-    secret: SMTP_HOST
-  - variable: SMTP_PORT
-    secret: SMTP_PORT
-  - variable: SMTP_USER
-    secret: SMTP_USER
-  - variable: SMTP_PASS
-    secret: SMTP_PASS
+  - variable: NEXT_PUBLIC_EMAILJS_SERVICE_ID
+    secret: NEXT_PUBLIC_EMAILJS_SERVICE_ID
+  - variable: NEXT_PUBLIC_EMAILJS_TEMPLATE_ID
+    secret: NEXT_PUBLIC_EMAILJS_TEMPLATE_ID
+  - variable: NEXT_PUBLIC_EMAILJS_PUBLIC_KEY
+    secret: NEXT_PUBLIC_EMAILJS_PUBLIC_KEY
   - variable: CONTACT_EMAIL
     secret: CONTACT_EMAIL
   - variable: NEXT_PUBLIC_WHATSAPP_NUMBER

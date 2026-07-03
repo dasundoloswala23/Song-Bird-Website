@@ -8,6 +8,7 @@ export const dynamic = 'force-static'
 export const metadata: Metadata = {
   title: 'Terms of Service',
   description: 'The terms governing your use of the Songbird Consultancy website and services.',
+  alternates: { canonical: '/terms/' },
 }
 
 const SECTIONS: { heading: string; body: string[] }[] = [

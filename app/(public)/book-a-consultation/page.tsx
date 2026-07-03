@@ -8,8 +8,10 @@ import { WhatsAppTriggerButton } from '@/components/WhatsAppTriggerButton'
 export const dynamic = 'force-static'
 
 export const metadata: Metadata = {
-  title: 'Book a Consultation — Songbird Consulting',
-  description: 'Schedule a complimentary consultation with a Songbird advisor. Choose your date, time, and duration.',
+  title: 'Book a Free Immigration Consultation',
+  description: 'Schedule a complimentary consultation with a Songbird Consultancy immigration advisor in the UAE. Choose your date, time, and duration.',
+  keywords: ['Free immigration consultation UAE', 'Visa consultation Dubai', 'Immigration Consultant Near Me', 'Book immigration consultant UAE'],
+  alternates: { canonical: '/book-a-consultation/' },
 }
 
 const BENEFITS = [

@@ -35,7 +35,7 @@ const en = {
 
   // ── Hero ──
   'hero.eyebrow': 'UAE-Licensed · Immigration & Global Mobility',
-  'hero.slide1': 'Supporting Your Business Investment & Migration Across the UAE',
+  'hero.slide1': 'Trusted Immigration Consultants in UAE',
   'hero.slide2': 'Reliable & Professional Legal Advisory Services for You & Your Businesses Abroad',
   'hero.slide3': 'Your Gateway to Life in the Emirates',
   'hero.slide4': 'Live Your Story in the UAE',
@@ -85,7 +85,7 @@ const en = {
 
   // ── Destinations ──
   'dest.eyebrow': 'Where We Operate',
-  'dest.heading': 'Our Destinations',
+  'dest.heading': 'Our Immigration Destinations',
 
   // ── Combined CTA ──
   'combined.eyebrow': 'Free Assessment',

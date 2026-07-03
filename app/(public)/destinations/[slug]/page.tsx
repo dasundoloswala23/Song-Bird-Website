@@ -2,6 +2,9 @@ import type { Metadata } from 'next'
 import { getDestinations, getDestinationBySlug } from '@/lib/firestorePublic'
 import { DestinationDetailClient } from '@/components/destinations/DestinationDetailClient'
 import { slugify } from '@/lib/utils'
+import { JsonLd } from '@/components/JsonLd'
+import { breadcrumbSchema, serviceSchema, pageOpenGraph } from '@/lib/structuredData'
+import { DESTINATION_KEYWORDS, genericDestinationKeywords } from '@/lib/seoKeywords'
 
 export const dynamic = 'force-static'
 export const dynamicParams = true
@@ -18,12 +21,49 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  const canonical = `/destinations/${slugify(params.slug)}/`
   const dest = await getDestinationBySlug(params.slug)
-  if (!dest) return { title: 'Destinations — Songbird Consultancy' }
-  return { title: `${dest.name} — Songbird Consultancy`, description: dest.blurb }
+  if (!dest) return { title: 'Destinations — Songbird Consultancy', alternates: { canonical } }
+  const title = `${dest.name} Immigration & Residency`
+  return {
+    title,
+    description: dest.blurb,
+    keywords: DESTINATION_KEYWORDS[slugify(params.slug)] ?? genericDestinationKeywords(dest.name),
+    alternates: { canonical },
+    openGraph: pageOpenGraph({
+      title: `${title} | Songbird Consultancy`,
+      description: dest.blurb,
+      path: canonical,
+      image: dest.image || undefined,
+    }),
+  }
 }
 
 export default async function DestinationDetailPage({ params }: { params: { slug: string } }) {
   const initial = await getDestinationBySlug(params.slug)
-  return <DestinationDetailClient initialSlug={params.slug} initial={initial} />
+  const path = `/destinations/${slugify(params.slug)}/`
+  return (
+    <>
+      {initial && (
+        <>
+          <JsonLd
+            data={serviceSchema({
+              name: `${initial.name} Immigration & Residency Advisory`,
+              description: initial.blurb,
+              path,
+              image: initial.image || undefined,
+            })}
+          />
+          <JsonLd
+            data={breadcrumbSchema([
+              { name: 'Home', path: '/' },
+              { name: 'Destinations', path: '/destinations/' },
+              { name: initial.name, path },
+            ])}
+          />
+        </>
+      )}
+      <DestinationDetailClient initialSlug={params.slug} initial={initial} />
+    </>
+  )
 }

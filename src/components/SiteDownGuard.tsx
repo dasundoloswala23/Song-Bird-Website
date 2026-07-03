@@ -10,27 +10,25 @@ import { ConsultationModal } from './ConsultationModal'
 import { WhatsAppPickerModal } from './WhatsAppPickerModal'
 import { ComingSoon } from './ComingSoon'
 
-type Status = 'loading' | 'live' | 'down'
+type Status = 'live' | 'down'
 
 export function SiteDownGuard({ children }: { children: React.ReactNode }) {
-  const [status, setStatus] = useState<Status>('loading')
+  // Default to 'live' so the full page is server-rendered into the static HTML
+  // (crawlers must see real content — a loading shell here breaks SEO entirely).
+  const [status, setStatus] = useState<Status>('live')
 
   useEffect(() => {
     async function check() {
       try {
         const { getSiteDown } = await import('@/lib/firestorePublic')
         const isDown = await getSiteDown()
-        setStatus(isDown ? 'down' : 'live')
+        if (isDown) setStatus('down')
       } catch {
-        setStatus('live')
+        // Firestore unreachable — keep serving the site.
       }
     }
     check()
   }, [])
-
-  if (status === 'loading') {
-    return <div className="min-h-screen" style={{ background: '#06241B' }} />
-  }
 
   if (status === 'down') {
     return <ComingSoon />

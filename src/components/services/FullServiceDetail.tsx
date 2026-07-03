@@ -12,7 +12,7 @@ export function FullServiceDetail({ service }: { service: ServiceDoc }) {
       {/* 1. Hero */}
       <section className="relative pt-[120px] min-h-[70vh] flex items-start">
         {service.heroImage ? (
-          <Image src={service.heroImage} alt={service.frontTitle} fill className="object-cover" priority sizes="100vw" />
+          <Image src={service.heroImage} alt={`${service.frontTitle} — Songbird Consultancy UAE`} fill className="object-cover" priority sizes="100vw" />
         ) : (
           <div className="absolute inset-0 bg-gradient-to-br from-navy via-navy-card to-navy-deep" />
         )}

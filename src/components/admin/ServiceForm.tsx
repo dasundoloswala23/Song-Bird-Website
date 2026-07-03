@@ -337,7 +337,7 @@ export function ServiceForm({ initialData, serviceId }: ServiceFormProps) {
                   <span className="absolute top-0.5 w-4 h-4 bg-white rounded-full transition-transform" style={{ left: field.value !== false ? '22px' : '2px' }} />
                 </button>
               )} />
-              <span className="text-[13px] font-sans text-cream/60">Show &ldquo;Contact an adviser&rdquo; in side nav</span>
+              <span className="text-[13px] font-sans text-cream/60">Show &ldquo;Contact an advisor&rdquo; in side nav</span>
             </div>
           </div>
         )}

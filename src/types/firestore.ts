@@ -78,7 +78,7 @@ export interface ServiceDoc {
 
   // Sectioned layout
   sections?: ServiceSection[]
-  showContactNav?: boolean   // show "Contact an adviser" in side nav (defaults true)
+  showContactNav?: boolean   // show "Contact an advisor" in side nav (defaults true)
 
   // Detail-page extras
   showUaeBar?: boolean       // show the UAE Licensed bar under the hero on this service's detail page
