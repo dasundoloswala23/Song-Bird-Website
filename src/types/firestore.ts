@@ -21,6 +21,20 @@ export interface FAQ {
   answer: string
 }
 
+// ── FAQ page (siteContent/faq) ──────────────────────────────────────────────
+// Dedicated /faq answer hub — Q&A grouped by category. Feeds FAQPage JSON-LD
+// (AEO / AI Overviews) and doubles as clean, quotable facts for generative
+// engines (GEO). Reuses the FAQ {question, answer} shape above.
+
+export interface FaqGroup {
+  category: string
+  items: FAQ[]
+}
+
+export interface FaqPageDoc {
+  groups: FaqGroup[]
+}
+
 export interface SectionTab {
   label: string   // tab title, e.g. "Overview", "Benefits", "Service"
   body: string    // rich HTML from Quill (may contain inline <img>)
@@ -207,6 +221,7 @@ export interface DestinationDoc {
   // Sectioned detail content (mirrors the sectioned service layout)
   overview?: string             // rich HTML intro block shown above the sections
   sections?: ServiceSection[]   // collapsible content sections (Overview / Our Service tabs + stats)
+  faqs?: FAQ[]                  // per-destination FAQs — rendered as an accordion + FAQPage JSON-LD (AEO)
 }
 
 // ── Bookings & Slots ──────────────────────────────────────────────────────────

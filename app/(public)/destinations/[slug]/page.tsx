@@ -3,7 +3,7 @@ import { getDestinations, getDestinationBySlug } from '@/lib/firestorePublic'
 import { DestinationDetailClient } from '@/components/destinations/DestinationDetailClient'
 import { slugify } from '@/lib/utils'
 import { JsonLd } from '@/components/JsonLd'
-import { breadcrumbSchema, serviceSchema, pageOpenGraph } from '@/lib/structuredData'
+import { breadcrumbSchema, serviceSchema, faqSchema, pageOpenGraph } from '@/lib/structuredData'
 import { DESTINATION_KEYWORDS, genericDestinationKeywords } from '@/lib/seoKeywords'
 
 export const dynamic = 'force-static'
@@ -61,6 +61,7 @@ export default async function DestinationDetailPage({ params }: { params: { slug
               { name: initial.name, path },
             ])}
           />
+          {(initial.faqs?.length ?? 0) > 0 && <JsonLd data={faqSchema(initial.faqs!)} />}
         </>
       )}
       <DestinationDetailClient initialSlug={params.slug} initial={initial} />

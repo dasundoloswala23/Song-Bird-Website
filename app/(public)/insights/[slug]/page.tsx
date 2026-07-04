@@ -45,6 +45,10 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 export default async function InsightDetailPage({ params }: { params: { slug: string } }) {
   const initial = await findArticle(params.slug)
   const path = `/insights/${params.slug}/`
+  // Approx word count from the rich-HTML body (tags stripped) — a provenance signal.
+  const wordCount = initial?.body
+    ? initial.body.replace(/<[^>]*>/g, ' ').trim().split(/\s+/).filter(Boolean).length
+    : undefined
   return (
     <>
       {initial && (
@@ -56,6 +60,7 @@ export default async function InsightDetailPage({ params }: { params: { slug: st
               path,
               image: initial.image || undefined,
               datePublished: initial.date || undefined,
+              wordCount: wordCount || undefined,
             })}
           />
           <JsonLd

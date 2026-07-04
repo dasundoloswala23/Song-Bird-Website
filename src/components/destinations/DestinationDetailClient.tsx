@@ -7,6 +7,7 @@ import Link from 'next/link'
 import { MapPin, ArrowRight, Loader2 } from 'lucide-react'
 import { FinalCTA } from '@/components/FinalCTA'
 import { SectionBlock } from '@/components/services/SectionBlock'
+import { FaqAccordion } from '@/components/FaqAccordion'
 import { decodeEntities, slugify } from '@/lib/utils'
 import type { DestinationDoc, ServiceSection } from '@/types/firestore'
 
@@ -130,6 +131,8 @@ export function DestinationDetailClient({ initialSlug, initial }: { initialSlug:
   ;(dest.sections ?? []).forEach(s => {
     if (s.title) tocItems.push({ id: s.id, label: s.title })
   })
+  const faqs = dest.faqs?.filter(f => f.question && f.answer) ?? []
+  if (faqs.length) tocItems.push({ id: 'faqs', label: 'FAQs' })
 
   return (
     <>
@@ -180,6 +183,16 @@ export function DestinationDetailClient({ initialSlug, initial }: { initialSlug:
               {sections.length > 0 && (
                 <div>
                   {sections.map(s => <SectionBlock key={s.id} section={s} />)}
+                </div>
+              )}
+
+              {/* FAQs */}
+              {faqs.length > 0 && (
+                <div id="faqs" className="scroll-mt-32 pt-12 mt-2 border-t border-cloud">
+                  <h2 className="font-serif font-normal text-[32px] text-ink mb-8">
+                    {dest.name} Immigration FAQs
+                  </h2>
+                  <FaqAccordion items={faqs} />
                 </div>
               )}
             </div>

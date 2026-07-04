@@ -18,6 +18,7 @@ const QUICK_LINKS = [
   { key: 'footer.link.testimonials',   href: '/#testimonials' },
   { key: 'footer.link.collaborations', href: '/collaborations' },
   { key: 'footer.link.insights',       href: '/insights' },
+  { key: 'footer.link.faq',            href: '/faq' },
   { key: 'footer.link.contact',        href: '/contact' },
   { key: 'footer.link.privacy',        href: '/privacy' },
 ] as const

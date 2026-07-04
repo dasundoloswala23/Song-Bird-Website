@@ -5,7 +5,7 @@
 import { initializeFirestore, collection, query, where, orderBy, getDocs, doc, getDoc, setDoc, addDoc, deleteDoc, updateDoc, deleteField } from 'firebase/firestore'
 import { firebaseApp } from './firebase'
 import { slugify } from './utils'
-import type { ServiceDoc, ServicesIntroDoc, WhyChooseUsDoc, StatsDoc, ProcessSectionDoc, TestimonialsSectionDoc, LeadDoc, DestinationDoc, SlotDoc, BookingDoc, GlobalReachDoc, HeroSettingsDoc, WelcomeDoc, AccreditationsDoc, CollaborationsDoc, InsightsDoc, NewsletterSignupDoc, ReserveCtaDoc } from '@/types/firestore'
+import type { ServiceDoc, ServicesIntroDoc, WhyChooseUsDoc, StatsDoc, ProcessSectionDoc, TestimonialsSectionDoc, LeadDoc, DestinationDoc, SlotDoc, BookingDoc, GlobalReachDoc, HeroSettingsDoc, WelcomeDoc, AccreditationsDoc, CollaborationsDoc, InsightsDoc, NewsletterSignupDoc, ReserveCtaDoc, FaqPageDoc } from '@/types/firestore'
 
 // ignoreUndefinedProperties: optional fields (e.g. a section's unset stats) may be `undefined`;
 // Firestore would otherwise reject the whole write ("invalid nested entity"). This drops them.
@@ -266,6 +266,13 @@ export async function getReserveCta(): Promise<ReserveCtaDoc | null> {
   } catch { return null }
 }
 
+export async function getFaqPage(): Promise<FaqPageDoc | null> {
+  try {
+    const snap = await getDoc(doc(db, 'siteContent', 'faq'))
+    return snap.exists() ? (snap.data() as FaqPageDoc) : null
+  } catch { return null }
+}
+
 // ── Admin writes ──────────────────────────────────────────────────────────────
 
 export async function saveService(data: Omit<ServiceDoc, 'id'>, id?: string): Promise<string> {
@@ -359,6 +366,10 @@ export async function saveServicesPageIntro(data: ServicesIntroDoc): Promise<voi
 
 export async function saveReserveCta(data: ReserveCtaDoc): Promise<void> {
   await setDoc(doc(db, 'siteContent', 'reserveCta'), data)
+}
+
+export async function saveFaqPage(data: FaqPageDoc): Promise<void> {
+  await setDoc(doc(db, 'siteContent', 'faq'), data)
 }
 
 export async function saveSlot(data: Omit<SlotDoc, 'id'>, id?: string): Promise<string> {

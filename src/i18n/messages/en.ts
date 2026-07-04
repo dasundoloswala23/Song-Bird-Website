@@ -9,6 +9,7 @@ const en = {
   'nav.about': 'About',
   'nav.collaborations': 'Collaborations',
   'nav.insights': 'Insights',
+  'nav.faq': 'FAQ',
   'nav.contact': 'Contact',
 
   // ── Brand ──
@@ -136,6 +137,7 @@ const en = {
   'footer.link.testimonials': 'Testimonials',
   'footer.link.collaborations': 'Collaborations',
   'footer.link.insights': 'Insights',
+  'footer.link.faq': 'FAQ',
   'footer.link.contact': 'Contact',
   'footer.link.privacy': 'Privacy Policy',
   'footer.terms': 'Terms of Service',

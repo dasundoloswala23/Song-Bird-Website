@@ -23,6 +23,7 @@ const TOP_LINKS = [
   { key: 'nav.about',          href: '/about' },
   { key: 'nav.collaborations', href: '/collaborations' },
   { key: 'nav.insights',       href: '/insights' },
+  { key: 'nav.faq',            href: '/faq' },
   { key: 'nav.contact',        href: '/contact' },
 ] as const
 

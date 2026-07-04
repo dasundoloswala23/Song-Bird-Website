@@ -1,4 +1,5 @@
 import { CONTACT_EMAIL, OFFICE_PHONE, OFFICES, SOCIAL, DESTINATIONS } from '@/lib/constants'
+import { SERVICES } from '@/lib/services'
 
 export const SITE_URL = 'https://songbird.ae'
 export const SITE_NAME = 'Songbird Immigration Consultants'
@@ -17,6 +18,7 @@ export const organizationSchema = {
   image: `${SITE_URL}/logo.png`,
   description:
     'Songbird Consultancy is a UAE-licensed immigration and multi-service advisory firm. Expert visa, residency, citizenship, business, and lifestyle services for individuals and families pursuing global residency.',
+  slogan: 'One Firm. Every Path.',
   email: CONTACT_EMAIL,
   telephone: OFFICE_PHONE,
   contactPoint: {
@@ -55,12 +57,30 @@ export const organizationSchema = {
     'Residency by investment',
     'Citizenship by investment',
     'Skilled worker visas',
+    'Student visas',
     'Business setup in UAE',
     'Patent and IP advisory',
     'Maritime advisory',
     'HR advisory',
     'Concierge services',
+    'How to get a UAE Golden Visa',
+    'Immigration to Canada, Australia, the UK and Europe',
   ],
+  // Offer catalog — lets generative engines enumerate exactly what the firm
+  // does (GEO). Sourced from the static SERVICES list (footer/nav source).
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Songbird Advisory Services',
+    itemListElement: SERVICES.map(s => ({
+      '@type': 'Offer',
+      itemOffered: {
+        '@type': 'Service',
+        name: s.title,
+        description: s.shortDesc,
+        url: `${SITE_URL}/services/${s.slug}/`,
+      },
+    })),
+  },
 }
 
 /** WebSite entity — helps Google associate the brand name with the domain. */
@@ -141,6 +161,11 @@ export function articleSchema(opts: {
   path: string
   image?: string
   datePublished?: string
+  dateModified?: string
+  /** Named human author → Person entity; omit to attribute to the Organization. */
+  author?: string
+  /** Approx. body length — a provenance signal generative engines value. */
+  wordCount?: number
 }) {
   return {
     '@context': 'https://schema.org',
@@ -150,7 +175,34 @@ export function articleSchema(opts: {
     url: `${SITE_URL}${opts.path}`,
     ...(opts.image ? { image: opts.image } : {}),
     ...(opts.datePublished ? { datePublished: opts.datePublished } : {}),
-    author: { '@id': `${SITE_URL}/#organization` },
+    // Fall back to datePublished so a "dateModified" is always present when a date exists.
+    ...(opts.dateModified || opts.datePublished ? { dateModified: opts.dateModified ?? opts.datePublished } : {}),
+    ...(opts.wordCount ? { wordCount: opts.wordCount } : {}),
+    author: opts.author
+      ? { '@type': 'Person', name: opts.author }
+      : { '@id': `${SITE_URL}/#organization` },
     publisher: { '@id': `${SITE_URL}/#organization` },
+  }
+}
+
+/**
+ * AggregateRating stub — INTENTIONALLY NOT WIRED IN.
+ *
+ * Star ratings are strongly surfaced by Google and generative engines, but
+ * schema.org ratings must reflect GENUINE, verifiable reviews — fabricated
+ * ratings risk a Google manual penalty. We have no real rating source yet
+ * (the testimonials CMS stores quote/name/role only, no scores).
+ *
+ * To switch on later: collect real ratings (e.g. Google Business Profile or a
+ * `rating` field added to TestimonialItem), then merge the return value of this
+ * helper into `organizationSchema` (or emit a Review list). One-line change.
+ */
+export function aggregateRatingSchema(opts: { ratingValue: number; reviewCount: number }) {
+  return {
+    '@type': 'AggregateRating',
+    ratingValue: opts.ratingValue,
+    reviewCount: opts.reviewCount,
+    bestRating: 5,
+    worstRating: 1,
   }
 }

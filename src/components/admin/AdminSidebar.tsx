@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
-import { LayoutDashboard, Layers, Settings2, BarChart3, Inbox, LogOut, Bird, ListOrdered, Quote, MapPin, CalendarDays, Clock, Video, Sparkles, Award, Handshake, Newspaper, Mail, Eye, Power } from 'lucide-react'
+import { LayoutDashboard, Layers, Settings2, BarChart3, Inbox, LogOut, Bird, ListOrdered, Quote, MapPin, CalendarDays, Clock, Video, Sparkles, Award, Handshake, Newspaper, Mail, Eye, Power, HelpCircle } from 'lucide-react'
 import { getAuth, signOut } from 'firebase/auth'
 import { firebaseApp } from '@/lib/firebase'
 import { cn } from '@/lib/utils'
@@ -21,6 +21,7 @@ const NAV = [
   { href: '/admin/process',        label: 'How It Works',   Icon: ListOrdered,     preview: '/' },
   { href: '/admin/testimonials',   label: 'Client Stories', Icon: Quote,           preview: '/' },
   { href: '/admin/insights',       label: 'Insights',       Icon: Newspaper,       preview: '/insights' },
+  { href: '/admin/faq',            label: 'FAQ',            Icon: HelpCircle,      preview: '/faq' },
   { href: '/admin/stats',          label: 'Stats',          Icon: BarChart3,       preview: '/' },
   { href: '/admin/slots',          label: 'Time Slots',     Icon: Clock },
   { href: '/admin/bookings',       label: 'Bookings',       Icon: CalendarDays },
