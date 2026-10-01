@@ -7,7 +7,7 @@ import * as nodemailer from "nodemailer";
 const GMAIL_APP_PASSWORD = defineSecret("GMAIL_APP_PASSWORD");
 
 const SENDER = "songbirddevdasun@gmail.com";
-const RECIPIENT = "info@songbird.ae";
+const RECIPIENT = ["info@songbird.ae", "duduwanage@gmail.com"];
 
 interface LeadEmailData {
   type?:

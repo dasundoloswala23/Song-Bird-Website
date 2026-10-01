@@ -30,7 +30,7 @@ firebase deploy --only storage
 node scripts/seed.mjs
 ```
 
-No test runner is configured. The `functions/` package is a **separate npm project** with its own `package.json`/`node_modules`, but it is currently **dormant/unused** — lead email now goes through EmailJS from the client (see below), not this Cloud Function.
+No test runner is configured. The `functions/` package is a **separate npm project** with its own `package.json`/`node_modules`, and hosts the `sendLeadEmail` Cloud Function that sends lead-notification email (see below).
 
 ## Environment Variables
 
@@ -43,11 +43,8 @@ Required in `.env.local`:
 | `ADMIN_SESSION_SECRET` | JWT signing secret for admin sessions |
 | `CONTACT_EMAIL` | Admin email for leads (also falls back to `constants.ts`) |
 | `NEXT_PUBLIC_WHATSAPP_NUMBER` | WhatsApp link number (also falls back to `constants.ts`) |
-| `NEXT_PUBLIC_EMAILJS_SERVICE_ID` | EmailJS service ID (Gmail connected via EmailJS OAuth) |
-| `NEXT_PUBLIC_EMAILJS_TEMPLATE_ID` | EmailJS template ID for lead notifications |
-| `NEXT_PUBLIC_EMAILJS_PUBLIC_KEY` | EmailJS public key — safe to expose client-side |
 
-Lead-notification email is sent **directly from the browser via EmailJS** (see below) — there is no server-side email step and no Gmail password anywhere in the codebase.
+Lead-notification email is sent by the `sendLeadEmail` Firebase Cloud Function (see below). The Gmail app password lives in the Firebase secret `GMAIL_APP_PASSWORD`, never in the codebase.
 
 ## Architecture
 
@@ -68,14 +65,12 @@ All dynamic content lives in Firestore. Public pages are **async Server Componen
 
 After adding or editing content in the admin panel, run `npm run build && firebase deploy --only hosting` to publish changes to the static site.
 
-### Email via EmailJS (Lead Notifications)
+### Email via Cloud Function (Lead Notifications)
 
-Because the site is a static export with no `app/api/` routes and no server, lead-notification email is sent **directly from the browser** using EmailJS (a service designed for client-side sending via a public key, not a real password):
-
-- Client side: `src/lib/email.ts` exports `sendLeadEmail(payload)`, which lazily imports `@emailjs/browser` and calls `emailjs.send(serviceId, templateId, templateParams, { publicKey })`, sending to `info@songbird.ae`. It is **best-effort** — failures are swallowed so they never block the Firestore write or the form's success UI.
+- Client side: `src/lib/email.ts` exports `sendLeadEmail(payload)`, which calls the `sendLeadEmail` callable (`getFunctions(firebaseApp, 'us-central1')`). It is **best-effort** — failures are swallowed so they never block the Firestore write or the form's success UI.
+- Server side: `functions/src/index.ts` sends via nodemailer + Gmail SMTP, **from** `songbirddevdasun@gmail.com` **to** `RECIPIENT` (hardcoded array, currently `info@songbird.ae` and `duduwanage@gmail.com`). Changing the recipient means editing that constant and running `firebase deploy --only functions`.
 - `LeadEmailPayload.type` is `'inquiry' | 'consultation' | 'eligibility' | 'booking' | 'collaboration'` and drives the email subject. The payload can carry scheduling fields (`date`, `startTime`, `durationMin`, `timezone`, `sessionType`, `charge`) and a CV attachment (`cvUrl`/`cvFileName`).
 - Callers: `ContactForm`, `ConsultationModal`, `BookFreeConsultation`, `BookingFlow`, `EligibilityFlow`, `EligibilityForm`, `CollaborationJoinForm`.
-- `functions/src/index.ts` still contains a `sendLeadEmail` Cloud Function (Gmail SMTP via nodemailer) from the previous architecture, but it is **no longer called from the app** — it is dormant, kept only in case the Cloud Function path is revived later.
 
 `src/lib/uploadFile.ts` uploads a `File` to Firebase Storage (`<folder>/<timestamp>_<name>`) and returns a download URL — used for CV/document attachments that are then passed to `sendLeadEmail` as `cvUrl`. Storage rules must allow writes to the target folder.
 
@@ -217,5 +212,4 @@ Custom color palette (CSS variables in `src/styles/theme.css`):
 - `motion` — animations (`src/lib/motionVariants.ts` has shared presets: `fadeUp`, `fadeIn`, `staggerContainer`, `slideInLeft`, `scaleIn`)
 - `embla-carousel-react` — testimonials/hero carousel
 - `@mui/material` + `@mui/icons-material` (+ `@emotion/*`) — MUI is used alongside Tailwind/shadcn in some newer components (e.g. booking/calendar UI); prefer the existing Tailwind tokens + shadcn primitives for new work unless matching an MUI component already in place
-- `@emailjs/browser` — sends lead-notification email directly from the browser (lazy-imported in `src/lib/email.ts`)
-- `nodemailer` — used **only inside `functions/`** for the now-dormant email Cloud Function (the copy in the root `package.json` is vestigial; the app no longer sends mail directly or via that function)
+- `nodemailer` — used **only inside `functions/`** for the email Cloud Function (the copy in the root `package.json` is vestigial)
